@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDF9EA"/><stop offset="1" stop-color="#F4EBC8"/></linearGradient>
+<radialGradient id="glow" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity="0.75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="bn1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE680"/><stop offset="0.6" stop-color="#F5CB2E"/><stop offset="1" stop-color="#C99A14"/></linearGradient>
+</defs>
+<rect width="800" height="600" fill="url(#bg)"/>
+<rect width="800" height="600" fill="url(#glow)"/>
+<g transform="translate(400 300) scale(1.22) translate(-400 -300)"><ellipse cx="416.8" cy="440" rx="199.5" ry="46.2" fill="#3b2f1e" opacity="0.13" filter="url(#soft)"/><g transform="translate(400 320) rotate(-8) scale(210)"><g transform="translate(0 0.2) rotate(6)"><path d="M-1 -0.25 C-0.6 0.55 0.5 0.62 1.05 -0.18 C1.1 -0.24 1.04 -0.32 0.97 -0.28 C0.42 0.2 -0.5 0.18 -0.9 -0.36Z" fill="url(#bn1)" stroke="#B88A10" stroke-opacity="0.35" stroke-width="0.02"/><path d="M-0.9 -0.36 L-1.05 -0.45 L-1 -0.25Z" fill="#5C4A1E"/><circle cx="1.03" cy="-0.22" r="0.04" fill="#3d3214"/></g><g transform="translate(0 0) rotate(0)"><path d="M-1 -0.25 C-0.6 0.55 0.5 0.62 1.05 -0.18 C1.1 -0.24 1.04 -0.32 0.97 -0.28 C0.42 0.2 -0.5 0.18 -0.9 -0.36Z" fill="url(#bn1)" stroke="#B88A10" stroke-opacity="0.35" stroke-width="0.02"/><path d="M-0.9 -0.36 L-1.05 -0.45 L-1 -0.25Z" fill="#5C4A1E"/><circle cx="1.03" cy="-0.22" r="0.04" fill="#3d3214"/></g><g transform="translate(0 -0.2) rotate(-6)"><path d="M-1 -0.25 C-0.6 0.55 0.5 0.62 1.05 -0.18 C1.1 -0.24 1.04 -0.32 0.97 -0.28 C0.42 0.2 -0.5 0.18 -0.9 -0.36Z" fill="url(#bn1)" stroke="#B88A10" stroke-opacity="0.35" stroke-width="0.02"/><path d="M-0.9 -0.36 L-1.05 -0.45 L-1 -0.25Z" fill="#5C4A1E"/><circle cx="1.03" cy="-0.22" r="0.04" fill="#3d3214"/></g></g></g>
+<g transform="translate(776 578)"><rect x="-178" y="-22" width="178" height="30" rx="15" fill="#fff" opacity="0.8"/><text x="-89" y="-2" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#6b6457">Helyőrző illusztráció</text></g>
+</svg>
