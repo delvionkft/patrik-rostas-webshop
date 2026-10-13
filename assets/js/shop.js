@@ -95,6 +95,10 @@
   var ARROW =
     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
+  function slug(t) {
+    return normalize(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+
   function fruitUrl(p) {
     return 'gyumolcs.html#' + encodeURIComponent(p.id);
   }
@@ -415,18 +419,54 @@
       q('tags').innerHTML = tagsHtml(p);
       q('desc').textContent = p.long || p.short;
 
-      var facts = [['Kategória', categoryLabel(p.category)]];
-      var st = seasonText(p);
-      if (st) facts.push(['Jellemző idény', st]);
-      facts.push(['Fajták', list.length + ' fajta']);
-      if (p.origin) facts.push(['Származás', p.origin]);
-      var price = priceInfo(p);
-      if (price) facts.push(['Ár', price.text + ' ' + price.unit + ' (' + price.date + ')']);
-      q('facts').innerHTML = facts
-        .map(function (r) {
-          return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>';
-        })
-        .join('');
+      // Adatsáv: fajták száma, kategória, 12 hónapos idénysáv
+      q('count-big').textContent = String(list.length);
+      q('category').textContent = categoryLabel(p.category);
+      var st = seasonText(p, true);
+      q('season-text').textContent = st ? '· ' + st : '';
+      var months = Array.isArray(p.season) ? p.season : [];
+      var strip = '';
+      for (var m = 1; m <= 12; m++) {
+        strip +=
+          '<li class="' + (months.indexOf(m) !== -1 ? 'is-on' : '') + (m === currentMonth ? ' is-now' : '') + '">' +
+          '<span>' + MONTHS_SHORT[m - 1].charAt(0).toUpperCase() + '</span></li>';
+      }
+      q('months').innerHTML = strip;
+
+      // Fotómozaik: kiemelt képek (hero mező), különben a borítókép és a fajták képei
+      var pics = [];
+      var seen = {};
+      var add = function (src, label, alt) {
+        if (src && !seen[src] && pics.length < 4) {
+          seen[src] = 1;
+          pics.push({ src: src, label: label, alt: alt });
+        }
+      };
+      (p.hero || []).forEach(function (name) {
+        list.forEach(function (v) {
+          if (v.name === name) add(v.image, v.name, v.alt);
+        });
+      });
+      list.forEach(function (v) {
+        if (v.image === p.image) add(v.image, v.name, v.alt);
+      });
+      list.forEach(function (v) {
+        add(v.image, v.name, v.alt);
+      });
+      var mosaic = q('mosaic');
+      mosaic.className = 'mosaic mosaic--' + Math.max(pics.length, 1);
+      mosaic.innerHTML = pics.length
+        ? pics
+            .map(function (x, i) {
+              return (
+                '<figure class="mosaic__item">' +
+                '<img src="' + esc(x.src) + '" alt="' + esc(x.alt || x.label) + '" width="800" height="600"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') + ' decoding="async">' +
+                '<figcaption>' + esc(x.label) + '</figcaption>' +
+                '</figure>'
+              );
+            })
+            .join('')
+        : '<div class="mosaic__item noimg"><strong>' + esc(p.name) + '</strong><span>Fotó hamarosan</span></div>';
 
       q('count').textContent =
         list.length > 1 ? list.length + ' fajta, betűrendben.' : 'Jelenleg egy fajta szerepel a kínálatban.';
@@ -436,7 +476,7 @@
             ? '<img src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '" width="800" height="600" loading="lazy" decoding="async">'
             : '<div class="noimg" aria-hidden="true"><strong>' + esc(v.name) + '</strong><span>Fotó hamarosan</span></div>';
           return (
-            '<li class="variety-card">' +
+            '<li class="variety-card" id="fajta-' + slug(v.name) + '">' +
             '<div class="product-card__media">' + media + '</div>' +
             '<h3>' + esc(v.name) + '</h3>' +
             '<p>' + esc(p.name) + '</p>' +
@@ -445,6 +485,18 @@
         })
         .join('');
 
+      // Fajtamutató: gombok, amelyek a fajta kártyájához görgetnek
+      // (a cím #-részét a gyümölcs azonosítója foglalja, ezért nem horgonylink).
+      q('index').innerHTML =
+        list.length > 4
+          ? list
+              .map(function (v) {
+                return '<button type="button" class="variety-chip" data-target="fajta-' + slug(v.name) + '">' + esc(v.name) + '</button>';
+              })
+              .join('')
+          : '';
+      q('index').hidden = list.length <= 4;
+
       q('storage').textContent = p.storage || 'Kérdezz bátran, szívesen adunk tanácsot a tároláshoz.';
       var inquire = 'kapcsolat.html?erdeklodes=' + encodeURIComponent(p.name) + '#urlap';
       Array.prototype.forEach.call(root.querySelectorAll('[data-f="inquire"]'), function (a) {
@@ -452,6 +504,16 @@
       });
       window.scrollTo(0, 0);
     }
+
+    var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    root.addEventListener('click', function (e) {
+      var chip = e.target.closest('[data-target]');
+      var toList = e.target.closest('[data-f="to-varieties"]');
+      var el = chip ? document.getElementById(chip.getAttribute('data-target')) : toList ? document.getElementById('fajtak-cim') : null;
+      if (!el) return;
+      el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+      if (toList) el.focus({ preventScroll: true });
+    });
 
     window.addEventListener('hashchange', render);
     render();

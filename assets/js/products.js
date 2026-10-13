@@ -23,6 +23,8 @@
  *                A „Szezonális” címke automatikusan megjelenik, ha az aktuális hónap benne van.
  *   isNew      – true esetén „Új a kínálatban” címke jelenik meg
  *   featured   – true esetén a főoldali „Kiemelt gyümölcsök” között is szerepel (4 javasolt)
+ *   hero       – (opcionális) az aloldal fejlécének fotómozaikja: legfeljebb 4 fajtanév; az első lesz a nagy kép.
+ *                Ha nincs megadva, a borítókép és a fajták képei kerülnek bele.
  *   image, alt – a gyümölcs borítóképe a kártyán. Ha még nincs saját fotó: image: null (semleges „Fotó hamarosan” mező jelenik meg).
  *                Csak saját vagy engedéllyel használt fotót tegyél ide.
  *   storage    – tárolási javaslat (általános tudnivaló)
@@ -66,6 +68,7 @@ window.PRODUCTS = [
     category: 'almafele',
     short: 'Illatos, lédús gyümölcs, érett állapotban puha, vajas állagú.',
     long: 'A körte akkor a legfinomabb, amikor a szár körüli része enyhén engedni kezd az ujjad alatt. Önmagában, sajttal, diós salátában vagy pitében is kiváló. Keményebb darabokból kompót vagy sült körte készíthető.',
+    hero: ['Piros Vilmos', 'Nyári Kálmán', 'Clapp kedveltje', 'Bosc kobak'],
     varieties: [
       { name: 'Alexander Lucas', image: 'assets/img/varieties/korte-alexander-lucas.webp', alt: 'Alexander Lucas körték az ágon' },
       { name: 'Arabitka', image: 'assets/img/varieties/korte-arabitka.webp', alt: 'Arabitka körték az ágon' },

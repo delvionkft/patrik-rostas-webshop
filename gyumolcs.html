@@ -48,19 +48,35 @@
 
   <main id="tartalom" data-fruit-page>
     <div data-f="content">
-      <section class="page-hero">
+      <section class="fruit-hero" aria-labelledby="gyumolcs-cim">
         <div class="container">
-          <nav class="crumbs label label--plain" aria-label="Morzsamenü"><a href="termekeink.html">Termékeink</a> <span aria-hidden="true">/</span> <span data-f="crumb" aria-current="page">Gyümölcs</span></nav>
-          <div class="page-hero__grid">
-            <div>
+          <div class="fruit-hero__grid">
+            <div class="fruit-hero__text">
+              <nav class="crumbs label label--plain" aria-label="Morzsamenü"><a href="termekeink.html">Termékeink</a> <span aria-hidden="true">/</span> <span data-f="crumb" aria-current="page">Gyümölcs</span></nav>
               <div class="dialog-tags" data-f="tags"></div>
-              <h1 data-f="name">Gyümölcs</h1>
+              <h1 id="gyumolcs-cim" data-f="name">Gyümölcs</h1>
+              <p class="fruit-hero__lead" data-f="desc"></p>
+              <div class="btn-row">
+                <button class="btn btn--primary" type="button" data-f="to-varieties">Fajták megtekintése <svg class="icon icon--down" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+                <a class="btn btn--light" data-f="inquire" href="kapcsolat.html#urlap">Érdeklődöm</a>
+              </div>
+            </div>
+            <div class="mosaic" data-f="mosaic"></div>
+          </div>
+          <dl class="fruit-stats">
+            <div>
+              <dt>Fajták</dt>
+              <dd><span class="fruit-stats__big" data-f="count-big">–</span> <span data-f="count-unit">fajta</span></dd>
             </div>
             <div>
-              <p class="lead" data-f="desc"></p>
-              <dl class="facts" data-f="facts"></dl>
+              <dt>Kategória</dt>
+              <dd data-f="category">–</dd>
             </div>
-          </div>
+            <div class="fruit-stats__season">
+              <dt>Jellemző idény <span data-f="season-text"></span></dt>
+              <dd><ol class="month-strip" data-f="months" aria-hidden="true"></ol></dd>
+            </div>
+          </dl>
         </div>
       </section>
 
@@ -69,11 +85,12 @@
           <div class="section-head">
             <div>
               <p class="label">Fajták</p>
-              <h2 id="fajtak-cim">Fajtáink</h2>
+              <h2 id="fajtak-cim" tabindex="-1">Fajtáink</h2>
               <p data-f="count"></p>
             </div>
             <a class="btn btn--ghost" href="termekeink.html"><svg class="icon icon--back" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg> Vissza a kínálathoz</a>
           </div>
+          <nav class="variety-index" data-f="index" aria-label="Ugrás egy fajtához"></nav>
           <ul class="variety-grid" data-f="varieties"></ul>
           <p class="calendar-note">Az aktuális választék és elérhetőség szezonálisan változhat.</p>
         </div>

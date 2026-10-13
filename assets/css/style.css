@@ -2483,3 +2483,318 @@ mark.ph {
 [data-fruit-page] .tip {
   margin-top: 8px;
 }
+
+/* Gyümölcs aloldal – fejléc */
+.fruit-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(40px, 6vw, 88px) 0;
+  background: var(--studio);
+  color: var(--on-studio);
+}
+
+.fruit-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 70% at 85% 30%, rgba(134, 196, 149, 0.14), transparent 70%),
+    radial-gradient(40% 50% at 10% 100%, rgba(192, 38, 27, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.fruit-hero .container {
+  position: relative;
+}
+
+.fruit-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+.fruit-hero__text {
+  display: grid;
+  gap: 22px;
+  align-content: center;
+  min-width: 0;
+}
+
+.fruit-hero .crumbs {
+  color: var(--on-studio-2);
+}
+
+.fruit-hero .crumbs a:hover {
+  color: var(--on-studio);
+}
+
+.fruit-hero .dialog-tags {
+  min-height: 0;
+  padding: 0;
+}
+
+.fruit-hero h1 {
+  margin: 0;
+  color: var(--on-studio);
+  font-size: clamp(3.4rem, 1.6rem + 8vw, 9.5rem);
+  font-stretch: 62%;
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+}
+
+.fruit-hero__lead {
+  max-width: 34em;
+  margin: 0;
+  color: var(--on-studio-2);
+  font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+  line-height: 1.6;
+}
+
+.icon--down {
+  transform: rotate(90deg);
+}
+
+.btn:hover .icon--down {
+  transform: rotate(90deg) translateX(3px);
+}
+
+/* Fotómozaik */
+.mosaic {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  height: clamp(320px, 42vw, 560px);
+}
+
+.mosaic--1 {
+  grid-template-columns: 1fr;
+}
+
+.mosaic--2 {
+  grid-template-columns: 1.6fr 1fr;
+}
+
+.mosaic--3 {
+  grid-template-columns: 1.6fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.mosaic--4 {
+  grid-template-columns: 1.7fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.mosaic--3 .mosaic__item:first-child {
+  grid-row: span 2;
+}
+
+.mosaic--4 .mosaic__item:first-child {
+  grid-row: span 3;
+}
+
+.mosaic__item {
+  position: relative;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  background: var(--studio-2);
+}
+
+.mosaic__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
+}
+
+.mosaic__item:hover img {
+  transform: scale(1.04);
+}
+
+.mosaic__item figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 7px 10px 6px;
+  background: rgba(18, 26, 21, 0.82);
+  color: var(--on-studio);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mosaic__item:first-child figcaption {
+  padding: 9px 14px 8px;
+  font-size: 0.76rem;
+}
+
+/* Adatsáv */
+.fruit-stats {
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 0.8fr) minmax(0, 1.5fr);
+  margin: clamp(36px, 5vw, 64px) 0 0;
+  border-top: 1px solid var(--studio-rule);
+}
+
+.fruit-stats > div {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+  padding: 22px 24px 28px 0;
+}
+
+.fruit-stats > div + div {
+  padding-left: 24px;
+  border-left: 1px solid var(--studio-rule);
+}
+
+.fruit-stats dt {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-studio-2);
+}
+
+.fruit-stats dd {
+  margin: 0;
+  font-family: var(--display);
+  font-stretch: 80%;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.fruit-stats__big {
+  font-stretch: 62%;
+  font-size: 3.2rem;
+  line-height: 0.85;
+  color: var(--green-light);
+}
+
+.month-strip {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 3px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.month-strip li {
+  display: grid;
+  gap: 6px;
+  text-align: center;
+}
+
+.month-strip li::before {
+  content: "";
+  display: block;
+  height: 12px;
+  background: rgba(243, 245, 241, 0.12);
+}
+
+.month-strip li.is-on::before {
+  background: var(--green-light);
+}
+
+.month-strip li.is-now::before {
+  box-shadow: inset 0 0 0 2px var(--red), 0 0 0 1px var(--red);
+}
+
+.month-strip li.is-now.is-on::before {
+  background: var(--red);
+  box-shadow: none;
+}
+
+.month-strip span {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  color: var(--on-studio-2);
+}
+
+.month-strip li.is-now span {
+  color: var(--on-studio);
+}
+
+@media (max-width: 960px) {
+  .fruit-hero__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mosaic {
+    height: clamp(260px, 70vw, 460px);
+  }
+
+  .fruit-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fruit-stats__season {
+    grid-column: 1 / -1;
+    padding-left: 0 !important;
+    border-left: 0 !important;
+    border-top: 1px solid var(--studio-rule);
+  }
+}
+
+@media (max-width: 520px) {
+  .mosaic--4 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 2fr 1fr;
+  }
+
+  .mosaic--4 .mosaic__item:first-child {
+    grid-row: auto;
+    grid-column: 1 / -1;
+  }
+
+  .mosaic--3 {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
+  }
+
+  .mosaic--3 .mosaic__item:first-child {
+    grid-row: auto;
+    grid-column: 1 / -1;
+  }
+
+  .mosaic__item:not(:first-child) figcaption {
+    display: none;
+  }
+}
+
+/* Fajtamutató */
+.variety-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -12px 0 clamp(28px, 3vw, 40px);
+}
+
+.variety-chip {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+
+.variety-chip:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+#fajtak-cim:focus {
+  outline: none;
+}
