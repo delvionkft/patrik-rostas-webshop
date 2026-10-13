@@ -196,8 +196,8 @@
       topic = topic.slice(0, 60);
       message.value =
         topic === 'kinalat'
-          ? 'Szia! Érdeklődnék az aktuális kínálatról: '
-          : 'Szia! Érdeklődnék a következő gyümölcs iránt: ' + topic + '. ';
+          ? 'Érdeklődnék az aktuális kínálatról: '
+          : 'Érdeklődnék a következő gyümölcs iránt: ' + topic + '. ';
     }
 
     var rules = {
@@ -320,7 +320,7 @@
         .catch(function () {
           setStatus(
             'error',
-            'Hoppá, az üzenetet most nem sikerült elküldeni. Kérlek, próbáld újra, vagy hívj minket telefonon.'
+            'Az üzenetet nem sikerült elküldeni. Kérjük, próbáld újra, vagy hívj minket telefonon.'
           );
         })
         .then(function () {
