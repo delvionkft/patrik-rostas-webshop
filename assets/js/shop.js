@@ -95,16 +95,30 @@
   var ARROW =
     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
-  function cardHtml(p, mode) {
+  function fruitUrl(p) {
+    return 'gyumolcs.html#' + encodeURIComponent(p.id);
+  }
+
+  function varieties(p) {
+    return (Array.isArray(p.varieties) ? p.varieties.slice() : []).sort(function (a, b) {
+      return a.name.localeCompare(b.name, 'hu');
+    });
+  }
+
+  function varietyMeta(p) {
+    var list = varieties(p);
+    if (!list.length) return '';
+    if (list.length === 1) return '<div><dt>Fajta:</dt><dd>' + esc(list[0].name) + '</dd></div>';
+    return '<div><dt>Fajták:</dt><dd>' + list.length + ' fajta</dd></div>';
+  }
+
+  function cardHtml(p) {
     var price = priceInfo(p);
     var meta = '';
-    if (p.variety) meta += '<div><dt>Fajta:</dt><dd>' + esc(p.variety) + '</dd></div>';
+    meta += varietyMeta(p);
     if (p.origin) meta += '<div><dt>Származás:</dt><dd>' + esc(p.origin) + '</dd></div>';
 
-    var title =
-      mode === 'link'
-        ? '<a class="product-card__link" href="termekeink.html#' + encodeURIComponent(p.id) + '">' + esc(p.name) + '</a>'
-        : '<button type="button" class="product-card__link" data-product="' + esc(p.id) + '" aria-haspopup="dialog">' + esc(p.name) + '</button>';
+    var title = '<a class="product-card__link" href="' + fruitUrl(p) + '">' + esc(p.name) + '</a>';
 
     return (
       '<article class="product-card">' +
@@ -141,7 +155,7 @@
     if (!items.length) return;
     list.innerHTML = items
       .map(function (p) {
-        return '<li>' + cardHtml(p, 'link') + '</li>';
+        return '<li>' + cardHtml(p) + '</li>';
       })
       .join('');
   }
@@ -167,7 +181,7 @@
         list.innerHTML = items
           .map(function (p) {
             return (
-              '<li><a href="termekeink.html#' + encodeURIComponent(p.id) + '">' +
+              '<li><a href="' + fruitUrl(p) + '">' +
               '<strong>' + esc(p.name) + '</strong><span>' + esc(seasonText(p, true)) + '</span>' +
               '</a></li>'
             );
@@ -198,7 +212,7 @@
             '</td>';
         }
         return (
-          '<tr><th scope="row"><a href="termekeink.html#' + encodeURIComponent(p.id) + '">' + esc(p.name) + '</a></th>' +
+          '<tr><th scope="row"><a href="' + fruitUrl(p) + '">' + esc(p.name) + '</a></th>' +
           cells +
           '</tr>'
         );
@@ -220,7 +234,12 @@
     var resetBtn = document.getElementById('filter-reset');
     var empty = document.getElementById('empty-state');
     var emptyReset = document.getElementById('empty-reset');
-    var dialog = document.getElementById('product-dialog');
+    // Régi hivatkozások (termekeink.html#alma) a gyümölcs aloldalára mutassanak.
+    var legacy = decodeURIComponent(window.location.hash.slice(1));
+    if (legacy && byId(legacy)) {
+      window.location.replace(fruitUrl(byId(legacy)));
+      return;
+    }
 
     var validCats = CATEGORIES.map(function (c) {
       return c.id;
@@ -235,7 +254,12 @@
     var haystacks = {};
     PRODUCTS.forEach(function (p) {
       haystacks[p.id] = normalize(
-        [p.name, p.short, p.variety, p.origin, categoryLabel(p.category)].concat(p.keywords || []).join(' ')
+        [p.name, p.short, p.origin, categoryLabel(p.category)]
+          .concat(p.keywords || [])
+          .concat(varieties(p).map(function (v) {
+            return v.name;
+          }))
+          .join(' ')
       );
     });
 
@@ -285,7 +309,7 @@
 
       grid.innerHTML = visible
         .map(function (p) {
-          return '<li>' + cardHtml(p, 'button') + '</li>';
+          return '<li>' + cardHtml(p) + '</li>';
         })
         .join('');
 
@@ -357,129 +381,87 @@
     });
 
     render();
-    initDialog(dialog, grid);
+  }
+
+  function byId(id) {
+    for (var i = 0; i < PRODUCTS.length; i++) if (PRODUCTS[i].id === id) return PRODUCTS[i];
+    return null;
   }
 
   /* ---------------------------------------------------------------------
-     Termék részletei felugró ablakban (natív <dialog>)
-     A link megosztható: termekeink.html#alma; a Vissza gomb bezárja.
+     Gyümölcs aloldal: gyumolcs.html#korte – az összes fajta képpel
      --------------------------------------------------------------------- */
-  function initDialog(dialog, grid) {
-    if (!dialog || typeof dialog.showModal !== 'function') return;
+  function initFruitPage() {
+    var root = document.querySelector('[data-fruit-page]');
+    if (!root) return;
+    var q = function (k) {
+      return root.querySelector('[data-f="' + k + '"]');
+    };
+    var baseTitle = document.title;
+    var siteName = baseTitle.indexOf(' – ') !== -1 ? baseTitle.split(' – ').slice(1).join(' – ') : baseTitle;
 
-    var img = dialog.querySelector('[data-d="img"]');
-    var tags = dialog.querySelector('[data-d="tags"]');
-    var title = dialog.querySelector('[data-d="title"]');
-    var desc = dialog.querySelector('[data-d="desc"]');
-    var facts = dialog.querySelector('[data-d="facts"]');
-    var storage = dialog.querySelector('[data-d="storage"]');
-    var inquire = dialog.querySelector('[data-d="inquire"]');
-    var closeBtn = dialog.querySelector('.dialog-close');
-    var opener = null;
-
-    function byId(id) {
-      for (var i = 0; i < PRODUCTS.length; i++) if (PRODUCTS[i].id === id) return PRODUCTS[i];
-      return null;
-    }
-
-    function fill(p) {
-      dialog.classList.toggle('no-media', !p.image);
-      if (p.image) {
-        img.src = p.image;
-        img.alt = p.alt;
+    function render() {
+      var p = byId(decodeURIComponent(window.location.hash.slice(1)));
+      q('content').hidden = !p;
+      q('missing').hidden = !!p;
+      if (!p) {
+        document.title = baseTitle;
+        return;
       }
-      tags.innerHTML = tagsHtml(p);
-      title.textContent = p.name;
-      desc.textContent = p.long || p.short;
+      var list = varieties(p);
+      document.title = p.name + ' – ' + siteName;
+      q('crumb').textContent = p.name;
+      q('name').textContent = p.name;
+      q('tags').innerHTML = tagsHtml(p);
+      q('desc').textContent = p.long || p.short;
 
-      var rows = [['Kategória', categoryLabel(p.category)]];
-      if (p.variety) rows.push(['Fajta', p.variety]);
-      if (p.origin) rows.push(['Származás', p.origin]);
+      var facts = [['Kategória', categoryLabel(p.category)]];
       var st = seasonText(p);
-      if (st) rows.push(['Jellemző idény', st]);
+      if (st) facts.push(['Jellemző idény', st]);
+      facts.push(['Fajták', list.length + ' fajta']);
+      if (p.origin) facts.push(['Származás', p.origin]);
       var price = priceInfo(p);
-      if (price) rows.push(['Ár', price.text + ' ' + price.unit + ' (' + price.date + ')']);
-      facts.innerHTML = rows
+      if (price) facts.push(['Ár', price.text + ' ' + price.unit + ' (' + price.date + ')']);
+      q('facts').innerHTML = facts
         .map(function (r) {
           return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>';
         })
         .join('');
 
-      storage.textContent = p.storage || 'Kérdezz bátran, szívesen adunk tanácsot a tároláshoz.';
-      inquire.href = 'kapcsolat.html?erdeklodes=' + encodeURIComponent(p.name) + '#urlap';
+      q('count').textContent =
+        list.length > 1 ? list.length + ' fajta, betűrendben.' : 'Jelenleg egy fajta szerepel a kínálatban.';
+      q('varieties').innerHTML = list
+        .map(function (v) {
+          var media = v.image
+            ? '<img src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '" width="800" height="600" loading="lazy" decoding="async">'
+            : '<div class="noimg" aria-hidden="true"><strong>' + esc(v.name) + '</strong><span>Fotó hamarosan</span></div>';
+          return (
+            '<li class="variety-card">' +
+            '<div class="product-card__media">' + media + '</div>' +
+            '<h3>' + esc(v.name) + '</h3>' +
+            '<p>' + esc(p.name) + '</p>' +
+            '</li>'
+          );
+        })
+        .join('');
+
+      q('storage').textContent = p.storage || 'Kérdezz bátran, szívesen adunk tanácsot a tároláshoz.';
+      var inquire = 'kapcsolat.html?erdeklodes=' + encodeURIComponent(p.name) + '#urlap';
+      Array.prototype.forEach.call(root.querySelectorAll('[data-f="inquire"]'), function (a) {
+        a.href = inquire;
+      });
+      window.scrollTo(0, 0);
     }
 
-    function open(id, push) {
-      var p = byId(id);
-      if (!p) return false;
-      fill(p);
-      if (push) {
-        try {
-          window.history.pushState({ product: id }, '', '#' + encodeURIComponent(id));
-        } catch (e) {
-          /* file:// – kihagyjuk */
-        }
-      }
-      if (!dialog.open) {
-        opener = document.activeElement;
-        dialog.showModal();
-        document.body.classList.add('is-locked');
-      }
-      dialog.querySelector('.dialog-inner').scrollTop = 0;
-      dialog.querySelector('.dialog-content').scrollTop = 0;
-      return true;
-    }
-
-    function requestClose() {
-      if (dialog.open) dialog.close();
-    }
-
-    dialog.addEventListener('close', function () {
-      document.body.classList.remove('is-locked');
-      if (window.history.state && window.history.state.product) {
-        // Mi nyitottuk meg pushState-tel → lépjünk vissza, így a Vissza gomb sem „ragad”.
-        window.history.back();
-      } else if (window.location.hash) {
-        try {
-          window.history.replaceState(null, '', window.location.pathname + window.location.search);
-        } catch (e) {
-          /* file:// – kihagyjuk */
-        }
-      }
-      if (opener && typeof opener.focus === 'function' && document.contains(opener)) opener.focus();
-      opener = null;
-    });
-
-    closeBtn.addEventListener('click', requestClose);
-
-    // Kattintás a sötétített háttérre is bezárja.
-    dialog.addEventListener('click', function (e) {
-      if (e.target === dialog) requestClose();
-    });
-
-    grid.addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-product]');
-      if (btn) open(btn.getAttribute('data-product'), true);
-    });
-
-    function fromHash() {
-      var id = decodeURIComponent(window.location.hash.slice(1));
-      if (id && byId(id)) open(id, false);
-      else if (dialog.open) {
-        // Vissza gombbal léptünk ki a termékből.
-        dialog.close();
-      }
-    }
-
-    window.addEventListener('popstate', fromHash);
-    window.addEventListener('hashchange', fromHash);
-    fromHash();
+    window.addEventListener('hashchange', render);
+    render();
   }
 
   function init() {
     renderFeatured();
     renderSeason();
     initCatalog();
+    initFruitPage();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

@@ -5,7 +5,8 @@ Magyar nyelvű, statikus termékbemutató oldal egy gyümölcsárusító vállal
 | Oldal | Fájl |
 | --- | --- |
 | Főoldal | `index.html` |
-| Termékeink | `termekeink.html` (kereső, kategóriaszűrő, termékrészletek felugró ablakban, megosztható link: `termekeink.html#alma`) |
+| Termékeink | `termekeink.html` (kereső, kategóriaszűrő; a kártyára kattintva a gyümölcs aloldala nyílik meg) |
+| Gyümölcs aloldal | `gyumolcs.html#korte` (a gyümölcs összes fajtája képpel, leírás, idény, tárolási javaslat) |
 | Rólunk | `rolunk.html` |
 | Kapcsolat | `kapcsolat.html` (térkép, űrlap, egy érintéssel hívható telefonszám) |
 | Impresszum + adatkezelés | `jogi.html` |
@@ -65,6 +66,7 @@ Fotócsere után **az `alt` szöveget is írd át**, hogy azt írja le, ami a k�
 Az egész oldal ebből az egy fájlból dolgozik: Termékeink, valamint a főoldali „Kiemelt gyümölcsök” blokk és az idénynaptár. A gyümölcslista **mintalista**, a valós kínálathoz kell igazítani. A mezők leírása a fájl elején van. A fontosabb szabályok:
 
 - **Ár** csak akkor jelenik meg, ha `price`, `unit` és `priceDate` is ki van töltve, és a dátum legfeljebb 30 napos (`PRICE_MAX_AGE_DAYS`). Az elavult ár így magától eltűnik, és nem kerülhet ki rossz ár.
+- **Fajták:** a `varieties` listába kerül minden fajta névvel és képpel (`assets/img/varieties/`). A gyümölcs aloldalán betűrendben jelennek meg, a kereső fajtanévre is talál.
 - **Saját fotó nélküli termék:** `image: null`, ilyenkor semleges „Fotó hamarosan” mező jelenik meg. Stock- vagy idegen fotót ne tegyél be.
 - **Üres kategória** szűrőgombja automatikusan elrejtődik.
 - **Fajta, származás** csak kitöltve jelenik meg. Ne írj be olyat, amit nem tudsz biztosan (pl. „hazai”, „bio”, „termelőtől”).

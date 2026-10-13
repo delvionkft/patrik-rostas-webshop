@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gyümölcs – [Vállalkozás neve]</title>
+  <meta name="description" content="Gyümölcsfajták képekkel, leírással és tárolási javaslattal.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://[Domain]/gyumolcs.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="hu_HU">
+  <meta property="og:site_name" content="[Vállalkozás neve]">
+  <meta property="og:title" content="Gyümölcs – [Vállalkozás neve]">
+  <meta property="og:description" content="Gyümölcsfajták képekkel, leírással és tárolási javaslattal.">
+  <meta property="og:url" content="https://[Domain]/gyumolcs.html">
+  <meta property="og:image" content="https://[Domain]/assets/img/og-image.png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#tartalom">Ugrás a tartalomra</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="[Vállalkozás neve] – főoldal">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" fill="#1F5C36"/><path d="M20 14c3.1-2.5 9.2-2.1 9.5 4.5.3 6-3.5 11-6.8 10.9-1.2 0-1.6-.6-2.7-.6s-1.5.6-2.7.6c-3.3.1-7.1-4.9-6.8-10.9.3-6.6 6.4-7 9.5-4.5z" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M20 13.9c0-2.1.8-3.8 2.1-5" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M22.4 9.6c1.5-1.4 3.9-1.6 5.4-.6-1.2 1.6-3.3 2.2-5.4.6z" fill="#E0392C"/></svg>
+        <span>[Vállalkozás neve]</span>
+      </a>
+      <a class="header-call" href="tel:[Telefonszám-link]">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+        <span>[Telefonszám]</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menü megnyitása">
+        <svg class="icon icon--menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        <svg class="icon icon--close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Főmenü">
+        <ul>
+          <li><a href="index.html">Főoldal</a></li>
+          <li><a href="termekeink.html" aria-current="page">Termékeink</a></li>
+          <li><a href="rolunk.html">Rólunk</a></li>
+          <li><a href="kapcsolat.html">Kapcsolat</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="tartalom" data-fruit-page>
+    <div data-f="content">
+      <section class="page-hero">
+        <div class="container">
+          <nav class="crumbs label label--plain" aria-label="Morzsamenü"><a href="termekeink.html">Termékeink</a> <span aria-hidden="true">/</span> <span data-f="crumb" aria-current="page">Gyümölcs</span></nav>
+          <div class="page-hero__grid">
+            <div>
+              <div class="dialog-tags" data-f="tags"></div>
+              <h1 data-f="name">Gyümölcs</h1>
+            </div>
+            <div>
+              <p class="lead" data-f="desc"></p>
+              <dl class="facts" data-f="facts"></dl>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="fajtak-cim">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="label">Fajták</p>
+              <h2 id="fajtak-cim">Fajtáink</h2>
+              <p data-f="count"></p>
+            </div>
+            <a class="btn btn--ghost" href="termekeink.html"><svg class="icon icon--back" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg> Vissza a kínálathoz</a>
+          </div>
+          <ul class="variety-grid" data-f="varieties"></ul>
+          <p class="calendar-note">Az aktuális választék és elérhetőség szezonálisan változhat.</p>
+        </div>
+      </section>
+
+      <section class="section section--soft" aria-labelledby="tarolas-cim">
+        <div class="container split split--top">
+          <div>
+            <p class="label">Tárolás</p>
+            <h2 id="tarolas-cim">Tárolási javaslat</h2>
+            <div class="tip">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/></svg>
+              <span data-f="storage"></span>
+            </div>
+          </div>
+          <div>
+            <p class="label">Érdeklődés</p>
+            <h2>Kérdésed van?</h2>
+            <p class="muted">Érdeklődj telefonon vagy írásban: tájékoztatunk, mely fajták kaphatók most.</p>
+            <div class="btn-row">
+              <a class="btn btn--primary" data-f="inquire" href="kapcsolat.html#urlap">Érdeklődöm <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+              <a class="btn btn--secondary" href="tel:[Telefonszám-link]"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg> [Telefonszám]</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="page-hero" data-f="missing" hidden>
+      <div class="container">
+        <p class="label">Termékeink</p>
+        <div class="page-hero__grid">
+          <h1>A gyümölcs nem található</h1>
+          <div>
+            <p class="lead">Lehet, hogy elírás van a&nbsp;címben, vagy ez a&nbsp;gyümölcs már nem szerepel a&nbsp;kínálatban.</p>
+            <div class="btn-row" style="margin-top:28px">
+              <a class="btn btn--primary" href="termekeink.html">Vissza a kínálathoz</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <noscript>
+      <div class="container"><p class="noscript">Az oldal megjelenítéséhez JavaScript szükséges. A kínálatról telefonon is tájékoztatunk: <a href="tel:[Telefonszám-link]">[Telefonszám]</a>.</p></div>
+    </noscript>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <p>Friss gyümölcsök a&nbsp;mindennapokra.</p>
+        <a class="btn btn--light" href="kapcsolat.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Hol talállak meg titeket?</a>
+      </div>
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html">
+            <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" fill="#1F5C36"/><path d="M20 14c3.1-2.5 9.2-2.1 9.5 4.5.3 6-3.5 11-6.8 10.9-1.2 0-1.6-.6-2.7-.6s-1.5.6-2.7.6c-3.3.1-7.1-4.9-6.8-10.9.3-6.6 6.4-7 9.5-4.5z" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M20 13.9c0-2.1.8-3.8 2.1-5" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M22.4 9.6c1.5-1.4 3.9-1.6 5.4-.6-1.2 1.6-3.3 2.2-5.4.6z" fill="#E0392C"/></svg>
+            <span>[Vállalkozás neve]</span>
+          </a>
+        </div>
+        <div>
+          <h2>Oldalak</h2>
+          <ul>
+            <li><a href="index.html">Főoldal</a></li>
+            <li><a href="termekeink.html">Termékeink</a></li>
+            <li><a href="rolunk.html">Rólunk</a></li>
+            <li><a href="kapcsolat.html">Kapcsolat</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Elérhetőség</h2>
+          <ul>
+            <li><a href="tel:[Telefonszám-link]">[Telefonszám]</a></li>
+            <li><a href="mailto:[E-mail-cím]">[E-mail-cím]</a></li>
+            <li>[Cím]</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Nyitvatartás</h2>
+          <p>Hétfő–péntek: [Nyitvatartás H–P]</p>
+          <p>Szombat: [Nyitvatartás Szo]</p>
+          <p>Vasárnap: [Nyitvatartás V]</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span data-year>2026</span> [Vállalkozás neve]</p>
+        <p><a href="jogi.html#impresszum">Impresszum</a> · <a href="jogi.html#adatkezeles">Adatkezelési tájékoztató</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/products.js" defer></script>
+  <script src="assets/js/shop.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

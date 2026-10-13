@@ -2429,3 +2429,57 @@ mark.ph {
 .product-dialog.no-media {
   width: min(680px, calc(100% - 32px));
 }
+
+/* ==========================================================================
+   Gyümölcs aloldal
+   ========================================================================== */
+
+.crumbs a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.crumbs a:hover {
+  color: var(--green);
+}
+
+.variety-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: clamp(24px, 3vw, 36px) clamp(16px, 2vw, 24px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.variety-card {
+  min-width: 0;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.variety-card h3 {
+  margin: 14px 0 4px;
+}
+
+.variety-card p {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.icon--back {
+  transform: scaleX(-1);
+}
+
+[data-fruit-page] .facts {
+  margin-top: 24px;
+}
+
+[data-fruit-page] .tip {
+  margin-top: 8px;
+}
