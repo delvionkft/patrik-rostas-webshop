@@ -625,8 +625,8 @@ function shopPlaceholder(title, hint, w = 1200, h = 900) {
 `;
 }
 
-writeFileSync(join(placeholderDir, 'uzlet-kirakat.svg'), shopPlaceholder('[ÜZLETFOTÓ HELYE]', 'Az üzlet bejárata vagy kirakata'));
-writeFileSync(join(placeholderDir, 'uzlet-pult.svg'), shopPlaceholder('[ÜZLETFOTÓ HELYE]', 'A gyümölcspult, ahogy a vásárló látja'));
-writeFileSync(join(placeholderDir, 'csapat.svg'), shopPlaceholder('[CSAPATFOTÓ HELYE]', 'Te és a csapat az üzletben'));
+writeFileSync(join(placeholderDir, 'uzlet-kirakat.svg'), shopPlaceholder('[FOTÓ HELYE]', 'A gyümölcsös vagy a szüret'));
+writeFileSync(join(placeholderDir, 'uzlet-pult.svg'), shopPlaceholder('[FOTÓ HELYE]', 'Válogatás vagy csomagolás'));
+writeFileSync(join(placeholderDir, 'csapat.svg'), shopPlaceholder('[CSAPATFOTÓ HELYE]', 'Te és a csapat munka közben'));
 
 console.log('Kész: nyitókép + 3 üzletfotó-helyőrző' + (process.argv.includes('--fruits') ? ' + gyümölcs-illusztrációk.' : '.'));

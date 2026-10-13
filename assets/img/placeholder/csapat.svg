@@ -9,5 +9,5 @@
 <circle cx="0" cy="26" r="36"/>
 </g>
 <text x="600" y="540" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34" font-weight="600" letter-spacing="3" fill="#ffffff">[CSAPATFOTÓ HELYE]</text>
-<text x="600" y="590" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="1" fill="#ffffff" fill-opacity="0.6">Te és a csapat az üzletben</text>
+<text x="600" y="590" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="1" fill="#ffffff" fill-opacity="0.6">Te és a csapat munka közben</text>
 </svg>

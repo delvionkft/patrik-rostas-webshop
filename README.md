@@ -8,7 +8,7 @@ Magyar nyelvű, statikus termékbemutató oldal egy gyümölcsárusító vállal
 | Termékeink | `termekeink.html` (kereső, kategóriaszűrő; a kártyára kattintva a gyümölcs aloldala nyílik meg) |
 | Gyümölcs aloldal | `gyumolcs.html#korte` (a gyümölcs összes fajtája képpel, leírás, idény, tárolási javaslat) |
 | Rólunk | `rolunk.html` |
-| Kapcsolat | `kapcsolat.html` (térkép, űrlap, egy érintéssel hívható telefonszám) |
+| Kapcsolat | `kapcsolat.html` (rendelés telefonon, e-mailben vagy űrlapon; egy érintéssel hívható telefonszám) |
 | Impresszum + adatkezelés | `jogi.html` |
 | 404 | `404.html` |
 
@@ -30,19 +30,16 @@ Minden hiányzó adat szögletes zárójelben szerepel. Ami kitöltetlen maradt,
 | Helyőrző | Mi kerüljön a helyére | Példa |
 | --- | --- | --- |
 | `[Vállalkozás neve]` | a vállalkozás neve | Rostás Gyümölcs |
-| `[Cím]` | teljes cím egy sorban (ebből készül a térkép is) | 1234 Település, Fő utca 1. |
-| `[Telefonszám]` | olvasható formában | +36 30 123 4567 |
-| `[Telefonszám-link]` | ugyanaz, **szóközök nélkül** (ez kell a hívható linkhez) | +36301234567 |
 | `[E-mail-cím]` | e-mail-cím | info@example.hu |
-| `[Nyitvatartás H–P]`, `[Nyitvatartás Szo]`, `[Nyitvatartás V]` | nyitvatartás napok szerint | 7:00–18:00 / Zárva |
+| `[Székhely címe]` és a többi impresszumadat | csak a `jogi.html` impresszumában (online értékesítésnél kötelező) | – |
 | `[Domain]` | a weboldal domainje, `https://` nélkül | rostasgyumolcs.hu |
-| `[Utca, házszám]`, `[Település]`, `[Irányítószám]`, `[Nyitvatartás schema.org formátumban…]` | csak a főoldal keresőknek szóló adatblokkjában (`index.html`, `application/ld+json`) | Mo-Fr 07:00-18:00, Sa 07:00-12:00 |
 | Rólunk-szövegek, képaláírások, impresszum, adatkezelési tájékoztató | valós tartalom | – |
 
-Tömeges csere (először a `-link` változatot cseréld, utána a sima telefonszámot):
+A telefonszám (06 30 627 5512) már be van írva. Cím és nyitvatartás nem szerepel az oldalon, mert a vásárlás online történik.
+
+Tömeges csere, például:
 
 ```bash
-sed -i 's/\[Telefonszám-link\]/+36301234567/g; s/\[Telefonszám\]/+36 30 123 4567/g' *.html
 sed -i 's/\[Vállalkozás neve\]/Rostás Gyümölcs/g' *.html
 ```
 
@@ -50,12 +47,12 @@ Utána keresd meg, mi maradt: `grep -o '\[[^]]*\]' *.html | sort | uniq -c`
 
 ### 2. Fotók
 
-Jelenleg **helyőrző illusztrációk** vannak az oldalon (jobb alsó sarkukban „Helyőrző illusztráció” felirat), mert valódi fotó nem állt rendelkezésre. Stockfotót ne használj üzletfotónak: idegen bolt képe a megbízhatóságot rombolja, nem építi.
+Jelenleg **helyőrző illusztrációk** vannak az oldalon (jobb alsó sarkukban „Helyőrző illusztráció” felirat), mert valódi fotó nem állt rendelkezésre. Stockfotót ne használj a bemutatkozó képekhez: idegen gyümölcsös vagy csapat képe a megbízhatóságot rombolja, nem építi.
 
 | Kép | Hol van | Javasolt méret |
 | --- | --- | --- |
 | Nyitókép (hero) | `index.html`, `assets/img/placeholder/hero.svg` | 1500×1800 px (álló, 4:5), lehetőleg a saját pultotok |
-| Üzletfotók (3 db) | `rolunk.html`, `index.html`, `assets/img/placeholder/*.svg` | 1600×1200 px (4:3) |
+| Fotók rólatok (3 db: gyümölcsös, válogatás/csomagolás, csapat) | `rolunk.html`, `index.html`, `assets/img/placeholder/*.svg` | 1600×1200 px (4:3) |
 | Termékfotók | `assets/js/products.js` → `image` mező | 1200×900 px (4:3). A dizájn sötét, stúdiófényes háttérre épül: egységes sötét háttér előtt, oldalfénnyel fotózd a gyümölcsöt |
 | Megosztási kép | `assets/img/og-image.png` | 1200×630 px |
 
@@ -82,10 +79,6 @@ Alapból az űrlap a látogató levelezőprogramját nyitja meg kitöltött lev�
 
 A `jogi.html` impresszuma és adatkezelési tájékoztatója helyőrző. Az űrlap személyes adatot gyűjt, ezért a tájékoztató nem hagyható ki. Érdemes szakemberrel összeállíttatni.
 
-## Térkép
-
-A Google Térkép csak akkor töltődik be, ha a látogató rákattint, mert a Google sütiket helyez el. Amíg a `[Cím]` nincs kitöltve, a gomb le van tiltva. A beágyazás nem igényel API-kulcsot.
-
 ## Szerkezet
 
 ```
@@ -93,7 +86,7 @@ assets/
   css/style.css         – minden stílus, színek a :root változókban
   js/products.js        – a kínálat adatai
   js/shop.js            – termékkártyák, kereső, szűrők, részletek ablak, idénynaptár
-  js/main.js            – menü, térkép, űrlap, helyőrző-kiemelés
+  js/main.js            – menü, űrlap, helyőrző-kiemelés
   fonts/                – Archivo (változtatható szélesség) + IBM Plex Mono, saját tárhelyről, OFL licenc; nincs Google Fonts hívás
   img/products/         – termékfotók (WebP, 4:3)
   img/placeholder/      – nyitókép- és üzletfotó-helyőrzők

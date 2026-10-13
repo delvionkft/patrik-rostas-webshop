@@ -8,6 +8,6 @@
 <path d="M-84 -34 h34 l16 -26 h68 l16 26 h34 v120 h-168z"/>
 <circle cx="0" cy="26" r="36"/>
 </g>
-<text x="600" y="540" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34" font-weight="600" letter-spacing="3" fill="#ffffff">[ÜZLETFOTÓ HELYE]</text>
-<text x="600" y="590" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="1" fill="#ffffff" fill-opacity="0.6">Az üzlet bejárata vagy kirakata</text>
+<text x="600" y="540" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34" font-weight="600" letter-spacing="3" fill="#ffffff">[FOTÓ HELYE]</text>
+<text x="600" y="590" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="1" fill="#ffffff" fill-opacity="0.6">A gyümölcsös vagy a szüret</text>
 </svg>
