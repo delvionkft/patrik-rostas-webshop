@@ -55,14 +55,14 @@ Jelenleg **helyőrző illusztrációk** vannak az oldalon (jobb alsó sarkukban 
 | --- | --- | --- |
 | Nyitókép (hero) | `index.html`, `assets/img/placeholder/hero.svg` | 1500×1800 px (álló, 4:5), lehetőleg a saját pultotok |
 | Üzletfotók (3 db) | `rolunk.html`, `index.html`, `assets/img/placeholder/*.svg` | 1600×1200 px (4:3) |
-| Termékfotók (21 db) | `assets/js/products.js` → `image` mező | 1200×900 px (4:3). A dizájn sötét, stúdiófényes háttérre épül: egységes sötét háttér előtt, oldalfénnyel fotózd a gyümölcsöt |
+| Termékfotók | `assets/js/products.js` → `image` mező | 1200×900 px (4:3). A dizájn sötét, stúdiófényes háttérre épül: egységes sötét háttér előtt, oldalfénnyel fotózd a gyümölcsöt |
 | Megosztási kép | `assets/img/og-image.png` | 1200×630 px |
 
 Fotócsere után **az `alt` szöveget is írd át**, hogy azt írja le, ami a képen valóban látszik. A fotókat WebP vagy JPG formátumban, kb. 80%-os minőséggel töltsd fel (egy termékfotó legfeljebb ~150 KB legyen).
 
 ### 3. Kínálat (`assets/js/products.js`)
 
-Az egész oldal ebből az egy fájlból dolgozik: Termékeink, valamint a főoldali „Kiemelt gyümölcsök” blokk és az idénynaptár. A 21 gyümölcs **mintalista**, a valós kínálathoz kell igazítani. A mezők leírása a fájl elején van. A fontosabb szabályok:
+Az egész oldal ebből az egy fájlból dolgozik: Termékeink, valamint a főoldali „Kiemelt gyümölcsök” blokk és az idénynaptár. A gyümölcslista **mintalista**, a valós kínálathoz kell igazítani. A mezők leírása a fájl elején van. A fontosabb szabályok:
 
 - **Ár** csak akkor jelenik meg, ha `price`, `unit` és `priceDate` is ki van töltve, és a dátum legfeljebb 30 napos (`PRICE_MAX_AGE_DAYS`). Az elavult ár így magától eltűnik, és nem kerülhet ki rossz ár.
 - **Fajta, származás** csak kitöltve jelenik meg. Ne írj be olyat, amit nem tudsz biztosan (pl. „hazai”, „bio”, „termelőtől”).
