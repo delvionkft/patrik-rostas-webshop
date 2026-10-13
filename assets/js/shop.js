@@ -526,9 +526,21 @@
       var d = function (k) {
         return dialog.querySelector('[data-v="' + k + '"]');
       };
-      d('media').innerHTML = v.image
-        ? '<img src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '" width="800" height="600">'
+      // Kis felbontású képet nem nagyítunk a végtelenségig: legfeljebb 1,25×,
+      // a maradék helyet ugyanannak a képnek elmosott változata tölti ki.
+      var media = d('media');
+      media.innerHTML = v.image
+        ? '<div class="variety-media__bg" aria-hidden="true" style="background-image:url(\'' + esc(v.image) + '\')"></div>' +
+          '<img class="variety-media__img" src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '">'
         : '<div class="noimg" aria-hidden="true"><strong>' + esc(v.name) + '</strong><span>Fotó hamarosan</span></div>';
+      var mimg = media.querySelector('.variety-media__img');
+      if (mimg) {
+        var fit = function () {
+          if (mimg.naturalWidth) mimg.style.maxWidth = Math.round(mimg.naturalWidth * 1.25) + 'px';
+        };
+        if (mimg.complete) fit();
+        else mimg.addEventListener('load', fit);
+      }
       d('fruit').textContent = v.kind || p.name;
       d('name').textContent = v.name;
       d('intro').textContent = v.intro || '';
@@ -544,8 +556,9 @@
       document.body.classList.add('is-locked');
       var inner = dialog.querySelector('.dialog-inner');
       if (inner) inner.scrollTop = 0;
-      var content = dialog.querySelector('.dialog-content');
-      if (content) content.scrollTop = 0;
+      Array.prototype.forEach.call(dialog.querySelectorAll('.dialog-content, .dialog-body'), function (el) {
+        el.scrollTop = 0;
+      });
     }
     if (dialog) {
       dialog.querySelector('.dialog-close').addEventListener('click', function () {
