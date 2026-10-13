@@ -416,6 +416,7 @@
       document.title = p.name + ' – ' + siteName;
       q('crumb').textContent = p.name;
       q('name').textContent = p.name;
+      q('name').style.setProperty('--len', String(Math.max(p.name.length, 4)));
       q('tags').innerHTML = tagsHtml(p);
       q('desc').textContent = p.long || p.short;
 
@@ -479,7 +480,7 @@
             '<li class="variety-card" id="fajta-' + slug(v.name) + '">' +
             '<div class="product-card__media">' + media + '</div>' +
             '<h3>' + esc(v.name) + '</h3>' +
-            '<p>' + esc(p.name) + '</p>' +
+            '<p>' + esc(v.kind || p.name) + '</p>' +
             '</li>'
           );
         })

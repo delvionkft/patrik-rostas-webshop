@@ -10,7 +10,7 @@
  *   keywords   – (opcionális) további keresőszavak, pl. népies nevek: ['szamoca']
  *   short      – 1–2 mondat a kártyára
  *   long       – részletesebb leírás a felugró ablakba
- *   varieties  – a gyümölcs fajtái: [{ name, image, alt }]. A gyümölcs aloldalán (gyumolcs.html#id)
+ *   varieties  – a gyümölcs fajtái: [{ name, image, alt, kind? }]. A kind (pl. 'nektarin') a kártyán a gyümölcs neve helyett jelenik meg. A gyümölcs aloldalán (gyumolcs.html#id)
  *                mindegyik saját képpel jelenik meg; image: null esetén „Fotó hamarosan” mező.
  *   origin     – származás (pl. "Szabolcs-Szatmár-Bereg"); null, ha nincs adat → nem jelenik meg
  *   price      – ár forintban (szám), null, ha nincs adat
@@ -185,8 +185,29 @@ window.PRODUCTS = [
     category: 'egyeb',
     short: 'Bársonyos héjú, édes és lédús nyári gyümölcs.',
     long: 'Az érett őszibarack illatos, lédús és édes. Magában, gyümölcssalátában, pitében vagy grillezve is kiváló. Az érett gyümölcs enyhe nyomásra kissé enged.',
+    hero: ['Champion', 'Venus', 'Fairlane', 'Caldesi 2000'],
     varieties: [
       { name: 'Dixired', image: 'assets/img/products/oszibarack.webp', alt: 'Érett, pirosas Dixired őszibarackok a fán' },
+      { name: 'Alirosada', image: 'assets/img/varieties/oszibarack-alirosada.webp', alt: 'Alirosada őszibarackok az ágon' },
+      { name: 'Amsden', image: 'assets/img/varieties/oszibarack-amsden.webp', alt: 'Amsden őszibarackok az ágon' },
+      { name: 'Andosa', image: 'assets/img/varieties/oszibarack-andosa.webp', alt: 'Andosa nektarinok az ágon', kind: 'nektarin' },
+      { name: 'Benedicte', image: 'assets/img/varieties/oszibarack-benedicte.webp', alt: 'Benedicte őszibarackok az ágon' },
+      { name: 'Caldesi 2000', image: 'assets/img/varieties/oszibarack-caldesi-2000.webp', alt: 'Caldesi 2000 nektarinok az ágon', kind: 'nektarin' },
+      { name: 'Champion', image: 'assets/img/varieties/oszibarack-champion.webp', alt: 'Champion őszibarackok az ágon' },
+      { name: 'Cresthaven', image: 'assets/img/varieties/oszibarack-cresthaven.webp', alt: 'Cresthaven őszibarackok az ágon' },
+      { name: 'Crimson', image: 'assets/img/varieties/oszibarack-crimson.webp', alt: 'Crimson őszibarackok az ágon' },
+      { name: 'Fairlane', image: 'assets/img/varieties/oszibarack-fairlane.webp', alt: 'Fairlane őszibarackok az ágon' },
+      { name: 'Fantasia', image: 'assets/img/varieties/oszibarack-fantasia.webp', alt: 'Fantasia nektarinok az ágon', kind: 'nektarin' },
+      { name: 'Ford', image: 'assets/img/varieties/oszibarack-ford.webp', alt: 'Ford őszibarackok az ágon' },
+      { name: 'Incrocio Pieri', image: 'assets/img/varieties/oszibarack-incrocio-pieri.webp', alt: 'Incrocio Pieri őszibarackok az ágon' },
+      { name: 'Maria Bianca', image: 'assets/img/varieties/oszibarack-maria-bianca.webp', alt: 'Maria Bianca őszibarackok az ágon' },
+      { name: 'Mariska', image: 'assets/img/varieties/oszibarack-mariska.webp', alt: 'Mariska őszibarackok az ágon' },
+      { name: 'Michelini', image: 'assets/img/varieties/oszibarack-michelini.webp', alt: 'Michelini őszibarackok az ágon' },
+      { name: 'Redhaven', image: 'assets/img/varieties/oszibarack-redhaven.webp', alt: 'Redhaven őszibarackok az ágon' },
+      { name: 'Remény', image: 'assets/img/varieties/oszibarack-remeny.webp', alt: 'Remény őszibarackok az ágon' },
+      { name: 'Royal Summer', image: 'assets/img/varieties/oszibarack-royal-summer.webp', alt: 'Royal Summer őszibarackok az ágon' },
+      { name: 'Venus', image: 'assets/img/varieties/oszibarack-venus.webp', alt: 'Venus nektarinok az ágon', kind: 'nektarin' },
+      { name: 'White Lady (Zaidy)', image: 'assets/img/varieties/oszibarack-white-lady-zaidy.webp', alt: 'White Lady (Zaidy) őszibarackok az ágon' },
     ],
     origin: null,
     price: null,
@@ -195,8 +216,8 @@ window.PRODUCTS = [
     season: [7, 8],
     isNew: false,
     featured: true,
-    image: 'assets/img/products/oszibarack.webp',
-    alt: 'Érett, pirosas Dixired őszibarackok a fán',
+    image: 'assets/img/varieties/oszibarack-champion.webp',
+    alt: 'Érett, sárgáspiros Champion őszibarackok az ágon',
     storage: 'Szobahőmérsékleten érik be. Az érett gyümölcsöt hűtőben tárold, és 1–2 napon belül fogyaszd el.',
   },
   {

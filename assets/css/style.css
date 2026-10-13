@@ -2514,6 +2514,7 @@ mark.ph {
 }
 
 .fruit-hero__text {
+  container-type: inline-size;
   display: grid;
   gap: 22px;
   align-content: center;
@@ -2537,8 +2538,11 @@ mark.ph {
   margin: 0;
   color: var(--on-studio);
   font-size: clamp(3.4rem, 1.6rem + 8vw, 9.5rem);
+  /* a név hosszához igazítva, hogy mindig beférjen az oszlopba */
+  font-size: min(clamp(2.4rem, 1.6rem + 8vw, 9.5rem), calc(100cqi / (var(--len, 6) * 0.58)));
   font-stretch: 62%;
   line-height: 0.82;
+  overflow-wrap: anywhere;
   letter-spacing: -0.02em;
 }
 
