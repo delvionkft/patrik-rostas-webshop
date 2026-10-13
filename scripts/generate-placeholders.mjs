@@ -45,7 +45,7 @@ function place(x, y, s, rot, body) {
 }
 
 function shadow(x, y, rx, ry) {
-  return `<ellipse cx="${f(x)}" cy="${f(y)}" rx="${f(rx)}" ry="${f(ry)}" fill="#3b2f1e" opacity="0.13" filter="url(#soft)"/>`;
+  return `<ellipse cx="${f(x)}" cy="${f(y)}" rx="${f(rx)}" ry="${f(ry)}" fill="#000" opacity="0.6" filter="url(#soft)"/>`;
 }
 
 function leaf(defs, x, y, s, rot, c1 = '#8CC56B', c2 = '#3F7D3A') {
@@ -62,7 +62,7 @@ function leaf(defs, x, y, s, rot, c1 = '#8CC56B', c2 = '#3F7D3A') {
 }
 
 function highlight(x, y, rx, ry, rot = -25, o = 0.35) {
-  return `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${x} ${y})" fill="#fff" opacity="${o}"/>`;
+  return `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${x} ${y})" fill="#fff" opacity="${f(o * 0.7)}"/>`;
 }
 
 const fruits = {
@@ -333,20 +333,37 @@ const fruits = {
   },
 };
 
+// Sötét, stúdiófényes háttér: a gyümölcs színe kerül előtérbe, mint egy termékfotón.
+function mix(hex, base, t) {
+  const a = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
+  const b = base.match(/\w\w/g).map((x) => parseInt(x, 16));
+  return '#' + a.map((v, i) => Math.round(b[i] + (v - b[i]) * t).toString(16).padStart(2, '0')).join('');
+}
+
 function frame({ w = 800, h = 600, bg = ['#FBF7EF', '#F3EADB'], label = true, zoom = 1, body, defs }) {
+  const top = mix(bg[1].slice(1), '17201b', 0.1);
+  const floor = mix(bg[1].slice(1), '1d2620', 0.14);
+  const horizon = Math.round(h * 0.6);
   const labelSvg = label
-    ? `<g transform="translate(${w - 24} ${h - 22})"><rect x="-178" y="-22" width="178" height="30" rx="15" fill="#fff" opacity="0.8"/><text x="-89" y="-2" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#6b6457">Helyőrző illusztráció</text></g>`
+    ? `<text x="${w - 22}" y="${h - 20}" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" letter-spacing="2" fill="#ffffff" fill-opacity="0.42">HELYŐRZŐ ILLUSZTRÁCIÓ</text>`
     : '';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img">
 <defs>
-${linear('bg', [[0, bg[0]], [1, bg[1]]])}
-<radialGradient id="glow" cx="50%" cy="38%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity="0.75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="9"/></filter>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="#0d120f"/></linearGradient>
+<linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${floor}"/><stop offset="1" stop-color="#101612"/></linearGradient>
+<radialGradient id="spot" cx="46%" cy="34%" r="62%"><stop offset="0" stop-color="#fff6df" stop-opacity="0.2"/><stop offset="0.55" stop-color="#fff6df" stop-opacity="0.05"/><stop offset="1" stop-color="#fff6df" stop-opacity="0"/></radialGradient>
+<radialGradient id="vig" cx="50%" cy="45%" r="75%"><stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.55"/></radialGradient>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0"/></filter>
 ${defs.join('\n')}
 </defs>
 <rect width="${w}" height="${h}" fill="url(#bg)"/>
-<rect width="${w}" height="${h}" fill="url(#glow)"/>
+<rect y="${horizon}" width="${w}" height="${h - horizon}" fill="url(#floor)"/>
+<rect y="${horizon - 1}" width="${w}" height="2" fill="#ffffff" opacity="0.04"/>
+<rect width="${w}" height="${h}" fill="url(#spot)"/>
 <g transform="translate(${w / 2} ${h / 2}) scale(${zoom}) translate(${-w / 2} ${-h / 2})">${body}</g>
+<rect width="${w}" height="${h}" fill="url(#vig)"/>
+<rect width="${w}" height="${h}" filter="url(#grain)" opacity="0.07"/>
 ${labelSvg}
 </svg>
 `;
@@ -589,22 +606,25 @@ for (const [name, scene] of Object.entries(scenes)) {
 
 // Üzletfotó-helyőrző: egyértelműen jelzi, hogy ide valódi fotó kell.
 function shopPlaceholder(title, hint, w = 1200, h = 900) {
+  const font = 'font-family="ui-monospace, SFMono-Regular, Menlo, monospace"';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img">
-<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7F4EC"/><stop offset="1" stop-color="#EDE7DA"/></linearGradient></defs>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b241f"/><stop offset="1" stop-color="#0f1411"/></linearGradient>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0"/></filter></defs>
 <rect width="${w}" height="${h}" fill="url(#bg)"/>
-<rect x="28" y="28" width="${w - 56}" height="${h - 56}" rx="22" fill="none" stroke="#B9B09E" stroke-width="3" stroke-dasharray="14 12"/>
-<g transform="translate(${w / 2} ${h / 2 - 70})" fill="none" stroke="#3E7A4C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-<path d="M-80 -30 h30 l18 -28 h64 l18 28 h30 a14 14 0 0 1 14 14 v98 a14 14 0 0 1 -14 14 h-160 a14 14 0 0 1 -14 -14 v-98 a14 14 0 0 1 14 -14z"/>
-<circle cx="0" cy="34" r="38"/>
+<rect width="${w}" height="${h}" filter="url(#grain)" opacity="0.06"/>
+<rect x="36" y="36" width="${w - 72}" height="${h - 72}" fill="none" stroke="#ffffff" stroke-opacity="0.28" stroke-width="2" stroke-dasharray="12 10"/>
+<g transform="translate(${w / 2} ${h / 2 - 80})" fill="none" stroke="#ffffff" stroke-opacity="0.85" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter">
+<path d="M-84 -34 h34 l16 -26 h68 l16 26 h34 v120 h-168z"/>
+<circle cx="0" cy="26" r="36"/>
 </g>
-<text x="${w / 2}" y="${h / 2 + 80}" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="44" font-weight="600" fill="#2C3A2E">${title}</text>
-<text x="${w / 2}" y="${h / 2 + 130}" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="26" fill="#6B6457">${hint}</text>
+<text x="${w / 2}" y="${h / 2 + 90}" text-anchor="middle" ${font} font-size="34" font-weight="600" letter-spacing="3" fill="#ffffff">${title}</text>
+<text x="${w / 2}" y="${h / 2 + 140}" text-anchor="middle" ${font} font-size="22" letter-spacing="1" fill="#ffffff" fill-opacity="0.6">${hint}</text>
 </svg>
 `;
 }
 
-writeFileSync(join(placeholderDir, 'uzlet-kirakat.svg'), shopPlaceholder('[Üzletfotó helye]', 'Az üzlet bejárata vagy kirakata'));
-writeFileSync(join(placeholderDir, 'uzlet-pult.svg'), shopPlaceholder('[Üzletfotó helye]', 'A gyümölcspult, ahogy a vásárló látja'));
-writeFileSync(join(placeholderDir, 'csapat.svg'), shopPlaceholder('[Csapatfotó helye]', 'Te és a csapat az üzletben'));
+writeFileSync(join(placeholderDir, 'uzlet-kirakat.svg'), shopPlaceholder('[ÜZLETFOTÓ HELYE]', 'Az üzlet bejárata vagy kirakata'));
+writeFileSync(join(placeholderDir, 'uzlet-pult.svg'), shopPlaceholder('[ÜZLETFOTÓ HELYE]', 'A gyümölcspult, ahogy a vásárló látja'));
+writeFileSync(join(placeholderDir, 'csapat.svg'), shopPlaceholder('[CSAPATFOTÓ HELYE]', 'Te és a csapat az üzletben'));
 
 console.log(`Kész: ${Object.keys(scenes).length} gyümölcs-illusztráció + nyitókép + 3 üzletfotó-helyőrző.`);

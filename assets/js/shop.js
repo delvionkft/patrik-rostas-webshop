@@ -11,6 +11,8 @@
     'július', 'augusztus', 'szeptember', 'október', 'november', 'december',
   ];
 
+  var MONTHS_SHORT = ['jan', 'feb', 'márc', 'ápr', 'máj', 'jún', 'júl', 'aug', 'szept', 'okt', 'nov', 'dec'];
+
   var now = new Date();
   var currentMonth = now.getMonth() + 1;
 
@@ -41,7 +43,8 @@
   }
 
   // Összefüggő hónapsávok szövegesen, évhatáron átnyúlva is (pl. „november–március”).
-  function seasonText(p) {
+  function seasonText(p, short) {
+    var names = short ? MONTHS_SHORT : MONTHS;
     var months = Array.isArray(p.season) ? p.season.slice() : [];
     if (!months.length || months.length >= 12) return '';
     var has = function (m) {
@@ -63,7 +66,7 @@
         if (has(prev(m))) return;
         var end = m;
         while (has(next(end)) && next(end) !== m) end = next(end);
-        ranges.push(m === end ? MONTHS[m - 1] : MONTHS[m - 1] + '–' + MONTHS[end - 1]);
+        ranges.push(m === end ? names[m - 1] : names[m - 1] + '–' + names[end - 1]);
       });
     return ranges.join(', ');
   }
@@ -114,8 +117,10 @@
       '<p class="product-card__text">' + esc(p.short) + '</p>' +
       (meta ? '<dl class="product-card__meta">' + meta + '</dl>' : '') +
       '<div class="product-card__footer">' +
-      (price ? '<span class="price">' + esc(price.text) + ' <small>' + esc(price.unit) + '</small></span>' : '') +
-      '<span class="more" aria-hidden="true">Részletek ' + ARROW + '</span>' +
+      (price
+        ? '<span class="price">' + esc(price.text) + ' <small>' + esc(price.unit) + '</small></span>'
+        : '<span>' + esc(seasonText(p, true) ? 'Idény: ' + seasonText(p, true) : categoryLabel(p.category)) + '</span>') +
+      '<span class="more" aria-hidden="true">' + ARROW + '</span>' +
       '</div>' +
       '</div>' +
       '</article>'
@@ -150,20 +155,50 @@
   }
 
   function renderSeason() {
-    var list = document.querySelector('[data-season-list]');
-    if (!list) return;
     var label = document.querySelector('[data-season-label]');
     if (label) label.textContent = seasonName(currentMonth) + ' · ' + MONTHS[currentMonth - 1];
 
-    var items = PRODUCTS.filter(inSeason).slice(0, 6);
-    if (!items.length) return;
-    list.innerHTML = items
+    var list = document.querySelector('[data-season-list]');
+    if (list) {
+      var items = PRODUCTS.filter(inSeason).slice(0, 6);
+      if (items.length) {
+        list.innerHTML = items
+          .map(function (p) {
+            return (
+              '<li><a href="termekeink.html#' + encodeURIComponent(p.id) + '">' +
+              '<strong>' + esc(p.name) + '</strong><span>' + esc(seasonText(p, true)) + '</span>' +
+              '</a></li>'
+            );
+          })
+          .join('');
+      }
+    }
+
+    // Idénynaptár: hónaponként, az aktuális hónap kiemelve.
+    var body = document.querySelector('[data-season-calendar]');
+    if (!body) return;
+    var table = body.closest('table');
+    var heads = table ? table.querySelectorAll('thead th[data-month]') : [];
+    Array.prototype.forEach.call(heads, function (th) {
+      if (Number(th.getAttribute('data-month')) === currentMonth) th.classList.add('is-now');
+    });
+    var rows = PRODUCTS.filter(function (p) {
+      return Array.isArray(p.season) && p.season.length > 0 && p.season.length < 12;
+    });
+    body.innerHTML = rows
       .map(function (p) {
+        var cells = '';
+        for (var m = 1; m <= 12; m++) {
+          var on = p.season.indexOf(m) !== -1;
+          cells +=
+            '<td' + (m === currentMonth ? ' class="is-now"' : '') + '>' +
+            (on ? '<span class="cal-bar"></span><span class="visually-hidden">' + MONTHS[m - 1] + ': idény</span>' : '') +
+            '</td>';
+        }
         return (
-          '<li><a class="season-item" href="termekeink.html#' + encodeURIComponent(p.id) + '">' +
-          '<img src="' + esc(p.image) + '" alt="" width="800" height="600" loading="lazy" decoding="async">' +
-          '<div><strong>' + esc(p.name) + '</strong><span>Jellemző idény: ' + esc(seasonText(p)) + '</span></div>' +
-          '</a></li>'
+          '<tr><th scope="row"><a href="termekeink.html#' + encodeURIComponent(p.id) + '">' + esc(p.name) + '</a></th>' +
+          cells +
+          '</tr>'
         );
       })
       .join('');
