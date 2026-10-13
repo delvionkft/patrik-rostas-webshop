@@ -65,6 +65,8 @@ Fotócsere után **az `alt` szöveget is írd át**, hogy azt írja le, ami a k�
 Az egész oldal ebből az egy fájlból dolgozik: Termékeink, valamint a főoldali „Kiemelt gyümölcsök” blokk és az idénynaptár. A gyümölcslista **mintalista**, a valós kínálathoz kell igazítani. A mezők leírása a fájl elején van. A fontosabb szabályok:
 
 - **Ár** csak akkor jelenik meg, ha `price`, `unit` és `priceDate` is ki van töltve, és a dátum legfeljebb 30 napos (`PRICE_MAX_AGE_DAYS`). Az elavult ár így magától eltűnik, és nem kerülhet ki rossz ár.
+- **Saját fotó nélküli termék:** `image: null`, ilyenkor semleges „Fotó hamarosan” mező jelenik meg. Stock- vagy idegen fotót ne tegyél be.
+- **Üres kategória** szűrőgombja automatikusan elrejtődik.
 - **Fajta, származás** csak kitöltve jelenik meg. Ne írj be olyat, amit nem tudsz biztosan (pl. „hazai”, „bio”, „termelőtől”).
 - **„Szezonális” címke** automatikusan jelenik meg, ha az aktuális hónap benne van a `season` listában. A főoldali idénynaptár is ebből a mezőből rajzolódik, az aktuális hónap kiemelésével.
 - **„Új a kínálatban”**: `isNew: true`.
@@ -91,9 +93,9 @@ assets/
   js/shop.js            – termékkártyák, kereső, szűrők, részletek ablak, idénynaptár
   js/main.js            – menü, térkép, űrlap, helyőrző-kiemelés
   fonts/                – Archivo (változtatható szélesség) + IBM Plex Mono, saját tárhelyről, OFL licenc; nincs Google Fonts hívás
-  img/fruits/           – termék-helyőrzők (SVG)
+  img/products/         – termékfotók (WebP, 4:3)
   img/placeholder/      – nyitókép- és üzletfotó-helyőrzők
-scripts/generate-placeholders.mjs – a helyőrző illusztrációk generátora (node scripts/generate-placeholders.mjs)
+scripts/generate-placeholders.mjs – a nyitókép- és üzletfotó-helyőrzők generátora (node scripts/generate-placeholders.mjs)
 ```
 
 A fejléc és a lábléc minden HTML-fájlban szerepel, egy menüpont módosítását mind a hat fájlban el kell végezni.

@@ -109,7 +109,9 @@
     return (
       '<article class="product-card">' +
       '<div class="product-card__media">' +
-      '<img src="' + esc(p.image) + '" alt="' + esc(p.alt) + '" width="800" height="600" loading="lazy" decoding="async">' +
+      (p.image
+        ? '<img src="' + esc(p.image) + '" alt="' + esc(p.alt) + '" width="800" height="600" loading="lazy" decoding="async">'
+        : '<div class="noimg" aria-hidden="true"><strong>' + esc(p.name) + '</strong><span>Fotó hamarosan</span></div>') +
       (tagsHtml(p) ? '<div class="product-card__tags">' + tagsHtml(p) + '</div>' : '') +
       '</div>' +
       '<div class="product-card__body">' +
@@ -275,6 +277,10 @@
         }).length;
         var c = chip.querySelector('.chip__count');
         if (c) c.textContent = String(n);
+        // Üres kategória (nincs ilyen termék a kínálatban) gombja ne látsszon.
+        chip.hidden = cat !== 'osszes' && !PRODUCTS.some(function (p) {
+          return p.category === cat;
+        });
       });
 
       grid.innerHTML = visible
@@ -377,8 +383,11 @@
     }
 
     function fill(p) {
-      img.src = p.image;
-      img.alt = p.alt;
+      dialog.classList.toggle('no-media', !p.image);
+      if (p.image) {
+        img.src = p.image;
+        img.alt = p.alt;
+      }
       tags.innerHTML = tagsHtml(p);
       title.textContent = p.name;
       desc.textContent = p.long || p.short;

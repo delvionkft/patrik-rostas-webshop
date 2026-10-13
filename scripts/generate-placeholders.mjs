@@ -569,7 +569,9 @@ const scenes = {
   },
 };
 
-for (const [name, scene] of Object.entries(scenes)) {
+// A termékekhez saját fotók tartoznak; gyümölcs-illusztrációt csak kérésre generálunk:
+// node scripts/generate-placeholders.mjs --fruits
+for (const [name, scene] of process.argv.includes('--fruits') ? Object.entries(scenes) : []) {
   uid = 0;
   const defs = [];
   const body = compose(scene.items, defs);
@@ -627,4 +629,4 @@ writeFileSync(join(placeholderDir, 'uzlet-kirakat.svg'), shopPlaceholder('[ÜZLE
 writeFileSync(join(placeholderDir, 'uzlet-pult.svg'), shopPlaceholder('[ÜZLETFOTÓ HELYE]', 'A gyümölcspult, ahogy a vásárló látja'));
 writeFileSync(join(placeholderDir, 'csapat.svg'), shopPlaceholder('[CSAPATFOTÓ HELYE]', 'Te és a csapat az üzletben'));
 
-console.log(`Kész: ${Object.keys(scenes).length} gyümölcs-illusztráció + nyitókép + 3 üzletfotó-helyőrző.`);
+console.log('Kész: nyitókép + 3 üzletfotó-helyőrző' + (process.argv.includes('--fruits') ? ' + gyümölcs-illusztrációk.' : '.'));
