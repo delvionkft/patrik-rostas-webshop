@@ -121,6 +121,30 @@ window.PRODUCTS = [
     alt: 'Sárga birsalmák a fán, zöld levelek között',
     storage: 'Hűvös, száraz helyen több hétig is eláll. Erős illata átjárhatja a többi gyümölcsöt, ezért tartsd külön.',
   },
+  {
+    id: 'naspolya',
+    keywords: ['naspolya', 'lasponya'],
+    name: 'Naspolya',
+    category: 'almafele',
+    short: 'Különleges késő őszi gyümölcs, amely utóérés után válik édessé és krémessé.',
+    long: 'A naspolya szedéskor kemény és fanyar. Néhány hét pihentetés (utóérés) vagy az első fagyok után a húsa megbarnul, megpuhul, és édes, enyhén borízű, almaszószra emlékeztető ízt kap. Nyersen kikanalazva, lekvárnak, zselének vagy süteménybe is kiváló.',
+    origin: null,
+    price: null,
+    unit: null,
+    priceDate: null,
+    season: [10, 11],
+    isNew: false,
+    featured: false,
+    image: 'assets/img/varieties/naspolya-macrocarpa.webp',
+    alt: 'Érett, barna Macrocarpa naspolyák az ágon',
+    storage: 'Hűvös, szellős helyen, egy rétegben elterítve érleld, amíg a gyümölcs megbarnul és megpuhul. Az érett naspolyát néhány napon belül fogyaszd el vagy dolgozd fel.',
+    hero: ['Macrocarpa', 'Royal', 'Nottingham'],
+    varieties: [
+      { name: 'Macrocarpa', image: 'assets/img/varieties/naspolya-macrocarpa.webp', alt: 'Macrocarpa naspolyák az ágon, levelek között' },
+      { name: 'Nottingham', image: 'assets/img/varieties/naspolya-nottingham.webp', alt: 'Nottingham naspolyák az ágon, levelek között' },
+      { name: 'Royal', image: 'assets/img/varieties/naspolya-royal.webp', alt: 'Royal naspolyák az ágon, levelek között' },
+    ],
+  },
 
 
   // --- Egyéb gyümölcsök ---------------------------------------------------
