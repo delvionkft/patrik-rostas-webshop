@@ -139,6 +139,23 @@
     </noscript>
   </main>
 
+  <dialog class="product-dialog" id="variety-dialog" aria-labelledby="variety-title">
+    <div class="dialog-inner">
+      <div class="dialog-media" data-v="media"></div>
+      <div class="dialog-content">
+        <button class="dialog-close" type="button" aria-label="Bezárás"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+        <p class="label" data-v="fruit">Fajta</p>
+        <h2 id="variety-title" data-v="name">Fajta</h2>
+        <p class="dialog-desc" data-v="intro"></p>
+        <dl class="dialog-facts" data-v="facts"></dl>
+        <div class="btn-row">
+          <a class="btn btn--primary" data-v="inquire" href="kapcsolat.html#urlap">Érdeklődöm erről a fajtáról <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <p class="dialog-small">Az elérhetőség szezonálisan változhat. Az aktuális választékról érdeklődj nálunk.</p>
+      </div>
+    </div>
+  </dialog>
+
   <footer class="site-footer">
     <div class="container">
       <div class="footer-top">

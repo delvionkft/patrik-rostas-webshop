@@ -472,19 +472,26 @@
       q('count').textContent =
         list.length > 1 ? list.length + ' fajta, betűrendben.' : 'Jelenleg egy fajta szerepel a kínálatban.';
       q('varieties').innerHTML = list
-        .map(function (v) {
+        .map(function (v, i) {
           var media = v.image
             ? '<img src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '" width="800" height="600" loading="lazy" decoding="async">'
             : '<div class="noimg" aria-hidden="true"><strong>' + esc(v.name) + '</strong><span>Fotó hamarosan</span></div>';
+          var hasInfo = !!(v.intro || (v.facts && v.facts.length));
+          var title = hasInfo
+            ? '<button type="button" class="variety-card__link" data-variety="' + i + '" aria-haspopup="dialog">' + esc(v.name) + '</button>'
+            : esc(v.name);
           return (
-            '<li class="variety-card" id="fajta-' + slug(v.name) + '">' +
+            '<li class="variety-card' + (hasInfo ? ' has-info' : '') + '" id="fajta-' + slug(v.name) + '">' +
             '<div class="product-card__media">' + media + '</div>' +
-            '<h3>' + esc(v.name) + '</h3>' +
+            '<h3>' + title + '</h3>' +
             '<p>' + esc(v.kind || p.name) + '</p>' +
+            (v.intro ? '<div class="variety-card__intro">' + esc(v.intro) + '</div>' : '') +
+            (hasInfo ? '<span class="variety-card__more" aria-hidden="true">Fajtaleírás ' + ARROW + '</span>' : '') +
             '</li>'
           );
         })
         .join('');
+      current = { product: p, list: list };
 
       // Fajtamutató: gombok, amelyek a fajta kártyájához görgetnek
       // (a cím #-részét a gyümölcs azonosítója foglalja, ezért nem horgonylink).
@@ -505,6 +512,61 @@
       });
       window.scrollTo(0, 0);
     }
+
+    var current = null;
+
+    // Fajtaleírás felugró ablakban
+    var dialog = document.getElementById('variety-dialog');
+    var opener = null;
+    function openVariety(idx) {
+      if (!dialog || typeof dialog.showModal !== 'function' || !current) return;
+      var v = current.list[idx];
+      var p = current.product;
+      if (!v) return;
+      var d = function (k) {
+        return dialog.querySelector('[data-v="' + k + '"]');
+      };
+      d('media').innerHTML = v.image
+        ? '<img src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '" width="800" height="600">'
+        : '<div class="noimg" aria-hidden="true"><strong>' + esc(v.name) + '</strong><span>Fotó hamarosan</span></div>';
+      d('fruit').textContent = v.kind || p.name;
+      d('name').textContent = v.name;
+      d('intro').textContent = v.intro || '';
+      d('intro').hidden = !v.intro;
+      d('facts').innerHTML = (v.facts || [])
+        .map(function (r) {
+          return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>';
+        })
+        .join('');
+      d('inquire').href = 'kapcsolat.html?erdeklodes=' + encodeURIComponent(p.name + ' – ' + v.name) + '#urlap';
+      opener = document.activeElement;
+      dialog.showModal();
+      document.body.classList.add('is-locked');
+      var inner = dialog.querySelector('.dialog-inner');
+      if (inner) inner.scrollTop = 0;
+      var content = dialog.querySelector('.dialog-content');
+      if (content) content.scrollTop = 0;
+    }
+    if (dialog) {
+      dialog.querySelector('.dialog-close').addEventListener('click', function () {
+        dialog.close();
+      });
+      dialog.addEventListener('click', function (e) {
+        if (e.target === dialog) dialog.close();
+      });
+      dialog.addEventListener('close', function () {
+        document.body.classList.remove('is-locked');
+        if (opener && document.contains(opener)) opener.focus();
+        opener = null;
+      });
+    }
+    root.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-variety]');
+      if (btn) openVariety(Number(btn.getAttribute('data-variety')));
+    });
+    window.addEventListener('hashchange', function () {
+      if (dialog && dialog.open) dialog.close();
+    });
 
     var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
     root.addEventListener('click', function (e) {
