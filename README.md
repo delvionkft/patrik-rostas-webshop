@@ -50,7 +50,7 @@ Jelenleg **helyőrző illusztrációk** vannak az oldalon (jobb alsó sarkukban 
 
 | Kép | Hol van | Javasolt méret |
 | --- | --- | --- |
-| Nyitókép (hero) | `index.html`, `assets/img/hero/` (4 csempe: 1 nagy álló 4:5, 3 kisebb 4:3); jelenleg saját fajtafotókból | nagy: 1200×1500 px, kicsik: 1200×900 px |
+| Nyitókép (hero) | `index.html`, `assets/img/hero/oszibarack.webp` (a jobb szélig érő fotó; jelenleg egy fajtafotó) | legalább 1600×1200 px (fekvő), a téma a kép jobb oldalán legyen |
 | Fotók rólatok (3 db: gyümölcsös, válogatás/csomagolás, csapat) | `rolunk.html`, `index.html`, `assets/img/placeholder/*.svg` | 1600×1200 px (4:3) |
 | Termékfotók | `assets/js/products.js` → `image` mező | 1200×900 px (4:3). A dizájn sötét, stúdiófényes háttérre épül: egységes sötét háttér előtt, oldalfénnyel fotózd a gyümölcsöt |
 | Megosztási kép | `assets/img/og-image.jpg` (kész: logó + saját termékfotók) | 1200×630 px |
