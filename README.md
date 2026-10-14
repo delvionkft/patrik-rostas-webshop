@@ -29,18 +29,17 @@ Minden hiányzó adat szögletes zárójelben szerepel. Ami kitöltetlen maradt,
 
 | Helyőrző | Mi kerüljön a helyére | Példa |
 | --- | --- | --- |
-| `[Vállalkozás neve]` | a vállalkozás neve | Rostás Gyümölcs |
 | `[E-mail-cím]` | e-mail-cím | info@example.hu |
 | `[Székhely címe]` és a többi impresszumadat | csak a `jogi.html` impresszumában (online értékesítésnél kötelező) | – |
 | `[Domain]` | a weboldal domainje, `https://` nélkül | rostasgyumolcs.hu |
 | Rólunk-szövegek, képaláírások, impresszum, adatkezelési tájékoztató | valós tartalom | – |
 
-A telefonszám (06 30 627 5512) már be van írva. Cím és nyitvatartás nem szerepel az oldalon, mert a vásárlás online történik.
+A név (Csodakert), a logó és a telefonszám (06 30 627 5512) már be van írva. Cím és nyitvatartás nem szerepel az oldalon, mert a vásárlás online történik.
 
 Tömeges csere, például:
 
 ```bash
-sed -i 's/\[Vállalkozás neve\]/Rostás Gyümölcs/g' *.html
+sed -i 's/\[E-mail-cím\]/info@example.hu/g' *.html
 ```
 
 Utána keresd meg, mi maradt: `grep -o '\[[^]]*\]' *.html | sort | uniq -c`
@@ -54,7 +53,7 @@ Jelenleg **helyőrző illusztrációk** vannak az oldalon (jobb alsó sarkukban 
 | Nyitókép (hero) | `index.html`, `assets/img/placeholder/hero.svg` | 1500×1800 px (álló, 4:5), lehetőleg a saját pultotok |
 | Fotók rólatok (3 db: gyümölcsös, válogatás/csomagolás, csapat) | `rolunk.html`, `index.html`, `assets/img/placeholder/*.svg` | 1600×1200 px (4:3) |
 | Termékfotók | `assets/js/products.js` → `image` mező | 1200×900 px (4:3). A dizájn sötét, stúdiófényes háttérre épül: egységes sötét háttér előtt, oldalfénnyel fotózd a gyümölcsöt |
-| Megosztási kép | `assets/img/og-image.png` | 1200×630 px |
+| Megosztási kép | `assets/img/og-image.jpg` (kész: logó + saját termékfotók) | 1200×630 px |
 
 Fotócsere után **az `alt` szöveget is írd át**, hogy azt írja le, ami a képen valóban látszik. A fotókat WebP vagy JPG formátumban, kb. 80%-os minőséggel töltsd fel (egy termékfotó legfeljebb ~150 KB legyen).
 
@@ -89,7 +88,10 @@ assets/
   js/main.js            – menü, űrlap, helyőrző-kiemelés
   fonts/                – Archivo (változtatható szélesség) + IBM Plex Mono, saját tárhelyről, OFL licenc; nincs Google Fonts hívás
   img/products/         – termékfotók (WebP, 4:3)
+  img/logo.webp         – logó a fejlécben; logo-light.webp a sötét láblécben (fehér felirattal)
+  img/logo.png          – logó a keresőknek (JSON-LD); logo-eredeti.png a feltöltött, teljes felbontású eredeti
   img/placeholder/      – nyitókép- és üzletfotó-helyőrzők
+favicon.png, apple-touch-icon.png – böngészőikon a logó virágából
 scripts/generate-placeholders.mjs – a nyitókép- és üzletfotó-helyőrzők generátora (node scripts/generate-placeholders.mjs)
 ```
 

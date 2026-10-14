@@ -430,27 +430,14 @@ mark.ph {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
   margin-right: auto;
-  color: var(--ink);
-  font-family: var(--display);
-  font-stretch: 72%;
-  font-size: 1.45rem;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
   text-decoration: none;
 }
 
-.brand:hover {
-  color: var(--ink);
-}
-
-.brand-mark {
-  width: 38px;
-  height: 38px;
-  flex: none;
+.brand img {
+  display: block;
+  width: auto;
+  height: 54px;
 }
 
 .site-nav {
@@ -568,13 +555,8 @@ mark.ph {
     gap: 10px;
   }
 
-  .brand {
-    font-size: 1.2rem;
-  }
-
-  .brand-mark {
-    width: 34px;
-    height: 34px;
+  .brand img {
+    height: 42px;
   }
 
   .header-call {
@@ -2324,8 +2306,8 @@ mark.ph {
   color: var(--on-studio);
 }
 
-.site-footer .brand {
-  color: var(--on-studio);
+.site-footer .brand img {
+  height: 60px;
 }
 
 .footer-bottom {
