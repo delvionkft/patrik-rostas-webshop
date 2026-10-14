@@ -71,23 +71,28 @@
     return ranges.join(', ');
   }
 
-  // Ár csak akkor jelenik meg, ha teljes és friss (lásd products.js).
-  function priceInfo(p) {
-    if (typeof p.price !== 'number' || !(p.price > 0) || !p.unit || !p.priceDate) return null;
-    var date = new Date(p.priceDate + 'T00:00:00');
-    if (isNaN(date.getTime())) return null;
-    var age = (now - date) / 86400000;
-    if (age < -1 || age > MAX_AGE) return null;
+  // Ár csak akkor jelenik meg, ha ár és egység is meg van adva. Ha van priceDate (napi ár),
+  // akkor csak friss lehet; fix (listaárnál) a priceDate null. Lásd products.js.
+  // A fajta saját ára (v.price) felülírja a gyümölcsét.
+  function priceInfo(p, v) {
+    var price = v && typeof v.price === 'number' ? v.price : p.price;
+    var unit = (v && v.unit) || p.unit;
+    if (typeof price !== 'number' || !(price > 0) || !unit) return null;
+    if (p.priceDate) {
+      var date = new Date(p.priceDate + 'T00:00:00');
+      if (isNaN(date.getTime())) return null;
+      var age = (now - date) / 86400000;
+      if (age < -1 || age > MAX_AGE) return null;
+    }
     return {
-      text: new Intl.NumberFormat('hu-HU').format(p.price) + ' Ft',
-      unit: '/ ' + p.unit,
-      date: date.toLocaleDateString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric' }),
+      text: new Intl.NumberFormat('hu-HU').format(price) + ' Ft',
+      unit: '/ ' + unit,
     };
   }
 
   function tagsHtml(p) {
     var out = '';
-    if (inSeason(p)) out += '<span class="tag tag--seasonal">Szezonális</span>';
+    if (inSeason(p)) out += '<span class="tag tag--seasonal">Most érik</span>';
     if (p.isNew) out += '<span class="tag tag--new">Új a kínálatban</span>';
     return out;
   }
@@ -139,7 +144,7 @@
       '<div class="product-card__footer">' +
       (price
         ? '<span class="price">' + esc(price.text) + ' <small>' + esc(price.unit) + '</small></span>'
-        : '<span>' + esc(seasonText(p, true) ? 'Idény: ' + seasonText(p, true) : categoryLabel(p.category)) + '</span>') +
+        : '<span>' + esc(seasonText(p, true) ? 'Érés: ' + seasonText(p, true) : categoryLabel(p.category)) + '</span>') +
       '<span class="more" aria-hidden="true">' + ARROW + '</span>' +
       '</div>' +
       '</div>' +
@@ -163,7 +168,7 @@
     });
     if (!names.length) return;
     nowBox.querySelector('[data-hero-now-text]').textContent =
-      MONTHS_IN[currentMonth - 1] + ' idényben: ' + names.join(' · ');
+      MONTHS_IN[currentMonth - 1] + ' érik: ' + names.join(' · ');
     nowBox.hidden = false;
   }
 
@@ -211,8 +216,8 @@
             return Array.isArray(p.season) && p.season.length < 12 && p.season.indexOf(m) !== -1;
           });
           if (next.length) {
-            if (title) title.textContent = 'Következő idény';
-            if (intro) intro.textContent = MONTHS_IN[currentMonth - 1] + ' egyik gyümölcsnek sincs szedési ideje. A következő idény ' +
+            if (title) title.textContent = 'Következő érés';
+            if (intro) intro.textContent = MONTHS_IN[currentMonth - 1] + ' egyik gyümölcs sem érik. A legközelebbi szedés ' +
               MONTHS_IN[m - 1].toLowerCase() + ' kezdődik.';
             items = next;
             break;
@@ -460,7 +465,10 @@
 
       // Adatsáv: fajták száma, kategória, 12 hónapos idénysáv
       q('count-big').textContent = String(list.length);
-      q('category').textContent = categoryLabel(p.category);
+      var pr = priceInfo(p);
+      q('price-big').textContent = pr ? pr.text : '–';
+      q('price-unit').textContent = pr ? pr.unit : '';
+      q('price-text').textContent = pr ? pr.text : 'kérésre';
       var st = seasonText(p, true);
       q('season-text').textContent = st ? '· ' + st : '';
       var months = Array.isArray(p.season) ? p.season : [];
@@ -522,7 +530,7 @@
             '<li class="variety-card' + (hasInfo ? ' has-info' : '') + '" id="fajta-' + slug(v.name) + '">' +
             '<div class="product-card__media">' + media + '</div>' +
             '<h3>' + title + '</h3>' +
-            '<p>' + esc(v.kind || p.name) + '</p>' +
+            '<p>' + esc(v.kind || p.name) + (priceInfo(p, v) ? ' <span class="variety-card__price">' + esc(priceInfo(p, v).text) + '</span>' : '') + '</p>' +
             (v.intro ? '<div class="variety-card__intro">' + esc(v.intro) + '</div>' : '') +
             (hasInfo ? '<span class="variety-card__more" aria-hidden="true">Fajtaleírás ' + ARROW + '</span>' : '') +
             '</li>'
@@ -543,7 +551,6 @@
           : '';
       q('index').hidden = list.length <= 4;
 
-      q('storage').textContent = p.storage || 'Kérdezz bátran, szívesen adunk tanácsot a tároláshoz.';
       var inquire = 'kapcsolat.html?erdeklodes=' + encodeURIComponent(p.name) + '#urlap';
       Array.prototype.forEach.call(root.querySelectorAll('[data-f="inquire"]'), function (a) {
         a.href = inquire;
@@ -588,6 +595,9 @@
           return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>';
         })
         .join('');
+      var vp = priceInfo(p, v);
+      d('price').innerHTML = vp ? 'Ár: <strong>' + esc(vp.text) + '</strong> ' + esc(vp.unit) : '';
+      d('price').hidden = !vp;
       d('inquire').href = 'kapcsolat.html?erdeklodes=' + encodeURIComponent(p.name + ' – ' + v.name) + '#urlap';
       opener = document.activeElement;
       dialog.showModal();

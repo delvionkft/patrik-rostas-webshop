@@ -907,8 +907,8 @@ mark.ph {
 .hero h1 {
   margin: 0;
   color: var(--on-studio);
-  /* a leghosszabb sor („a mindennapokra.”) mindig beférjen */
-  font-size: min(6.2rem, 12.4cqi);
+  /* a leghosszabb sor („Gyümölcsfák”) mindig beférjen az oszlopba */
+  font-size: min(6.2rem, 16cqi);
   font-stretch: 64%;
   font-weight: 800;
   line-height: 1.02;
@@ -3273,4 +3273,53 @@ mark.ph {
   background: var(--sun-2);
   border-color: var(--sun-2);
   color: var(--studio);
+}
+
+/* Ár: fajtakártya, fajtaleírás, nyitó */
+.variety-card p {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.variety-card__price {
+  flex: none;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.dialog-price {
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.dialog-price strong {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  font-stretch: 80%;
+  font-weight: 800;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+.hero-price {
+  color: var(--on-studio);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* a „Ft” rövidítés ne legyen csupa nagybetű a kártya nagybetűs láblécében */
+.price {
+  text-transform: none;
+}
+
+.price small {
+  text-transform: uppercase;
 }

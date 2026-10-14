@@ -1,6 +1,6 @@
-# Gyümölcsárusító bemutatkozó weboldal
+# Csodakert – gyümölcsfa-csemeték weboldala
 
-Magyar nyelvű, statikus termékbemutató oldal egy gyümölcsárusító vállalkozásnak. Nincs kosár, nincs online fizetés, és nincs build-lépés: sima HTML, CSS és JavaScript, bármilyen statikus tárhelyen fut (Netlify, GitHub Pages, cPanel stb.).
+Magyar nyelvű, statikus termékbemutató oldal gyümölcsfa-csemetékhez. A képeken a fák termése látható. Nincs kosár, nincs online fizetés, és nincs build-lépés: sima HTML, CSS és JavaScript, bármilyen statikus tárhelyen fut (Netlify, GitHub Pages, cPanel stb.).
 
 | Oldal | Fájl |
 | --- | --- |
@@ -60,7 +60,7 @@ Fotócsere után **az `alt` szöveget is írd át**, hogy azt írja le, ami a k�
 
 Az egész oldal ebből az egy fájlból dolgozik: Termékeink, valamint a főoldali „Kiemelt gyümölcsök” blokk és az idénynaptár. A gyümölcslista **mintalista**, a valós kínálathoz kell igazítani. A mezők leírása a fájl elején van. A fontosabb szabályok:
 
-- **Ár** csak akkor jelenik meg, ha `price`, `unit` és `priceDate` is ki van töltve, és a dátum legfeljebb 30 napos (`PRICE_MAX_AGE_DAYS`). Az elavult ár így magától eltűnik, és nem kerülhet ki rossz ár.
+- **Ár:** minden csemete 3000 Ft (`price: 3000`, `unit: 'csemete'`, `priceDate: null`). Fix listaárnál a `priceDate` null, így az ár mindig látszik: a kártyán, a gyümölcs aloldalán, minden fajtakártyán és a fajtaleírásban. Egy fajta saját árat kaphat (`{ name, price: 3500, ... }`). Ha valaha időszakos árat adsz meg dátummal, az csak 30 napig látszik (`PRICE_MAX_AGE_DAYS`), utána magától eltűnik.
 - **Fajták:** a `varieties` listába kerül minden fajta névvel és képpel (`assets/img/varieties/`). Opcionálisan `intro` (rövid bemutatás) és `facts` (pl. érés, íz, porzás) is megadható: ilyenkor a fajtakártyára kattintva leírásablak nyílik. A gyümölcs aloldalán betűrendben jelennek meg, a kereső fajtanévre is talál.
 - **Saját fotó nélküli termék:** `image: null`, ilyenkor semleges „Fotó hamarosan” mező jelenik meg. Stock- vagy idegen fotót ne tegyél be.
 - **Üres kategória** szűrőgombja automatikusan elrejtődik.

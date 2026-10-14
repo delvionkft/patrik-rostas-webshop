@@ -15,22 +15,22 @@
  *                Ha van intro vagy facts, a fajtakártyára kattintva leírásablak nyílik. A kind (pl. 'nektarin') a kártyán a gyümölcs neve helyett jelenik meg. A gyümölcs aloldalán (gyumolcs.html#id)
  *                mindegyik saját képpel jelenik meg; image: null esetén „Fotó hamarosan” mező.
  *   origin     – származás (pl. "Szabolcs-Szatmár-Bereg"); null, ha nincs adat → nem jelenik meg
- *   price      – ár forintban (szám), null, ha nincs adat
- *   unit       – mértékegység (pl. "kg", "db", "doboz")
- *   priceDate  – az ár érvényességének napja "ÉÉÉÉ-HH-NN" formában.
- *                Az ár CSAK akkor jelenik meg, ha price, unit és priceDate is ki van töltve,
- *                és a priceDate legfeljebb PRICE_MAX_AGE_DAYS napos. Így elavult ár nem kerülhet ki.
- *   season     – a szedési idő hónapjai (1–12), a fajták leírásában megadott érési idők alapján.
+ *   price      – a csemete ára forintban (szám), null, ha nincs adat. Egy fajta saját árat kaphat: { name, price, ... }.
+ *   unit       – mire vonatkozik az ár (itt: "csemete")
+ *   priceDate  – null: fix listaár, mindig látszik.
+ *                Ha napi/időszakos árat adsz meg "ÉÉÉÉ-HH-NN" dátummal, az ár csak PRICE_MAX_AGE_DAYS napig látszik,
+ *                utána magától eltűnik, így elavult ár nem kerülhet ki.
+ *   season     – a termés szedési idejének hónapjai (1–12), a fajták leírásában megadott érési idők alapján.
  *                Csak forrással alátámasztott hónap kerüljön ide. Üres tömb = nincs adat, idény nem jelenik meg.
  *                Általános tájékoztatás, nem a termék származására vonatkozik.
- *                A „Szezonális” címke automatikusan megjelenik, ha az aktuális hónap benne van.
+ *                A „Most érik” címke automatikusan megjelenik, ha az aktuális hónap benne van.
  *   isNew      – true esetén „Új a kínálatban” címke jelenik meg
  *   featured   – true esetén a főoldali „Kiemelt gyümölcsök” között is szerepel (4 javasolt)
  *   hero       – (opcionális) az aloldal fejlécének fotómozaikja: legfeljebb 4 fajtanév; az első lesz a nagy kép.
  *                Ha nincs megadva, a borítókép és a fajták képei kerülnek bele.
  *   image, alt – a gyümölcs borítóképe a kártyán. Ha még nincs saját fotó: image: null (semleges „Fotó hamarosan” mező jelenik meg).
  *                Csak saját vagy engedéllyel használt fotót tegyél ide.
- *   storage    – tárolási javaslat (általános tudnivaló)
+ *   storage    – a termés tárolási javaslata (jelenleg nem jelenik meg az oldalon)
  */
 
 window.PRICE_MAX_AGE_DAYS = 30;
@@ -420,8 +420,8 @@ window.PRODUCTS = [
       },
     ],
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [7, 8, 9, 10],
     isNew: false,
@@ -710,8 +710,8 @@ window.PRODUCTS = [
       },
     ],
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [6, 7, 8, 9, 10],
     isNew: false,
@@ -836,8 +836,8 @@ window.PRODUCTS = [
       },
     ],
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [9, 10],
     isNew: false,
@@ -854,8 +854,8 @@ window.PRODUCTS = [
     short: 'Különleges késő őszi gyümölcs, amely utóérés után válik édessé és krémessé.',
     long: 'A naspolya szedéskor kemény és fanyar. Néhány hét pihentetés (utóérés) vagy az első fagyok után a húsa megbarnul, megpuhul, és édes, enyhén borízű, almaszószra emlékeztető ízt kap. Nyersen kikanalazva, lekvárnak, zselének vagy süteménybe is kiváló.',
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [10, 11],
     isNew: false,
@@ -1265,8 +1265,8 @@ window.PRODUCTS = [
       },
     ],
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [6, 7, 8, 9],
     isNew: false,
@@ -1715,8 +1715,8 @@ window.PRODUCTS = [
       },
     ],
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [6, 7, 8],
     isNew: false,
@@ -1735,8 +1735,8 @@ window.PRODUCTS = [
       { name: 'Debreceni muskotály', image: null, alt: '' },
     ],
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [],
     isNew: false,
@@ -2025,8 +2025,8 @@ window.PRODUCTS = [
       },
     ],
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [5, 6, 7],
     isNew: false,
@@ -2315,8 +2315,8 @@ window.PRODUCTS = [
       },
     ],
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [5, 6, 7],
     isNew: false,
@@ -2420,8 +2420,8 @@ window.PRODUCTS = [
       },
     ],
     origin: null,
-    price: null,
-    unit: null,
+    price: 3000,
+    unit: 'csemete',
     priceDate: null,
     season: [9, 10],
     isNew: false,
