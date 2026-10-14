@@ -99,6 +99,8 @@
 
   var ARROW =
     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CART_ICON =
+    '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9.5" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>';
 
   function slug(t) {
     return normalize(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -532,7 +534,11 @@
             '<h3>' + title + '</h3>' +
             '<p>' + esc(v.kind || p.name) + (priceInfo(p, v) ? ' <span class="variety-card__price">' + esc(priceInfo(p, v).text) + '</span>' : '') + '</p>' +
             (v.intro ? '<div class="variety-card__intro">' + esc(v.intro) + '</div>' : '') +
+            '<div class="variety-card__foot">' +
             (hasInfo ? '<span class="variety-card__more" aria-hidden="true">Fajtaleírás ' + ARROW + '</span>' : '') +
+            '<button type="button" class="add-btn" data-add-fruit="' + esc(p.id) + '" data-add-variety="' + esc(v.name) + '">' +
+            CART_ICON + '<span>Kosárba</span><span class="visually-hidden">: ' + esc(p.name + ' – ' + v.name) + '</span></button>' +
+            '</div>' +
             '</li>'
           );
         })
@@ -598,6 +604,8 @@
       var vp = priceInfo(p, v);
       d('price').innerHTML = vp ? 'Ár: <strong>' + esc(vp.text) + '</strong> ' + esc(vp.unit) : '';
       d('price').hidden = !vp;
+      d('add').setAttribute('data-add-fruit', p.id);
+      d('add').setAttribute('data-add-variety', v.name);
       d('inquire').href = 'kapcsolat.html?erdeklodes=' + encodeURIComponent(p.name + ' – ' + v.name) + '#urlap';
       opener = document.activeElement;
       dialog.showModal();
@@ -642,6 +650,17 @@
     window.addEventListener('hashchange', render);
     render();
   }
+
+  window.Shop = {
+    priceOf: function (p, v) {
+      var info = priceInfo(p, v);
+      if (!info) return null;
+      return v && typeof v.price === 'number' ? v.price : p.price;
+    },
+    unitOf: function (p, v) {
+      return (v && v.unit) || p.unit || '';
+    },
+  };
 
   function init() {
     initHero();

@@ -179,14 +179,122 @@
   }
 
   /* ---------------------------------------------------------------------
-     Kapcsolatfelvételi űrlap
+     Űrlapok közös része: mezőnkénti ellenőrzés, hibaüzenetek, állapotsor,
+     küldés űrlapkezelőre (data-endpoint) vagy levelezőprogrammal (data-mailto).
+     A kapcsolati és a rendelési űrlap is ezt használja.
+     --------------------------------------------------------------------- */
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var PHONE_RE = /^[+()\d\s\/-]{6,20}$/;
+
+  function bindForm(form, rules) {
+    var status = form.querySelector('.form-status');
+
+    function validateField(name) {
+      var el = form.elements[name];
+      var error = rules[name](el ? el.value : '', el);
+      var out = document.getElementById(name + '-error');
+      if (el && el.setAttribute) el.setAttribute('aria-invalid', error ? 'true' : 'false');
+      if (out) out.textContent = error;
+      return !error;
+    }
+
+    Object.keys(rules).forEach(function (name) {
+      var el = form.elements[name];
+      if (!el || !el.addEventListener) return;
+      el.addEventListener('blur', function () {
+        if (el.value || el.type === 'checkbox') validateField(name);
+      });
+      ['input', 'change'].forEach(function (type) {
+        el.addEventListener(type, function () {
+          if (el.getAttribute('aria-invalid') === 'true') validateField(name);
+        });
+      });
+    });
+
+    return {
+      validateField: validateField,
+      // Igaz, ha minden mező rendben van; különben az első hibás mezőre ugrik.
+      validateAll: function () {
+        var first = null;
+        Object.keys(rules).forEach(function (name) {
+          if (!validateField(name) && !first) first = form.elements[name] || document.getElementById(name + '-error');
+        });
+        if (first) {
+          if (first.focus && first.tagName !== 'SPAN') first.focus();
+          else if (first.scrollIntoView) first.scrollIntoView({ block: 'center' });
+        }
+        return !first;
+      },
+      isSpam: function () {
+        return !!(form.elements._gotcha && form.elements._gotcha.value);
+      },
+      setStatus: function (type, text) {
+        status.className = 'form-status' + (type ? ' is-' + type : '');
+        status.textContent = text;
+      },
+      endpoint: function () {
+        return (form.getAttribute('data-endpoint') || '').trim();
+      },
+      mailto: function (subject, body) {
+        var to = form.getAttribute('data-mailto') || '';
+        window.location.href =
+          'mailto:' + encodeURIComponent(to).replace(/%40/g, '@') +
+          '?subject=' + encodeURIComponent(subject) +
+          '&body=' + encodeURIComponent(body);
+        return to;
+      },
+      post: function (busyLabel) {
+        var submit = form.querySelector('[type="submit"]');
+        var label = submit.innerHTML;
+        submit.disabled = true;
+        submit.textContent = busyLabel || 'Küldés…';
+        return fetch(this.endpoint(), {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+          })
+          .finally(function () {
+            submit.disabled = false;
+            submit.innerHTML = label;
+          });
+      },
+    };
+  }
+
+  window.SiteForm = {
+    bind: bindForm,
+    rules: {
+      required: function (msg) {
+        return function (v) {
+          return v.trim() ? '' : msg;
+        };
+      },
+      email: function (v) {
+        if (!v.trim()) return 'Kérlek, add meg az e-mail-címed.';
+        return EMAIL_RE.test(v.trim()) ? '' : 'Ez nem tűnik érvényes e-mail-címnek.';
+      },
+      phone: function (required) {
+        return function (v) {
+          if (!v.trim()) return required ? 'Kérlek, add meg a telefonszámod.' : '';
+          return PHONE_RE.test(v.trim()) && v.replace(/\D/g, '').length >= 6 ? '' : 'Ellenőrizd a telefonszámot (pl. +36 30 123 4567).';
+        };
+      },
+      consent: function (v, el) {
+        return el && el.checked ? '' : 'Az elküldéshez fogadd el az adatkezelési tájékoztatót.';
+      },
+    },
+  };
+
+  /* ---------------------------------------------------------------------
+     Kapcsolatfelvételi űrlap (kérdés, érdeklődés)
      --------------------------------------------------------------------- */
   function initContactForm() {
     var form = document.getElementById('contact-form');
     if (!form) return;
 
-    var status = form.querySelector('.form-status');
-    var submit = form.querySelector('[type="submit"]');
     var message = form.elements.message;
 
     // Előtöltés a „Érdeklődöm” gombokról érkezve (kapcsolat.html?erdeklodes=...)
@@ -197,80 +305,34 @@
       message.value =
         topic === 'kinalat'
           ? 'Érdeklődnék az aktuális kínálatról: '
-          : 'Érdeklődnék a következő gyümölcs iránt: ' + topic + '. ';
+          : 'Érdeklődnék a következő iránt: ' + topic + '. ';
     }
 
-    var rules = {
-      name: function (v) {
-        return v.trim() ? '' : 'Kérlek, add meg a neved.';
-      },
+    var R = window.SiteForm.rules;
+    var f = bindForm(form, {
+      name: R.required('Kérlek, add meg a neved.'),
       email: function (v) {
-        if (!v.trim()) return 'Kérlek, add meg az e-mail-címed, hogy válaszolni tudjunk.';
-        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Ez nem tűnik érvényes e-mail-címnek.';
+        return v.trim() ? R.email(v) : 'Kérlek, add meg az e-mail-címed, hogy válaszolni tudjunk.';
       },
-      phone: function (v) {
-        if (!v.trim()) return '';
-        return /^[+()\d\s\/-]{6,20}$/.test(v.trim()) ? '' : 'Ellenőrizd a telefonszámot (pl. +36 30 123 4567).';
-      },
+      phone: R.phone(false),
       message: function (v) {
         return v.trim().length >= 5 ? '' : 'Írd meg röviden, miben segíthetünk.';
       },
-      consent: function (v, el) {
-        return el.checked ? '' : 'Az elküldéshez fogadd el az adatkezelési tájékoztatót.';
-      },
-    };
-
-    function validateField(el) {
-      var rule = rules[el.name];
-      if (!rule) return true;
-      var error = rule(el.value, el);
-      var out = document.getElementById(el.name + '-error');
-      el.setAttribute('aria-invalid', error ? 'true' : 'false');
-      if (out) out.textContent = error;
-      return !error;
-    }
-
-    Object.keys(rules).forEach(function (name) {
-      var el = form.elements[name];
-      if (!el) return;
-      el.addEventListener('blur', function () {
-        if (el.value || el.type === 'checkbox') validateField(el);
-      });
-      el.addEventListener('input', function () {
-        if (el.getAttribute('aria-invalid') === 'true') validateField(el);
-      });
-      el.addEventListener('change', function () {
-        if (el.getAttribute('aria-invalid') === 'true') validateField(el);
-      });
+      consent: R.consent,
     });
-
-    function setStatus(type, text) {
-      status.className = 'form-status' + (type ? ' is-' + type : '');
-      status.textContent = text;
-    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      setStatus('', '');
-
-      var firstInvalid = null;
-      Object.keys(rules).forEach(function (name) {
-        var el = form.elements[name];
-        if (el && !validateField(el) && !firstInvalid) firstInvalid = el;
-      });
-      if (firstInvalid) {
-        firstInvalid.focus();
-        return;
-      }
+      f.setStatus('', '');
+      if (!f.validateAll()) return;
 
       // Csapda a spamrobotoknak: ember nem tölti ki ezt a mezőt.
-      if (form.elements._gotcha && form.elements._gotcha.value) {
+      if (f.isSpam()) {
         form.reset();
-        setStatus('success', 'Köszönjük, megkaptuk az üzeneted!');
+        f.setStatus('success', 'Köszönjük, megkaptuk az üzeneted!');
         return;
       }
 
-      var endpoint = (form.getAttribute('data-endpoint') || '').trim();
       var data = {
         name: form.elements.name.value.trim(),
         email: form.elements.email.value.trim(),
@@ -278,54 +340,26 @@
         message: form.elements.message.value.trim(),
       };
 
-      if (!endpoint) {
+      if (!f.endpoint()) {
         // Nincs beállított űrlapkezelő: a látogató levelezőprogramját nyitjuk meg kitöltve.
-        var to = form.getAttribute('data-mailto') || '';
-        var body =
-          data.message +
-          '\n\n—\nNév: ' +
-          data.name +
-          '\nE-mail: ' +
-          data.email +
-          (data.phone ? '\nTelefon: ' + data.phone : '');
-        window.location.href =
-          'mailto:' +
-          encodeURIComponent(to).replace(/%40/g, '@') +
-          '?subject=' +
-          encodeURIComponent('Érdeklődés a weboldalról') +
-          '&body=' +
-          encodeURIComponent(body);
-        setStatus(
+        var to = f.mailto(
+          'Érdeklődés a weboldalról',
+          data.message + '\n\n—\nNév: ' + data.name + '\nE-mail: ' + data.email + (data.phone ? '\nTelefon: ' + data.phone : '')
+        );
+        f.setStatus(
           'success',
-          'Megnyitottuk a levelezőprogramodat a kitöltött üzenettel – már csak el kell küldened. Ha nem nyílt meg, írj nekünk közvetlenül: ' +
-            to
+          'Megnyitottuk a levelezőprogramodat a kitöltött üzenettel – már csak el kell küldened. Ha nem nyílt meg, írj nekünk közvetlenül: ' + to
         );
         return;
       }
 
-      submit.disabled = true;
-      var label = submit.textContent;
-      submit.textContent = 'Küldés…';
-
-      fetch(endpoint, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form),
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error('HTTP ' + res.status);
+      f.post()
+        .then(function () {
           form.reset();
-          setStatus('success', 'Köszönjük, megkaptuk az üzeneted! Hamarosan válaszolunk.');
+          f.setStatus('success', 'Köszönjük, megkaptuk az üzeneted! Hamarosan válaszolunk.');
         })
         .catch(function () {
-          setStatus(
-            'error',
-            'Az üzenetet nem sikerült elküldeni. Kérjük, próbáld újra, vagy hívj minket telefonon.'
-          );
-        })
-        .then(function () {
-          submit.disabled = false;
-          submit.textContent = label;
+          f.setStatus('error', 'Az üzenetet nem sikerült elküldeni. Kérjük, próbáld újra, vagy hívj minket telefonon.');
         });
     });
   }

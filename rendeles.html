@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rendelés – Csodakert</title>
+  <meta name="description" content="A kosaradban lévő gyümölcsfa-csemeték megrendelése. Online fizetés nincs, a részleteket a rendelés után egyeztetjük.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://[Domain]/rendeles.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="hu_HU">
+  <meta property="og:site_name" content="Csodakert">
+  <meta property="og:title" content="Rendelés – Csodakert">
+  <meta property="og:description" content="A kosaradban lévő gyümölcsfa-csemeték megrendelése. Online fizetés nincs, a részleteket a rendelés után egyeztetjük.">
+  <meta property="og:url" content="https://[Domain]/rendeles.html">
+  <meta property="og:image" content="https://[Domain]/assets/img/og-image.jpg">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#tartalom">Ugrás a tartalomra</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/img/logo.webp" alt="Csodakert – főoldal" width="429" height="132">
+      </a>
+      <a class="header-call" href="tel:+36306275512">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+        <span>06&nbsp;30&nbsp;627&nbsp;5512</span>
+      </a>
+      <a class="header-cart" href="rendeles.html" data-cart-open aria-haspopup="dialog" aria-label="Kosár">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9.5" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>
+        <span class="header-cart__label">Kosár</span>
+        <span class="header-cart__count" data-cart-count hidden>0</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menü megnyitása">
+        <svg class="icon icon--menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        <svg class="icon icon--close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Főmenü">
+        <ul>
+          <li><a href="index.html">Főoldal</a></li>
+          <li><a href="termekeink.html">Termékeink</a></li>
+          <li><a href="rolunk.html">Rólunk</a></li>
+          <li><a href="kapcsolat.html">Kapcsolat</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="tartalom">
+    <section class="page-hero">
+      <div class="container">
+        <p class="label">Rendelés</p>
+        <div class="page-hero__grid">
+          <h1>Rendelés</h1>
+          <p class="lead">Ellenőrizd a&nbsp;kosarad tartalmát, add meg az elérhetőségeidet, és küldd el a&nbsp;rendelést. Online fizetés nincs: a&nbsp;részleteket a&nbsp;rendelés után egyeztetjük veled.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="rendeles-cim">
+      <div class="container order-layout">
+        <div class="form-card">
+          <h2 class="visually-hidden" id="rendeles-cim">Rendelési űrlap</h2>
+          <!-- Űrlapkezelő: a data-endpoint attribútumba írd be pl. a Formspree-végpontot (rendelésnél erősen ajánlott).
+               Ha üres, a gomb a látogató levelezőprogramját nyitja meg a kitöltött rendeléssel (data-mailto címre). -->
+          <form class="form" id="order-form" data-endpoint="" data-mailto="kerteszet1993@gmail.com" novalidate>
+            <fieldset class="order-items">
+              <legend>Rendelt csemeték</legend>
+              <div data-order-list>
+                <p class="noscript">A kosár használatához JavaScript szükséges. Rendelj telefonon: <a href="tel:+36306275512">06&nbsp;30&nbsp;627&nbsp;5512</a>.</p>
+              </div>
+              <p class="order-total" data-cart-filled hidden><span>Összesen</span> <strong data-order-total>0 Ft</strong></p>
+              <span class="field-error" id="items-error" aria-live="polite"></span>
+            </fieldset>
+            <div class="form-row">
+              <div class="field">
+                <label for="order-name">Neved</label>
+                <input id="order-name" name="name" type="text" autocomplete="name" required aria-describedby="name-error">
+                <span class="field-error" id="name-error" aria-live="polite"></span>
+              </div>
+              <div class="field">
+                <label for="order-phone">Telefonszám</label>
+                <input id="order-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="phone-error">
+                <span class="field-error" id="phone-error" aria-live="polite"></span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="order-email">E-mail-címed</label>
+              <input id="order-email" name="email" type="email" autocomplete="email" required aria-describedby="email-error">
+              <span class="field-error" id="email-error" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="order-note">Megjegyzés <span class="optional">(nem kötelező)</span></label>
+              <textarea id="order-note" name="note" rows="4"></textarea>
+            </div>
+            <div class="hp" aria-hidden="true">
+              <label for="order-gotcha">Ezt a mezőt hagyd üresen</label>
+              <input id="order-gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" name="rendeles" value="">
+            <input type="hidden" name="_subject" value="Rendelés a weboldalról">
+            <div class="field">
+              <label class="check">
+                <input id="order-consent" type="checkbox" name="consent" required aria-describedby="consent-error">
+                <span>Elolvastam és elfogadom az <a href="jogi.html#adatkezeles" target="_blank">adatkezelési tájékoztatót</a>.</span>
+              </label>
+              <span class="field-error" id="consent-error" aria-live="polite"></span>
+            </div>
+            <div class="form-status" role="status" aria-live="polite"></div>
+            <div>
+              <button class="btn btn--primary" type="submit">Rendelés elküldése <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+            </div>
+          </form>
+        </div>
+        <aside class="order-aside" aria-labelledby="menete-cim">
+          <h2 id="menete-cim">Így működik</h2>
+          <ol class="steps">
+            <li><strong>Válaszd ki a&nbsp;fajtákat.</strong> A&nbsp;gyümölcs oldalán a&nbsp;„Kosárba” gombbal.</li>
+            <li><strong>Küldd el a&nbsp;rendelést.</strong> Itt, a&nbsp;neveddel, telefonszámoddal és e-mail-címeddel.</li>
+            <li><strong>Felvesszük veled a&nbsp;kapcsolatot,</strong> és egyeztetjük a&nbsp;részleteket. Online fizetés nincs.</li>
+          </ol>
+          <p class="muted">Csak kérdésed van? <a href="kapcsolat.html#urlap">Írj nekünk a&nbsp;Kapcsolat oldalon</a>, vagy hívj: <a href="tel:+36306275512">06&nbsp;30&nbsp;627&nbsp;5512</a>.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <p>Gyümölcsfák a&nbsp;kertedbe.</p>
+        <a class="btn btn--light" href="tel:+36306275512"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg> 06&nbsp;30&nbsp;627&nbsp;5512</a>
+      </div>
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html">
+            <img src="assets/img/logo-light.webp" alt="Csodakert – főoldal" width="429" height="132">
+          </a>
+        </div>
+        <div>
+          <h2>Oldalak</h2>
+          <ul>
+            <li><a href="index.html">Főoldal</a></li>
+            <li><a href="termekeink.html">Termékeink</a></li>
+            <li><a href="rolunk.html">Rólunk</a></li>
+            <li><a href="kapcsolat.html">Kapcsolat</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Elérhetőség</h2>
+          <ul>
+            <li><a href="tel:+36306275512">06&nbsp;30&nbsp;627&nbsp;5512</a></li>
+            <li><a href="mailto:kerteszet1993@gmail.com">kerteszet1993@gmail.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Rendelés</h2>
+          <p><a href="rendeles.html">Kosár és rendelés</a></p>
+          <p><a href="kapcsolat.html#urlap">Kérdés küldése</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span data-year>2026</span> Csodakert</p>
+        <p><a href="jogi.html#impresszum">Impresszum</a> · <a href="jogi.html#adatkezeles">Adatkezelési tájékoztató</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="cart-dialog" id="cart-dialog" aria-labelledby="cart-title">
+    <div class="cart-panel">
+      <div class="cart-head">
+        <h2 id="cart-title">Kosár</h2>
+        <button class="dialog-close" type="button" data-cart-close aria-label="Kosár bezárása"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="cart-body" data-cart-list></div>
+      <div class="cart-foot" data-cart-filled hidden>
+        <p class="cart-total"><span>Összesen</span> <strong data-cart-total>0 Ft</strong></p>
+        <p class="cart-note">Online fizetés nincs. A&nbsp;rendelés elküldése után felvesszük veled a&nbsp;kapcsolatot.</p>
+        <a class="btn btn--sun" href="rendeles.html">Tovább a rendeléshez <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+        <button class="btn btn--secondary" type="button" data-cart-close>Vásárlás folytatása</button>
+      </div>
+    </div>
+  </dialog>
+  <div class="toast" data-cart-toast role="status" aria-live="polite"></div>
+
+  <script src="assets/js/products.js" defer></script>
+  <script src="assets/js/shop.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/cart.js" defer></script>
+</body>
+</html>

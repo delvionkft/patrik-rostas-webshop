@@ -1,6 +1,6 @@
 # Csodakert – gyümölcsfa-csemeték weboldala
 
-Magyar nyelvű, statikus termékbemutató oldal gyümölcsfa-csemetékhez. A képeken a fák termése látható. Nincs kosár, nincs online fizetés, és nincs build-lépés: sima HTML, CSS és JavaScript, bármilyen statikus tárhelyen fut (Netlify, GitHub Pages, cPanel stb.).
+Magyar nyelvű, statikus termékbemutató oldal gyümölcsfa-csemetékhez. A képeken a fák termése látható. Van kosár és rendelési űrlap, de nincs online fizetés, és nincs build-lépés: sima HTML, CSS és JavaScript, bármilyen statikus tárhelyen fut (Netlify, GitHub Pages, cPanel stb.).
 
 | Oldal | Fájl |
 | --- | --- |
@@ -8,7 +8,8 @@ Magyar nyelvű, statikus termékbemutató oldal gyümölcsfa-csemetékhez. A ké
 | Termékeink | `termekeink.html` (kereső, kategóriaszűrő; a kártyára kattintva a gyümölcs aloldala nyílik meg) |
 | Gyümölcs aloldal | `gyumolcs.html#korte` (a gyümölcs összes fajtája képpel, leírás, idény, tárolási javaslat) |
 | Rólunk | `rolunk.html` |
-| Kapcsolat | `kapcsolat.html` (rendelés telefonon, e-mailben vagy űrlapon; egy érintéssel hívható telefonszám) |
+| Kapcsolat | `kapcsolat.html` (kérdések: telefon, e-mail, kérdező űrlap) |
+| Rendelés | `rendeles.html` (a kosár tartalma kitöltve + név, telefonszám, e-mail; online fizetés nincs) |
 | Impresszum + adatkezelés | `jogi.html` |
 | 404 | `404.html` |
 
@@ -69,11 +70,20 @@ Az egész oldal ebből az egy fájlból dolgozik: Termékeink, valamint a főold
 - **„Új a kínálatban”**: `isNew: true`.
 - **Kiemelt a főoldalon**: `featured: true` (4 darab javasolt).
 
-### 4. Kapcsolatfelvételi űrlap
+### 4. Kosár és rendelés
+
+- **Kosárba tétel:** minden fajtakártyán és a fajtaleírás-ablakban „Kosárba” gomb. A fejlécben a kosár gomb mutatja a darabszámot; rákattintva oldalt nyílik a kosár (mennyiség +/−, beírható 1–999, törlés, összesen).
+- **Tovább a rendeléshez** → `rendeles.html`: a tételek és mennyiségek kitöltve (itt is módosíthatók), kötelező a név, a telefonszám, az e-mail-cím és az adatkezelési hozzájárulás; a megjegyzés nem kötelező. Üres kosárral nem küldhető.
+- A kosár a látogató böngészőjében marad (localStorage), oldalváltáskor és újratöltéskor is megmarad. Ha a böngésző tárolója tiltott (pl. privát mód), az oldalon belül akkor is működik.
+- **Küldés:** ugyanúgy, mint a kérdező űrlapnál: a `rendeles.html` `data-endpoint` attribútumába írt űrlapkezelőre (pl. Formspree), vagy ha az üres, a látogató levelezőprogramját nyitja meg a kitöltött rendeléssel. **Rendeléshez az űrlapkezelő erősen ajánlott:** a levelezőprogramos megoldásnál nem tudjuk, hogy a látogató végül elküldte-e a levelet, és sok telefonon nincs is beállított levelezőprogram. Sikeres küldés után a kosár kiürül; hiba esetén megmarad.
+- Az űrlapkezelő a rendelést a `rendeles` mezőben kapja szövegesen (pl. `3 × Körte – Kieffer (3000 Ft/csemete) = 9000 Ft`, a végén az összesen).
+- A kérdező űrlap a Kapcsolat oldalon változatlanul megmaradt.
+
+### 5. Kapcsolatfelvételi (kérdező) űrlap
 
 Alapból az űrlap a látogató levelezőprogramját nyitja meg kitöltött levéllel. Ez megbízhatatlan (sok telefonon nincs beállított levelezőprogram). **Élesítéshez állíts be űrlapkezelőt**, pl. [Formspree](https://formspree.io): a `kapcsolat.html` fájlban a `data-endpoint=""` attribútumba írd a kapott végpontot (`https://formspree.io/f/xxxx`). Az űrlapban van spamcsapda mező (`_gotcha`) és kötelező adatkezelési hozzájárulás.
 
-### 5. Jogi szövegek
+### 6. Jogi szövegek
 
 A `jogi.html` impresszuma és adatkezelési tájékoztatója helyőrző. Az űrlap személyes adatot gyűjt, ezért a tájékoztató nem hagyható ki. Érdemes szakemberrel összeállíttatni.
 
@@ -84,7 +94,8 @@ assets/
   css/style.css         – minden stílus, színek a :root változókban
   js/products.js        – a kínálat adatai
   js/shop.js            – termékkártyák, kereső, szűrők, részletek ablak, idénynaptár
-  js/main.js            – menü, űrlap, helyőrző-kiemelés
+  js/main.js            – menü, űrlapok közös része (ellenőrzés, küldés), helyőrző-kiemelés
+  js/cart.js            – kosár, kosárpanel, rendelési űrlap
   fonts/                – Archivo (változtatható szélesség) + IBM Plex Mono, saját tárhelyről, OFL licenc; nincs Google Fonts hívás
   img/products/         – termékfotók (WebP, 4:3)
   img/logo.webp         – logó a fejlécben; logo-light.webp a sötét láblécben (fehér felirattal)
