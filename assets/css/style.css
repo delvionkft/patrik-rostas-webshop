@@ -3858,3 +3858,171 @@ mark.ph {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Rólunk – „Kik vagyunk”: sötét sáv, balra a fotó a sötétbe olvadva
+   ========================================================================== */
+
+.about-band {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(560px, 70vh, 720px);
+  padding-block: clamp(64px, 8vw, 120px);
+  overflow: hidden;
+  background: var(--studio);
+  color: var(--on-studio);
+  isolation: isolate;
+}
+
+.about-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(40% 60% at 85% 20%, rgba(247, 162, 27, 0.16), transparent 70%),
+    radial-gradient(45% 60% at 100% 100%, rgba(31, 92, 54, 0.5), transparent 72%);
+  pointer-events: none;
+}
+
+.about-band__media {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 52%;
+  z-index: -2;
+}
+
+.about-band__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 40% 50%;
+}
+
+.about-band__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(270deg, var(--studio) 0%, rgba(18, 26, 21, 0.82) 22%, rgba(18, 26, 21, 0.2) 55%, rgba(18, 26, 21, 0) 80%),
+    linear-gradient(0deg, rgba(18, 26, 21, 0.5), rgba(18, 26, 21, 0) 40%);
+}
+
+.about-band__inner {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.about-band__text {
+  display: grid;
+  gap: 18px;
+  width: min(560px, 100%);
+}
+
+.about-band__text .label {
+  margin: 0;
+  color: var(--on-studio-2);
+}
+
+.about-band__text p {
+  margin: 0;
+  color: var(--on-studio-2);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.about-band__text .about-band__big {
+  color: var(--on-studio);
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 1.2rem + 2.4vw, 3.2rem);
+  font-stretch: 72%;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.about-band__big .accent {
+  color: var(--sun);
+  background: linear-gradient(95deg, var(--sun) 10%, var(--coral) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 10px 0 6px;
+  border-top: 1px solid var(--studio-rule);
+}
+
+.about-stats > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 4px;
+  padding: 16px 12px 0 0;
+}
+
+.about-stats > div + div {
+  padding-left: 16px;
+  border-left: 1px solid var(--studio-rule);
+}
+
+.about-stats dd {
+  margin: 0;
+  color: var(--on-studio);
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.6rem);
+  font-stretch: 70%;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.about-stats dt {
+  color: var(--on-studio-2);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .about-band {
+    display: block;
+    min-height: 0;
+    padding: 0 0 64px;
+  }
+
+  .about-band__media {
+    position: relative;
+    width: auto;
+    aspect-ratio: 4 / 3;
+    max-height: 56vh;
+  }
+
+  .about-band__media::after {
+    background: linear-gradient(180deg, rgba(18, 26, 21, 0) 40%, var(--studio) 100%);
+  }
+
+  .about-band__inner {
+    display: block;
+    margin-top: -48px;
+  }
+
+  .about-band__text {
+    width: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .about-stats > div + div {
+    padding-left: 10px;
+  }
+}

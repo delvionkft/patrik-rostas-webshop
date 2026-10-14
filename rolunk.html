@@ -80,16 +80,26 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="tortenet-cim">
-      <div class="container statement">
-        <div>
-          <h2 id="tortenet-cim" class="label label--plain">Kik vagyunk</h2>
-        </div>
+    <section class="about-band" aria-labelledby="tortenet-cim">
+      <div class="about-band__media">
+        <img src="assets/img/varieties/alma-idared.webp" alt="Idared alma az ágon" width="1195" height="896" loading="lazy">
+      </div>
+      <div class="container about-band__inner">
         <!-- Általános bemutatkozás. Ha lesz konkrét, valós információ (ki, mióta, honnan), ide kerüljön. Kitalált múlt, díj, minősítés vagy beszállító ne szerepeljen. -->
-        <div class="prose">
-          <p class="big">Úgy gondoljuk, a&nbsp;jó gyümölcsfához nem kell sokat keresgélni. Ezért a&nbsp;kínálatunkat fajtánként mutatjuk be, a&nbsp;termés képével együtt, hogy könnyen megtaláld, ami a&nbsp;kertedbe való.</p>
+        <div class="about-band__text">
+          <h2 id="tortenet-cim" class="label">Kik vagyunk</h2>
+          <p class="about-band__big">Úgy gondoljuk, a&nbsp;jó gyümölcsfához <span class="accent">nem kell sokat keresgélni.</span></p>
+          <p>Ezért a&nbsp;kínálatunkat fajtánként mutatjuk be, a&nbsp;termés képével együtt, hogy könnyen megtaláld, ami a&nbsp;kertedbe való.</p>
           <p>Egy almafa vagy egy barackfa sokféle lehet: van, amelyik korán érik, és van, amelyik késő ősszel; van, amelyik egyedül is terem, és van, amelyik mellé porzófajta kell. Ezért minden fajtánál leírjuk, amit tudni érdemes.</p>
-          <p>Ha nem tudod eldönteni, melyiket válaszd, kérdezz bátran telefonon vagy üzenetben. Szívesen segítünk.</p>
+          <dl class="about-stats">
+            <div><dt>gyümölcs</dt><dd data-stat="fruits">10</dd></div>
+            <div><dt>fajta</dt><dd data-stat="varieties">148</dd></div>
+            <div><dt>csemeténként</dt><dd>3000&nbsp;Ft</dd></div>
+          </dl>
+          <div class="btn-row">
+            <a class="btn btn--sun" href="termekeink.html">Megnézem a kínálatot <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn--light" href="kapcsolat.html#urlap">Kérdésem van</a>
+          </div>
         </div>
       </div>
     </section>
@@ -205,6 +215,8 @@
   </dialog>
   <div class="toast" data-cart-toast role="status" aria-live="polite"></div>
 
+  <script src="assets/js/products.js" defer></script>
+  <script src="assets/js/shop.js" defer></script>
   <script src="assets/js/main.js" defer></script>
   <script src="assets/js/cart.js" defer></script>
 </body>

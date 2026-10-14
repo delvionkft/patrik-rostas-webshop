@@ -662,8 +662,23 @@
     },
   };
 
+  // A kínálat számai (pl. Rólunk oldal): a build-időben beírt értéket a friss adatokra cseréljük.
+  function initStats() {
+    var total = 0;
+    PRODUCTS.forEach(function (p) {
+      total += (p.varieties || []).length;
+    });
+    var stats = { fruits: PRODUCTS.length, varieties: total };
+    Object.keys(stats).forEach(function (k) {
+      Array.prototype.forEach.call(document.querySelectorAll('[data-stat="' + k + '"]'), function (el) {
+        if (stats[k]) el.textContent = String(stats[k]);
+      });
+    });
+  }
+
   function init() {
     initHero();
+    initStats();
     renderFeatured();
     renderSeason();
     initCatalog();
