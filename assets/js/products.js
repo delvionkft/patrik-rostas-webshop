@@ -20,7 +20,8 @@
  *   priceDate  – az ár érvényességének napja "ÉÉÉÉ-HH-NN" formában.
  *                Az ár CSAK akkor jelenik meg, ha price, unit és priceDate is ki van töltve,
  *                és a priceDate legfeljebb PRICE_MAX_AGE_DAYS napos. Így elavult ár nem kerülhet ki.
- *   season     – a gyümölcs jellemző hazai idényének hónapjai (1–12). Üres tömb = nincs kifejezett idény.
+ *   season     – a szedési idő hónapjai (1–12), a fajták leírásában megadott érési idők alapján.
+ *                Csak forrással alátámasztott hónap kerüljön ide. Üres tömb = nincs adat, idény nem jelenik meg.
  *                Általános tájékoztatás, nem a termék származására vonatkozik.
  *                A „Szezonális” címke automatikusan megjelenik, ha az aktuális hónap benne van.
  *   isNew      – true esetén „Új a kínálatban” címke jelenik meg
@@ -422,7 +423,7 @@ window.PRODUCTS = [
     price: null,
     unit: null,
     priceDate: null,
-    season: [7, 8, 9, 10, 11],
+    season: [7, 8, 9, 10],
     isNew: false,
     featured: true,
     image: 'assets/img/products/alma.webp',
@@ -838,7 +839,7 @@ window.PRODUCTS = [
     price: null,
     unit: null,
     priceDate: null,
-    season: [9, 10, 11],
+    season: [9, 10],
     isNew: false,
     featured: false,
     image: 'assets/img/products/birs.webp',
@@ -856,7 +857,7 @@ window.PRODUCTS = [
     price: null,
     unit: null,
     priceDate: null,
-    season: [10, 11, 12],
+    season: [10, 11],
     isNew: false,
     featured: false,
     image: 'assets/img/varieties/naspolya-macrocarpa.webp',
@@ -1737,7 +1738,7 @@ window.PRODUCTS = [
     price: null,
     unit: null,
     priceDate: null,
-    season: [7, 8, 9],
+    season: [],
     isNew: false,
     featured: false,
     image: null,

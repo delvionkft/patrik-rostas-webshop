@@ -200,7 +200,25 @@
 
     var list = document.querySelector('[data-season-list]');
     if (list) {
-      var items = PRODUCTS.filter(inSeason).slice(0, 6);
+      var items = PRODUCTS.filter(inSeason);
+      if (!items.length) {
+        // Nincs szedési idő ebben a hónapban: a következő hónapot mutatjuk, amelyikben van.
+        var title = document.querySelector('[data-season-title]');
+        var intro = document.querySelector('[data-season-intro]');
+        for (var k = 1; k < 12; k++) {
+          var m = ((currentMonth - 1 + k) % 12) + 1;
+          var next = PRODUCTS.filter(function (p) {
+            return Array.isArray(p.season) && p.season.length < 12 && p.season.indexOf(m) !== -1;
+          });
+          if (next.length) {
+            if (title) title.textContent = 'Következő idény';
+            if (intro) intro.textContent = MONTHS_IN[currentMonth - 1] + ' egyik gyümölcsnek sincs szedési ideje. A következő idény ' +
+              MONTHS_IN[m - 1].toLowerCase() + ' kezdődik.';
+            items = next;
+            break;
+          }
+        }
+      }
       if (items.length) {
         list.innerHTML = items
           .map(function (p) {

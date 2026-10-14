@@ -29,17 +29,16 @@ Minden hiányzó adat szögletes zárójelben szerepel. Ami kitöltetlen maradt,
 
 | Helyőrző | Mi kerüljön a helyére | Példa |
 | --- | --- | --- |
-| `[E-mail-cím]` | e-mail-cím | info@example.hu |
 | `[Székhely címe]` és a többi impresszumadat | csak a `jogi.html` impresszumában (online értékesítésnél kötelező) | – |
 | `[Domain]` | a weboldal domainje, `https://` nélkül | rostasgyumolcs.hu |
 | Rólunk-szövegek, képaláírások, impresszum, adatkezelési tájékoztató | valós tartalom | – |
 
-A név (Csodakert), a logó és a telefonszám (06 30 627 5512) már be van írva. Cím és nyitvatartás nem szerepel az oldalon, mert a vásárlás online történik.
+A név (Csodakert), a logó, a telefonszám (06 30 627 5512) és az e-mail-cím (kerteszet1993@gmail.com) már be van írva. Cím és nyitvatartás nem szerepel az oldalon, mert a vásárlás online történik.
 
 Tömeges csere, például:
 
 ```bash
-sed -i 's/\[E-mail-cím\]/info@example.hu/g' *.html
+sed -i 's/\[Domain\]/csodakert.hu/g' *.html
 ```
 
 Utána keresd meg, mi maradt: `grep -o '\[[^]]*\]' *.html | sort | uniq -c`
@@ -66,7 +65,7 @@ Az egész oldal ebből az egy fájlból dolgozik: Termékeink, valamint a főold
 - **Saját fotó nélküli termék:** `image: null`, ilyenkor semleges „Fotó hamarosan” mező jelenik meg. Stock- vagy idegen fotót ne tegyél be.
 - **Üres kategória** szűrőgombja automatikusan elrejtődik.
 - **Fajta, származás** csak kitöltve jelenik meg. Ne írj be olyat, amit nem tudsz biztosan (pl. „hazai”, „bio”, „termelőtől”).
-- **„Szezonális” címke** automatikusan jelenik meg, ha az aktuális hónap benne van a `season` listában. A főoldali idénynaptár is ebből a mezőből rajzolódik, az aktuális hónap kiemelésével.
+- **Idény (`season`)**: a szedési idő hónapjai, kizárólag a fajták leírásában megadott érési idők alapján (pl. alma: a Fehér Klára júliustól a Fuji és a Pónyik októberig → július–október). Tárolt áru eladhatóságát nem jelöli. Ha nincs forrás, a lista üres (`[]`), és a gyümölcs nem jelenik meg az idénynaptárban. Ebből jelenik meg a „Szezonális” címke, a főoldali „Most van idénye” blokk és az idénynaptár. Ha egy hónapban semminek nincs szedési ideje, a blokk a következő idényt mutatja.
 - **„Új a kínálatban”**: `isNew: true`.
 - **Kiemelt a főoldalon**: `featured: true` (4 darab javasolt).
 
