@@ -148,6 +148,72 @@
   }
 
   /* ---------------------------------------------------------------------
+     Főoldal: nyitó (most idényben, számok, fajtaszalag)
+     --------------------------------------------------------------------- */
+  var MONTHS_IN = [
+    'Januárban', 'Februárban', 'Márciusban', 'Áprilisban', 'Májusban', 'Júniusban',
+    'Júliusban', 'Augusztusban', 'Szeptemberben', 'Októberben', 'Novemberben', 'Decemberben',
+  ];
+
+  function initHero() {
+    var nowBox = document.querySelector('[data-hero-now]');
+    if (nowBox) {
+      var names = PRODUCTS.filter(inSeason).map(function (p) {
+        return p.name;
+      });
+      if (names.length) {
+        nowBox.querySelector('[data-hero-now-text]').textContent =
+          MONTHS_IN[currentMonth - 1] + ' idényben: ' + names.join(' · ');
+        nowBox.hidden = false;
+      }
+    }
+
+    var months = {};
+    var total = 0;
+    PRODUCTS.forEach(function (p) {
+      total += (p.varieties || []).length;
+      (p.season || []).forEach(function (m) {
+        months[m] = true;
+      });
+    });
+    var stats = { fruits: PRODUCTS.length, varieties: total, months: Object.keys(months).length };
+    Object.keys(stats).forEach(function (k) {
+      var el = document.querySelector('[data-stat="' + k + '"]');
+      if (el && stats[k]) el.textContent = stats[k];
+    });
+
+    // Fajtaszalag: gyümölcsönként felváltva, a végtelen futáshoz kétszer egymás után.
+    var track = document.querySelector('[data-ticker]');
+    if (!track) return;
+    var lists = PRODUCTS.map(function (p) {
+      return (p.varieties || []).map(function (v) {
+        return v.name;
+      });
+    });
+    var out = [];
+    for (var i = 0; out.length < 60; i++) {
+      var any = false;
+      for (var j = 0; j < lists.length && out.length < 60; j++) {
+        if (i < lists[j].length) {
+          out.push(lists[j][i]);
+          any = true;
+        }
+      }
+      if (!any) break;
+    }
+    if (out.length) {
+      var html = out
+        .map(function (n) {
+          return '<span>' + esc(n) + '</span>';
+        })
+        .join('');
+      track.innerHTML = html + html;
+      track.style.setProperty('--ticker-dur', Math.max(40, out.length * 2.4) + 's');
+      track.classList.add('is-ready');
+    }
+  }
+
+  /* ---------------------------------------------------------------------
      Főoldal: kiemelt gyümölcsök
      --------------------------------------------------------------------- */
   function renderFeatured() {
@@ -596,6 +662,7 @@
   }
 
   function init() {
+    initHero();
     renderFeatured();
     renderSeason();
     initCatalog();

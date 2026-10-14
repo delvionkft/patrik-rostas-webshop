@@ -61,43 +61,45 @@
 
   <main id="tartalom">
     <section class="hero">
-      <div class="container">
-        <div class="hero-grid">
-          <div class="hero-text">
-            <div>
-              <p class="label">Gyümölcsárusítás</p>
-              <h1>Friss gyümölcsök <span class="accent">a&nbsp;mindennapokra.</span></h1>
-            </div>
-            <div>
-              <p class="lead">Szezonális gyümölcsök fajtánként válogatva. Böngészd a&nbsp;kínálatot, és rendelj egyszerűen telefonon vagy üzenetben.</p>
-              <div class="btn-row">
-                <a class="btn btn--primary" href="termekeink.html">Megnézem a kínálatot <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
-                <a class="btn btn--secondary" href="tel:+36306275512"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg> 06&nbsp;30&nbsp;627&nbsp;5512</a>
-              </div>
-            </div>
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <p class="hero-now" data-hero-now hidden><span class="hero-now__dot" aria-hidden="true"></span><span data-hero-now-text></span></p>
+          <h1>Friss gyümölcsök <span class="accent">a&nbsp;mindennapokra.</span></h1>
+          <p class="lead">Szezonális gyümölcsök fajtánként válogatva. Böngészd a&nbsp;kínálatot, és rendelj egyszerűen telefonon vagy üzenetben.</p>
+          <div class="btn-row">
+            <a class="btn btn--sun" href="termekeink.html">Megnézem a kínálatot <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn--light" href="tel:+36306275512"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg> 06&nbsp;30&nbsp;627&nbsp;5512</a>
           </div>
-          <figure class="hero-media">
-            <!-- CSERÉLD: nagy, minőségi gyümölcsfotó, lehetőleg saját (kb. 1500×1800 px, álló) -->
-            <img src="assets/img/placeholder/hero.svg" alt="Gyümölcsválogatás sötét háttér előtt: körte, alma, szőlő, narancs, barack, eper és áfonya" width="1200" height="1000" fetchpriority="high">
-            <figcaption>Az évszak gyümölcsei</figcaption>
-          </figure>
+          <dl class="hero-stats">
+            <div><dt>gyümölcs</dt><dd data-stat="fruits">10</dd></div>
+            <div><dt>fajta</dt><dd data-stat="varieties">148</dd></div>
+            <div><dt>hónap idény</dt><dd data-stat="months">8</dd></div>
+          </dl>
         </div>
-        <div class="info-strip">
-          <div>
-            <span class="label">Telefon</span>
-            <a href="tel:+36306275512">06&nbsp;30&nbsp;627&nbsp;5512</a>
-          </div>
-          <div>
-            <span class="label">E-mail</span>
-            <a href="mailto:[E-mail-cím]">[E-mail-cím]</a>
-          </div>
-          <div>
-            <span class="label">Rendelés</span>
-            <a href="kapcsolat.html#urlap">Telefonon vagy üzenetben</a>
-          </div>
+        <div class="hero-bento">
+          <a class="bento bento--big" href="gyumolcs.html#cseresznye">
+            <img src="assets/img/hero/cseresznye.webp" alt="" width="600" height="750" fetchpriority="high">
+            <span class="bento__tag">Cseresznye <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="bento" href="gyumolcs.html#sargabarack">
+            <img src="assets/img/hero/sargabarack.webp" alt="" width="640" height="480">
+            <span class="bento__tag">Kajszi <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="bento" href="gyumolcs.html#alma">
+            <img src="assets/img/hero/alma.webp" alt="" width="640" height="480">
+            <span class="bento__tag">Alma <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a class="bento" href="gyumolcs.html#korte">
+            <img src="assets/img/hero/korte.webp" alt="" width="640" height="480">
+            <span class="bento__tag">Körte <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+          </a>
         </div>
       </div>
     </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track" data-ticker><span>Jonagored</span><span>Alexander Lucas</span><span>Bereczki bőtermő</span><span>Macrocarpa</span><span>Dixired</span><span>Harcot</span><span>Debreceni muskotály</span><span>Katalin</span><span>Érdi nagygyümölcsű</span><span>Chandler</span><span>Fehér Klára</span><span>Arabitka</span><span>Aromatnaja</span><span>Nottingham</span><span>Alirosada</span><span>Bergeron</span><span>Aida</span><span>Achat</span><span>Alsószentiváni 117</span><span>Fuji</span><span>Avranchesi jó Lujza</span><span>Champion</span><span>Royal</span><span>Amsden</span><span>Ceglédi arany</span><span>Alex</span><span>Cigánymeggy 404</span><span>Fernette</span><span>Galarina</span><span>Árpával érő</span><span>Konstantinápolyi</span><span>Szentesi rózsa</span><span>Andosa</span><span>Ceglédi bájos</span><span>Badacsonyi óriás</span><span>Cigánymeggy 7</span><span>Milotai 10</span><span>Goldcats</span><span>Bosc kobak</span><span>Leskováci</span><span>Benedicte</span><span>Ceglédi bíborkajszi</span><span>Bigarreau Burlat</span><span>Csengődi</span><span>Pedro</span><span>Golden Delicious</span><span>Clapp kedveltje</span><span>Mezőtúri</span><span>Caldesi 2000</span><span>Ceglédi gömbölyű</span><span>Christiana</span><span>Debreceni bőtermő</span><span>Tiszacsécsi 83</span><span>Idared</span><span>Conference</span><span>Vranja</span><span>Champion</span><span>Ceglédi hajnalpír</span><span>Irena</span><span>Feketicsi</span></div>
+    </div>
 
     <section class="section" aria-labelledby="bemutatkozas-cim">
       <div class="container statement">
