@@ -100,6 +100,9 @@
 
   var ARROW =
     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  // MI-vel generált vagy illusztratív kép: a vásárló lássa, hogy nem fotó.
+  var AI_BADGE = '<span class="ai-badge">Illusztráció</span>';
+
   var CART_ICON =
     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h9.2a1 1 0 0 0 1-.8L20 8H6.2"/><circle cx="9.5" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>';
 
@@ -136,7 +139,7 @@
       '<article class="product-card">' +
       '<div class="product-card__media">' +
       (p.image
-        ? '<img src="' + esc(p.image) + '" alt="' + esc(p.alt) + '" width="800" height="600" loading="lazy" decoding="async">'
+        ? '<img src="' + esc(p.image) + '" alt="' + esc(p.alt) + '" width="800" height="600" loading="lazy" decoding="async">' + (p.imageAi ? AI_BADGE : '')
         : '<div class="noimg" aria-hidden="true"><strong>' + esc(p.name) + '</strong><span>Fotó hamarosan</span></div>') +
       (tagsHtml(p) ? '<div class="product-card__tags">' + tagsHtml(p) + '</div>' : '') +
       '</div>' +
@@ -503,14 +506,14 @@
       };
       (p.hero || []).forEach(function (name) {
         list.forEach(function (v) {
-          if (v.name === name) add(v.image, v.name, v.alt);
+          if (v.name === name) add(v.image, v.name + (v.ai ? ' · illusztráció' : ''), v.alt);
         });
       });
       list.forEach(function (v) {
-        if (v.image === p.image) add(v.image, v.name, v.alt);
+        if (v.image === p.image) add(v.image, v.name + (v.ai ? ' · illusztráció' : ''), v.alt);
       });
       list.forEach(function (v) {
-        add(v.image, v.name, v.alt);
+        add(v.image, v.name + (v.ai ? ' · illusztráció' : ''), v.alt);
       });
       var mosaic = q('mosaic');
       mosaic.className = 'mosaic mosaic--' + Math.max(pics.length, 1);
@@ -535,7 +538,7 @@
       q('varieties').innerHTML = list
         .map(function (v, i) {
           var media = v.image
-            ? '<img src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '" width="800" height="600" loading="lazy" decoding="async">'
+            ? '<img src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '" width="800" height="600" loading="lazy" decoding="async">' + (v.ai ? AI_BADGE : '')
             : '<div class="noimg" aria-hidden="true"><strong>' + esc(v.name) + '</strong><span>Fotó hamarosan</span></div>';
           var hasInfo = !!(v.intro || (v.facts && v.facts.length));
           var title = hasInfo
@@ -595,7 +598,7 @@
       var media = d('media');
       media.innerHTML = v.image
         ? '<div class="variety-media__bg" aria-hidden="true" style="background-image:url(\'' + esc(v.image) + '\')"></div>' +
-          '<img class="variety-media__img" src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '">'
+          '<img class="variety-media__img" src="' + esc(v.image) + '" alt="' + esc(v.alt || v.name) + '">' + (v.ai ? AI_BADGE : '')
         : '<div class="noimg" aria-hidden="true"><strong>' + esc(v.name) + '</strong><span>Fotó hamarosan</span></div>';
       var mimg = media.querySelector('.variety-media__img');
       if (mimg) {

@@ -28,6 +28,7 @@
  *   featured   – true esetén a főoldali „Kiemelt gyümölcsök” között is szerepel (4 javasolt)
  *   hero       – (opcionális) az aloldal fejlécének fotómozaikja: legfeljebb 4 fajtanév; az első lesz a nagy kép.
  *                Ha nincs megadva, a borítókép és a fajták képei kerülnek bele.
+ *   ai / imageAi – true, ha a fajta (ai) vagy a borító (imageAi) képe MI-vel generált vagy illusztráció: „Illusztráció” jelölést kap.
  *   image, alt – a gyümölcs borítóképe a kártyán. Ha még nincs saját fotó: image: null (semleges „Fotó hamarosan” mező jelenik meg).
  *                Csak saját vagy engedéllyel használt fotót tegyél ide.
  *   storage    – a termés tárolási javaslata (jelenleg nem jelenik meg az oldalon)
@@ -942,6 +943,7 @@ window.PRODUCTS = [
         name: 'Dixired',
         image: 'assets/img/products/oszibarack.webp',
         alt: 'Érett, pirosas Dixired őszibarackok a fán',
+        ai: true,
         intro: 'A Dixired őszibarack korai-középérésű, sárga húsú fajta.',
         facts: [
           ['Érés', 'júliusban'],
@@ -987,6 +989,7 @@ window.PRODUCTS = [
         name: 'Andosa',
         image: 'assets/img/varieties/oszibarack-andosa.webp',
         alt: 'Andosa nektarinok az ágon',
+        ai: true,
         kind: 'nektarin',
         intro: 'Az Andosa (Stark Red Gold) nektarin sárga húsú, bőtermő fajta.',
         facts: [
@@ -1185,6 +1188,7 @@ window.PRODUCTS = [
         name: 'Redhaven',
         image: 'assets/img/varieties/oszibarack-redhaven.webp',
         alt: 'Redhaven őszibarackok az ágon',
+        ai: true,
         intro: 'A Redhaven őszibarack világszerte elterjedt, sárga húsú fajta.',
         facts: [
           ['Érés', 'július végén, augusztus elején'],
@@ -1779,8 +1783,8 @@ window.PRODUCTS = [
       },
       {
         name: 'Debreceni muskotály',
-        image: null,
-        alt: '',
+        image: 'assets/img/varieties/szilva-debreceni-muskotaly.webp',
+        alt: 'Debreceni muskotály szilva az ágon',
         intro: 'A Debreceni muskotály régi magyar szilvafajta, jellegzetes muskotályos aromával.',
         facts: [
           ['Érés', 'szeptember közepétől, elhúzódóan'],
@@ -2036,6 +2040,7 @@ window.PRODUCTS = [
         name: 'Stanley',
         image: 'assets/img/varieties/szilva-stanley.webp',
         alt: 'Stanley szilva az ágon',
+        ai: true,
         intro: 'A Stanley bőtermő, öntermékeny, sokoldalúan felhasználható szilvafajta.',
         facts: [
           ['Érés', 'augusztus végén–szeptember elején'],
@@ -2146,6 +2151,7 @@ window.PRODUCTS = [
         name: 'Bigarreau Burlat',
         image: 'assets/img/varieties/cseresznye-bigarreau-burlat.webp',
         alt: 'Bigarreau Burlat cseresznye az ágon',
+        ai: true,
         intro: 'A Bigarreau Burlat az egyik legismertebb korai cseresznyefajta.',
         facts: [
           ['Érés', 'május végén, június elején'],
@@ -2451,6 +2457,7 @@ window.PRODUCTS = [
         name: 'Debreceni bőtermő',
         image: 'assets/img/varieties/meggy-debreceni-botermo.webp',
         alt: 'Debreceni bőtermő meggy az ágon',
+        ai: true,
         intro: 'A Debreceni bőtermő magyar tájfajta, amely rendszeresen és bőven terem.',
         facts: [
           ['Érés', 'június végén–július elején'],
@@ -2803,8 +2810,19 @@ window.PRODUCTS = [
     keywords: ['rozsa', 'rozsafa', 'magastorzsu', 'torzses'],
     category: 'rozsa',
     short: 'Törzsre oltott, magastörzsű rózsafák.',
-    long: 'Törzsre oltott, magastörzsű rózsafák. A fajták hamarosan felkerülnek; addig érdeklődj telefonon vagy üzenetben.',
-    varieties: [],
+    long: 'Törzsre oltott, magastörzsű rózsafák, fajtánként. A fajták képei illusztrációk; az áráról és a választékról érdeklődj telefonon vagy üzenetben.',
+    hero: ['Burgundy Beauty', 'Blue Moon', 'Golden Gate', 'Pink Elegance'],
+    varieties: [
+      { name: 'Blue Moon', image: 'assets/img/varieties/rozsa-blue-moon.webp', alt: 'Blue Moon magastörzsű rózsa virágai (illusztráció)', ai: true },
+      { name: 'Burgundy Beauty', image: 'assets/img/varieties/rozsa-burgundy-beauty.webp', alt: 'Burgundy Beauty magastörzsű rózsa virágai (illusztráció)', ai: true },
+      { name: 'Cirmos Csoda', image: 'assets/img/varieties/rozsa-cirmos-csoda.webp', alt: 'Cirmos Csoda magastörzsű rózsa virágai (illusztráció)', ai: true },
+      { name: 'Golden Gate', image: 'assets/img/varieties/rozsa-golden-gate.webp', alt: 'Golden Gate magastörzsű rózsa virágai (illusztráció)', ai: true },
+      { name: 'Ice Queen', image: 'assets/img/varieties/rozsa-ice-queen.webp', alt: 'Ice Queen magastörzsű rózsa virágai (illusztráció)', ai: true },
+      { name: 'Pink Elegance', image: 'assets/img/varieties/rozsa-pink-elegance.webp', alt: 'Pink Elegance magastörzsű rózsa virágai (illusztráció)', ai: true },
+      { name: 'Monika', image: 'assets/img/varieties/rozsa-monika.webp', alt: 'Monika magastörzsű rózsa virágai (illusztráció)', ai: true },
+      { name: 'Nostalgia', image: 'assets/img/varieties/rozsa-nostalgia.webp', alt: 'Nostalgia magastörzsű rózsa virágai (illusztráció)', ai: true },
+      { name: 'Tünde', image: 'assets/img/varieties/rozsa-tunde.webp', alt: 'Tünde magastörzsű rózsa virágai (illusztráció)', ai: true },
+    ],
     origin: null,
     price: null,
     unit: 'oltvány',
@@ -2812,8 +2830,9 @@ window.PRODUCTS = [
     season: [],
     isNew: false,
     featured: false,
-    image: null,
-    alt: '',
+    image: 'assets/img/varieties/rozsa-burgundy-beauty.webp',
+    imageAi: true,
+    alt: 'Burgundy Beauty magastörzsű rózsa virágai (illusztráció)',
     storage: '',
   },
 ];
