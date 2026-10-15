@@ -2810,7 +2810,7 @@ window.PRODUCTS = [
     keywords: ['rozsa', 'rozsafa', 'magastorzsu', 'torzses'],
     category: 'rozsa',
     short: 'Törzsre oltott, magastörzsű rózsafák.',
-    long: 'Törzsre oltott, magastörzsű rózsafák, fajtánként. A fajták képei illusztrációk; az áráról és a választékról érdeklődj telefonon vagy üzenetben.',
+    long: 'Törzsre oltott, magastörzsű rózsafák, fajtánként, egységesen 3500 Ft-os áron. A fajták képei illusztrációk; az aktuális választékról érdeklődj telefonon vagy üzenetben.',
     hero: ['Burgundy Beauty', 'Blue Moon', 'Golden Gate', 'Pink Elegance'],
     varieties: [
       { name: 'Blue Moon', image: 'assets/img/varieties/rozsa-blue-moon.webp', alt: 'Blue Moon magastörzsű rózsa virágai (illusztráció)', ai: true },
@@ -2824,7 +2824,7 @@ window.PRODUCTS = [
       { name: 'Tünde', image: 'assets/img/varieties/rozsa-tunde.webp', alt: 'Tünde magastörzsű rózsa virágai (illusztráció)', ai: true },
     ],
     origin: null,
-    price: null,
+    price: 3500,
     unit: 'oltvány',
     priceDate: null,
     season: [],
