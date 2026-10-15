@@ -63,6 +63,7 @@ Az egész oldal ebből az egy fájlból dolgozik: Termékeink, valamint a főold
 
 - **Ár:** minden csemete 3000 Ft (`price: 3000`, `unit: 'csemete'`, `priceDate: null`). Fix listaárnál a `priceDate` null, így az ár mindig látszik: a kártyán, a gyümölcs aloldalán, minden fajtakártyán és a fajtaleírásban. Egy fajta saját árat kaphat (`{ name, price: 3500, ... }`). Ha valaha időszakos árat adsz meg dátummal, az csak 30 napig látszik (`PRICE_MAX_AGE_DAYS`), utána magától eltűnik.
 - **Fajták:** a `varieties` listába kerül minden fajta névvel és képpel (`assets/img/varieties/`). Opcionálisan `intro` (rövid bemutatás) és `facts` (pl. érés, íz, porzás) is megadható: ilyenkor a fajtakártyára kattintva leírásablak nyílik. A gyümölcs aloldalán betűrendben jelennek meg, a kereső fajtanévre is talál.
+- **Kategóriák:** `gyumolcsfa` (szabadgyökeres gyümölcsfa-oltványok, gyümölcsönként egy tétel), `szolo` (két tétel: „Magyar szőlőskertek legendái” és „Különleges csemegeszőlők”), `rozsa` (magastörzsű rózsafák). A szőlő- és rózsafajtákat a megfelelő tétel `varieties` listájába kell felvenni, ugyanúgy, mint a gyümölcsfáknál; amíg üres, a tétel „Fajták hamarosan” jelzéssel jelenik meg, ár nélkül.
 - **Saját fotó nélküli termék:** `image: null`, ilyenkor semleges „Fotó hamarosan” mező jelenik meg. Stock- vagy idegen fotót ne tegyél be.
 - **Üres kategória** szűrőgombja automatikusan elrejtődik.
 - **Fajta, származás** csak kitöltve jelenik meg. Ne írj be olyat, amit nem tudsz biztosan (pl. „hazai”, „bio”, „termelőtől”).

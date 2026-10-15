@@ -6,7 +6,7 @@
  * Mezők:
  *   id         – egyedi azonosító, ékezet nélkül (ez kerül a linkbe: termekeink.html#alma)
  *   name       – megjelenő név
- *   category   – "almafele" | "citrus" | "bogyos" | "egyeb"
+ *   category   – "gyumolcsfa" | "szolo" | "rozsa" (lásd CATEGORIES; a szőlő két csoportja külön tétel)
  *   keywords   – (opcionális) további keresőszavak, pl. népies nevek: ['szamoca']
  *   short      – 1–2 mondat a kártyára
  *   long       – részletesebb leírás a felugró ablakba
@@ -15,8 +15,8 @@
  *                Ha van intro vagy facts, a fajtakártyára kattintva leírásablak nyílik. A kind (pl. 'nektarin') a kártyán a gyümölcs neve helyett jelenik meg. A gyümölcs aloldalán (gyumolcs.html#id)
  *                mindegyik saját képpel jelenik meg; image: null esetén „Fotó hamarosan” mező.
  *   origin     – származás (pl. "Szabolcs-Szatmár-Bereg"); null, ha nincs adat → nem jelenik meg
- *   price      – a csemete ára forintban (szám), null, ha nincs adat. Egy fajta saját árat kaphat: { name, price, ... }.
- *   unit       – mire vonatkozik az ár (itt: "csemete")
+ *   price      – az oltvány ára forintban (szám), null, ha nincs adat. Egy fajta saját árat kaphat: { name, price, ... }.
+ *   unit       – mire vonatkozik az ár (itt: "oltvány")
  *   priceDate  – null: fix listaár, mindig látszik.
  *                Ha napi/időszakos árat adsz meg "ÉÉÉÉ-HH-NN" dátummal, az ár csak PRICE_MAX_AGE_DAYS napig látszik,
  *                utána magától eltűnik, így elavult ár nem kerülhet ki.
@@ -37,10 +37,9 @@ window.PRICE_MAX_AGE_DAYS = 30;
 
 window.CATEGORIES = [
   { id: 'osszes', label: 'Összes' },
-  { id: 'almafele', label: 'Almafélék' },
-  { id: 'citrus', label: 'Citrusfélék' },
-  { id: 'bogyos', label: 'Bogyós gyümölcsök' },
-  { id: 'egyeb', label: 'Egyéb gyümölcsök' },
+  { id: 'gyumolcsfa', label: 'Gyümölcsfa-oltványok', long: 'Szabadgyökeres gyümölcsfa-oltványok' },
+  { id: 'szolo', label: 'Csemegeszőlők', long: 'Csemegeszőlő-oltványok' },
+  { id: 'rozsa', label: 'Rózsafák', long: 'Magastörzsű rózsafák' },
 ];
 
 window.PRODUCTS = [
@@ -48,7 +47,7 @@ window.PRODUCTS = [
   {
     id: 'alma',
     name: 'Alma',
-    category: 'almafele',
+    category: 'gyumolcsfa',
     short: 'Ropogós, lédús, egyszerre édes és savanykás. Nyersen és sütve is sokoldalúan felhasználható.',
     long: 'Az alma a gyümölcsöstál alapja: fajtától függően lehet mézédes, savanykás, ropogós vagy omlósabb. Nyersen, salátába reszelve, rétesben vagy sült almaként egyaránt remek. Ha bizonytalan vagy, melyik fajtát válaszd, szívesen segítünk.',
     hero: ['Rubinola', 'Golden Delicious', 'Idared', 'Téli arany parmen'],
@@ -421,7 +420,7 @@ window.PRODUCTS = [
     ],
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [7, 8, 9, 10],
     isNew: false,
@@ -433,7 +432,7 @@ window.PRODUCTS = [
   {
     id: 'korte',
     name: 'Körte',
-    category: 'almafele',
+    category: 'gyumolcsfa',
     short: 'Illatos, lédús gyümölcs, érett állapotban puha, vajas állagú.',
     long: 'A körte akkor a legfinomabb, amikor a szár körüli része enyhén engedni kezd az ujjad alatt. Önmagában, sajttal, diós salátában vagy pitében is kiváló. Keményebb darabokból kompót vagy sült körte készíthető.',
     hero: ['Piros Vilmos', 'Nyári Kálmán', 'Clapp kedveltje', 'Bosc kobak'],
@@ -711,7 +710,7 @@ window.PRODUCTS = [
     ],
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [6, 7, 8, 9, 10],
     isNew: false,
@@ -724,7 +723,7 @@ window.PRODUCTS = [
     id: 'birs',
     keywords: ['birs'],
     name: 'Birsalma',
-    category: 'almafele',
+    category: 'gyumolcsfa',
     short: 'Illatos őszi gyümölcs, főzve és sütve a legízletesebb.',
     long: 'A birsalma nyersen kemény és fanyar, de hőkezelve csodás illatot és mély, mézes ízt kap. Birsalmasajtnak, lekvárnak, kompótnak vagy húsételek mellé sütve is kiváló. Már pár darab is betölti illatával a konyhát.',
     hero: ['Konstantinápolyi', 'Aromatnaja', 'Leskováci', 'Bereczki bőtermő'],
@@ -837,7 +836,7 @@ window.PRODUCTS = [
     ],
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [9, 10],
     isNew: false,
@@ -850,12 +849,12 @@ window.PRODUCTS = [
     id: 'naspolya',
     keywords: ['naspolya', 'lasponya'],
     name: 'Naspolya',
-    category: 'almafele',
+    category: 'gyumolcsfa',
     short: 'Különleges késő őszi gyümölcs, amely utóérés után válik édessé és krémessé.',
     long: 'A naspolya szedéskor kemény és fanyar. Néhány hét pihentetés (utóérés) vagy az első fagyok után a húsa megbarnul, megpuhul, és édes, enyhén borízű, almaszószra emlékeztető ízt kap. Nyersen kikanalazva, lekvárnak, zselének vagy süteménybe is kiváló.',
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [10, 11],
     isNew: false,
@@ -934,7 +933,7 @@ window.PRODUCTS = [
     id: 'oszibarack',
     keywords: ['barack'],
     name: 'Őszibarack',
-    category: 'egyeb',
+    category: 'gyumolcsfa',
     short: 'Bársonyos héjú, édes és lédús nyári gyümölcs.',
     long: 'Az érett őszibarack illatos, lédús és édes. Magában, gyümölcssalátában, pitében vagy grillezve is kiváló. Az érett gyümölcs enyhe nyomásra kissé enged.',
     hero: ['Champion', 'Venus', 'Fairlane', 'Caldesi 2000'],
@@ -1266,7 +1265,7 @@ window.PRODUCTS = [
     ],
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [6, 7, 8, 9],
     isNew: false,
@@ -1279,7 +1278,7 @@ window.PRODUCTS = [
     id: 'sargabarack',
     keywords: ['kajszi', 'kajszibarack', 'barack'],
     name: 'Sárgabarack',
-    category: 'egyeb',
+    category: 'gyumolcsfa',
     short: 'Illatos, édes-savanykás barack, lekvárhoz és gombóchoz is kiváló.',
     long: 'A sárgabarack nyersen is finom, de igazán lekvárban, gombócban, pitében vagy befőttként mutatja meg magát. Az érett gyümölcs mélyen narancssárga és illatos.',
     hero: ['Ceglédi napsugár', 'Orangered', 'Bergeron', 'Korai piros'],
@@ -1716,7 +1715,7 @@ window.PRODUCTS = [
     ],
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [6, 7, 8],
     isNew: false,
@@ -1728,7 +1727,7 @@ window.PRODUCTS = [
   {
     id: 'szilva',
     name: 'Szilva',
-    category: 'egyeb',
+    category: 'gyumolcsfa',
     short: 'Lédús, édes-fanyar gyümölcs gombóchoz, lekvárhoz, süteményhez.',
     long: 'A szilva nyersen is finom, de sütve, főzve igazán sokoldalú: szilvás gombóc, pite, lekvár vagy kompót is készülhet belőle. A héján lévő hamvas, fehéres bevonat természetes.',
     varieties: [
@@ -1736,7 +1735,7 @@ window.PRODUCTS = [
     ],
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [],
     isNew: false,
@@ -1748,7 +1747,7 @@ window.PRODUCTS = [
   {
     id: 'cseresznye',
     name: 'Cseresznye',
-    category: 'egyeb',
+    category: 'gyumolcsfa',
     short: 'Ropogós, édes, sötétpiros szemek a kora nyári idényből.',
     long: 'A cseresznye az elsők között jelzi a nyarat. Ropogós, édes szemei magukban is elfogynak, de clafoutis-ban, süteményben vagy befőttként is remekek. Válassz fényes, feszes szemeket zöld szárral.',
     hero: ['Alex', 'Irena', 'Badacsonyi óriás', 'Stella'],
@@ -2026,7 +2025,7 @@ window.PRODUCTS = [
     ],
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [5, 6, 7],
     isNew: false,
@@ -2039,7 +2038,7 @@ window.PRODUCTS = [
     id: 'meggy',
     keywords: ['meggy'],
     name: 'Meggy',
-    category: 'egyeb',
+    category: 'gyumolcsfa',
     short: 'Sötétpiros, savanykás-édes gyümölcs befőttnek, süteménynek, levesnek.',
     long: 'A meggy savanykásabb, mint a cseresznye, ezért konyhai felhasználásra különösen alkalmas: meggyleves, rétes, pite, befőtt vagy lekvár is készülhet belőle. Az érett szem sötétpiros, fényes és lédús.',
     hero: ['Piramis', 'Kőrösi', 'Pipacs 1', 'Újfehértói fürtös'],
@@ -2316,7 +2315,7 @@ window.PRODUCTS = [
     ],
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [5, 6, 7],
     isNew: false,
@@ -2329,7 +2328,7 @@ window.PRODUCTS = [
     id: 'dio',
     keywords: ['dio', 'hejas'],
     name: 'Dió',
-    category: 'egyeb',
+    category: 'gyumolcsfa',
     short: 'Testes, olajos bél süteményekhez, salátákhoz és önmagában is.',
     long: 'A dió az ősz egyik legsokoldalúbb terméke: süteményekbe, bejglibe, salátákba, müzlibe vagy önmagában is kiváló. A friss dió héja ép, a bél világos és kellemes illatú.',
     hero: ['Pedro', 'Milotai 10', 'Chandler', 'Fernette'],
@@ -2421,7 +2420,7 @@ window.PRODUCTS = [
     ],
     origin: null,
     price: 3000,
-    unit: 'csemete',
+    unit: 'oltvány',
     priceDate: null,
     season: [9, 10],
     isNew: false,
@@ -2429,5 +2428,62 @@ window.PRODUCTS = [
     image: 'assets/img/products/dio.webp',
     alt: 'Feltört Chandler dió világos béllel, egész diók között',
     storage: 'Héjában hűvös, száraz, szellős helyen hónapokig eláll. A kibontott diót légmentesen zárva, hűtőben tárold, hogy ne avasodjon.',
+  },
+  {
+    id: 'szolo-legendak',
+    name: 'Magyar szőlőskertek legendái',
+    keywords: ['szolo', 'csemegeszolo', 'oltvany'],
+    category: 'szolo',
+    short: 'Csemegeszőlő-oltványok a magyar szőlőskertek klasszikus fajtáiból.',
+    long: 'Csemegeszőlő-oltványok a magyar szőlőskertek klasszikus fajtáiból. A fajták hamarosan felkerülnek; addig érdeklődj telefonon vagy üzenetben.',
+    varieties: [],
+    origin: null,
+    price: null,
+    unit: 'oltvány',
+    priceDate: null,
+    season: [],
+    isNew: false,
+    featured: false,
+    image: null,
+    alt: '',
+    storage: '',
+  },
+  {
+    id: 'szolo-kulonleges',
+    name: 'Különleges csemegeszőlők',
+    keywords: ['szolo', 'csemegeszolo', 'oltvany'],
+    category: 'szolo',
+    short: 'Különleges csemegeszőlő-fajták oltványai.',
+    long: 'Különleges csemegeszőlő-fajták oltványai. A fajták hamarosan felkerülnek; addig érdeklődj telefonon vagy üzenetben.',
+    varieties: [],
+    origin: null,
+    price: null,
+    unit: 'oltvány',
+    priceDate: null,
+    season: [],
+    isNew: false,
+    featured: false,
+    image: null,
+    alt: '',
+    storage: '',
+  },
+  {
+    id: 'rozsa',
+    name: 'Magastörzsű rózsafák',
+    keywords: ['rozsa', 'rozsafa', 'magastorzsu', 'torzses'],
+    category: 'rozsa',
+    short: 'Törzsre oltott, magastörzsű rózsafák.',
+    long: 'Törzsre oltott, magastörzsű rózsafák. A fajták hamarosan felkerülnek; addig érdeklődj telefonon vagy üzenetben.',
+    varieties: [],
+    origin: null,
+    price: null,
+    unit: 'oltvány',
+    priceDate: null,
+    season: [],
+    isNew: false,
+    featured: false,
+    image: null,
+    alt: '',
+    storage: '',
   },
 ];

@@ -1,4 +1,4 @@
-/* Kosár és rendelés: a kiválasztott csemeték a látogató böngészőjében maradnak (localStorage),
+/* Kosár és rendelés: a kiválasztott oltványok a látogató böngészőjében maradnak (localStorage),
    a rendelés az űrlapon megy el. Online fizetés nincs: GLS házhozszállítás, utánvét. */
 (function () {
   'use strict';
@@ -214,7 +214,7 @@
       el.hidden = count === 0;
     });
     Array.prototype.forEach.call(document.querySelectorAll('[data-cart-open]'), function (el) {
-      el.setAttribute('aria-label', count ? 'Kosár, ' + count + ' csemete' : 'Kosár (üres)');
+      el.setAttribute('aria-label', count ? 'Kosár, ' + count + ' oltvány' : 'Kosár (üres)');
     });
     Array.prototype.forEach.call(document.querySelectorAll('[data-cart-list], [data-order-list]'), function (el) {
       // A fókuszt megtartjuk, ha épp egy mennyiségmezőben gépel a látogató.
@@ -342,7 +342,7 @@
     var R = window.SiteForm.rules;
     var f = window.SiteForm.bind(form, {
       items: function () {
-        return read().length ? '' : 'A kosarad üres. Előbb tegyél kosárba legalább egy csemetét.';
+        return read().length ? '' : 'A kosarad üres. Előbb tegyél kosárba legalább egy oltványt.';
       },
       name: R.required('Kérlek, add meg a neved.'),
       phone: R.phone(true),

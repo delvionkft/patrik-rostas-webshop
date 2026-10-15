@@ -94,6 +94,7 @@
     var out = '';
     if (inSeason(p)) out += '<span class="tag tag--seasonal">Most érik</span>';
     if (p.isNew) out += '<span class="tag tag--new">Új a kínálatban</span>';
+    if (!(p.varieties || []).length) out += '<span class="tag tag--soon">Fajták hamarosan</span>';
     return out;
   }
 
@@ -364,7 +365,7 @@
 
       var filtered = state.category !== 'osszes' || !!state.query;
       countEl.textContent = visible.length
-        ? visible.length + ' gyümölcs' + (filtered ? ' a szűrésnek megfelelően' : ' a kínálatban')
+        ? visible.length + ' termék' + (filtered ? ' a szűrésnek megfelelően' : ' a kínálatban')
         : 'Nincs találat';
       resetBtn.hidden = !filtered;
       clearBtn.hidden = !state.query;
@@ -460,19 +461,28 @@
       var list = varieties(p);
       document.title = p.name + ' – ' + siteName;
       q('crumb').textContent = p.name;
+      var cat = q('crumb-cat');
+      cat.textContent = categoryLabel(p.category) || 'Termékeink';
+      cat.href = 'termekeink.html?kategoria=' + encodeURIComponent(p.category);
       q('name').textContent = p.name;
-      q('name').style.setProperty('--len', String(Math.max(p.name.length, 4)));
+      // Több szavas névnél (pl. „Magyar szőlőskertek legendái”) a leghosszabb szóhoz méretezünk, két sorra.
+      var longest = p.name.split(/\s+/).reduce(function (m, w) {
+        return Math.max(m, w.length);
+      }, 0);
+      q('name').style.setProperty('--len', String(Math.max(longest, Math.ceil(p.name.length / 2), 4)));
       q('tags').innerHTML = tagsHtml(p);
       q('desc').textContent = p.long || p.short;
 
       // Adatsáv: fajták száma, kategória, 12 hónapos idénysáv
-      q('count-big').textContent = String(list.length);
+      q('count-big').textContent = list.length ? String(list.length) : '';
+      q('count-unit').textContent = list.length ? 'fajta' : 'Hamarosan';
       var pr = priceInfo(p);
-      q('price-big').textContent = pr ? pr.text : '–';
-      q('price-unit').textContent = pr ? pr.unit : '';
-      q('price-text').textContent = pr ? pr.text : 'kérésre';
+      q('price-big').textContent = pr ? pr.text : '';
+      q('price-unit').textContent = pr ? pr.unit : 'Érdeklődj';
+      q('price-head').textContent = pr ? 'Minden oltvány ' + pr.text : 'Az árakról érdeklődj';
       var st = seasonText(p, true);
       q('season-text').textContent = st ? '· ' + st : '';
+      q('season').hidden = !st;
       var months = Array.isArray(p.season) ? p.season : [];
       var strip = '';
       for (var m = 1; m <= 12; m++) {
@@ -517,8 +527,11 @@
             .join('')
         : '<div class="mosaic__item noimg"><strong>' + esc(p.name) + '</strong><span>Fotó hamarosan</span></div>';
 
-      q('count').textContent =
-        list.length > 1 ? list.length + ' fajta, betűrendben.' : 'Jelenleg egy fajta szerepel a kínálatban.';
+      q('count').textContent = list.length > 1
+        ? list.length + ' fajta, betűrendben.'
+        : list.length
+          ? 'Jelenleg egy fajta szerepel a kínálatban.'
+          : 'A fajták hamarosan felkerülnek. Addig érdeklődj telefonon vagy üzenetben.';
       q('varieties').innerHTML = list
         .map(function (v, i) {
           var media = v.image
@@ -663,12 +676,31 @@
   };
 
   // A kínálat számai (pl. Rólunk oldal): a build-időben beírt értéket a friss adatokra cseréljük.
+  function categoryStat(cat) {
+    var groups = PRODUCTS.filter(function (p) {
+      return p.category === cat;
+    });
+    var n = groups.reduce(function (s, p) {
+      return s + (p.varieties || []).length;
+    }, 0);
+    if (!n) return 'Fajták hamarosan';
+    return (cat === 'gyumolcsfa' ? groups.length + ' gyümölcs · ' : '') + n + ' fajta';
+  }
+
   function initStats() {
     var total = 0;
     PRODUCTS.forEach(function (p) {
       total += (p.varieties || []).length;
     });
-    var stats = { fruits: PRODUCTS.length, varieties: total };
+    Array.prototype.forEach.call(document.querySelectorAll('[data-cat-stat]'), function (el) {
+      el.textContent = categoryStat(el.getAttribute('data-cat-stat'));
+    });
+    var stats = {
+      fruits: PRODUCTS.filter(function (p) {
+        return p.category === 'gyumolcsfa';
+      }).length,
+      varieties: total,
+    };
     Object.keys(stats).forEach(function (k) {
       Array.prototype.forEach.call(document.querySelectorAll('[data-stat="' + k + '"]'), function (el) {
         if (stats[k]) el.textContent = String(stats[k]);

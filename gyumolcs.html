@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Gyümölcs – Csodakert</title>
-  <meta name="description" content="Gyümölcsfa-csemeték fajtánként, a termés képével és fajtaleírással. Minden csemete 3000 Ft.">
+  <title>Fajták – Csodakert</title>
+  <meta name="description" content="Oltványok fajtánként, képpel és fajtaleírással.">
   <meta name="theme-color" content="#ffffff">
   <link rel="canonical" href="https://[Domain]/gyumolcs.html">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="hu_HU">
   <meta property="og:site_name" content="Csodakert">
-  <meta property="og:title" content="Gyümölcs – Csodakert">
-  <meta property="og:description" content="Gyümölcsfa-csemeték fajtánként, a termés képével és fajtaleírással. Minden csemete 3000 Ft.">
+  <meta property="og:title" content="Fajták – Csodakert">
+  <meta property="og:description" content="Oltványok fajtánként, képpel és fajtaleírással.">
   <meta property="og:url" content="https://[Domain]/gyumolcs.html">
   <meta property="og:image" content="https://[Domain]/assets/img/og-image.jpg">
   <link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
@@ -57,9 +57,9 @@
         <div class="container">
           <div class="fruit-hero__grid">
             <div class="fruit-hero__text">
-              <nav class="crumbs label label--plain" aria-label="Morzsamenü"><a href="termekeink.html">Termékeink</a> <span aria-hidden="true">/</span> <span data-f="crumb" aria-current="page">Gyümölcs</span></nav>
+              <nav class="crumbs label label--plain" aria-label="Morzsamenü"><a href="termekeink.html">Termékeink</a> <span aria-hidden="true">/</span> <a data-f="crumb-cat" href="termekeink.html">Kategória</a> <span aria-hidden="true">/</span> <span data-f="crumb" aria-current="page">Fajták</span></nav>
               <div class="dialog-tags" data-f="tags"></div>
-              <h1 id="gyumolcs-cim" data-f="name">Gyümölcs</h1>
+              <h1 id="gyumolcs-cim" data-f="name">Fajták</h1>
               <p class="fruit-hero__lead" data-f="desc"></p>
               <div class="btn-row">
                 <button class="btn btn--primary" type="button" data-f="to-varieties">Fajták megtekintése <svg class="icon icon--down" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
@@ -77,7 +77,7 @@
               <dt>Ár</dt>
               <dd><span class="fruit-stats__big" data-f="price-big">–</span> <span data-f="price-unit"></span></dd>
             </div>
-            <div class="fruit-stats__season">
+            <div class="fruit-stats__season" data-f="season">
               <dt>Érés <span data-f="season-text"></span></dt>
               <dd><ol class="month-strip" data-f="months" aria-hidden="true"></ol></dd>
             </div>
@@ -97,7 +97,7 @@
           </div>
           <nav class="variety-index" data-f="index" aria-label="Ugrás egy fajtához"></nav>
           <ul class="variety-grid" data-f="varieties"></ul>
-          <p class="calendar-note">A&nbsp;képeken a&nbsp;fajta termése látható. Az aktuális választék változhat.</p>
+          <p class="calendar-note">A&nbsp;gyümölcsfáknál a&nbsp;képeken a&nbsp;fajta termése látható. Az aktuális választék változhat.</p>
         </div>
       </section>
 
@@ -105,7 +105,7 @@
         <div class="container split split--top">
           <div>
             <p class="label">Ár</p>
-            <h2 id="tarolas-cim">Minden csemete <span data-f="price-text">3000&nbsp;Ft</span></h2>
+            <h2 id="tarolas-cim" data-f="price-head">Minden oltvány 3000&nbsp;Ft</h2>
             <p class="muted">Az ár minden fajtára egyformán érvényes. Tedd kosárba a&nbsp;kiválasztott fajtákat, és küldd el a&nbsp;rendelést az űrlapon. GLS házhozszállítás, fizetés utánvéttel.</p>
           </div>
           <div>
