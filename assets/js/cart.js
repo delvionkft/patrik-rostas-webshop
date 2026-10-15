@@ -1,5 +1,5 @@
 /* Kosár és rendelés: a kiválasztott csemeték a látogató böngészőjében maradnak (localStorage),
-   a rendelés az űrlapon megy el. Online fizetés nincs. */
+   a rendelés az űrlapon megy el. Online fizetés nincs: GLS házhozszállítás, utánvét. */
 (function () {
   'use strict';
 
@@ -347,6 +347,12 @@
       name: R.required('Kérlek, add meg a neved.'),
       phone: R.phone(true),
       email: R.email,
+      zip: function (v) {
+        if (!v.trim()) return 'Kérlek, add meg az irányítószámot.';
+        return /^\d{4}$/.test(v.trim()) ? '' : 'Az irányítószám 4 számjegy.';
+      },
+      city: R.required('Kérlek, add meg a települést.'),
+      address: R.required('Kérlek, add meg az utcát és a házszámot.'),
       consent: R.consent,
     });
 
@@ -365,6 +371,7 @@
         name: form.elements.name.value.trim(),
         phone: form.elements.phone.value.trim(),
         email: form.elements.email.value.trim(),
+        address: form.elements.zip.value.trim() + ' ' + form.elements.city.value.trim() + ', ' + form.elements.address.value.trim(),
         note: form.elements.note.value.trim(),
       };
       var summary = Cart.summary();
@@ -375,6 +382,7 @@
           'Rendelés a weboldalról – ' + data.name,
           'Rendelés\n\n' + summary +
             '\n\n—\nNév: ' + data.name + '\nTelefon: ' + data.phone + '\nE-mail: ' + data.email +
+            '\nSzállítási cím (GLS): ' + data.address + '\nFizetés: utánvéttel' +
             (data.note ? '\nMegjegyzés: ' + data.note : '')
         );
         f.setStatus(

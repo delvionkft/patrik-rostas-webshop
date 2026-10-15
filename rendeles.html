@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Rendelés – Csodakert</title>
-  <meta name="description" content="A kosaradban lévő gyümölcsfa-csemeték megrendelése. Online fizetés nincs, a részleteket a rendelés után egyeztetjük.">
+  <meta name="description" content="A kosaradban lévő oltványok megrendelése. GLS házhozszállítás, fizetés utánvéttel.">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#ffffff">
   <link rel="canonical" href="https://[Domain]/rendeles.html">
@@ -12,7 +12,7 @@
   <meta property="og:locale" content="hu_HU">
   <meta property="og:site_name" content="Csodakert">
   <meta property="og:title" content="Rendelés – Csodakert">
-  <meta property="og:description" content="A kosaradban lévő gyümölcsfa-csemeték megrendelése. Online fizetés nincs, a részleteket a rendelés után egyeztetjük.">
+  <meta property="og:description" content="A kosaradban lévő oltványok megrendelése. GLS házhozszállítás, fizetés utánvéttel.">
   <meta property="og:url" content="https://[Domain]/rendeles.html">
   <meta property="og:image" content="https://[Domain]/assets/img/og-image.jpg">
   <link rel="icon" href="favicon.png" type="image/png" sizes="64x64">
@@ -58,7 +58,7 @@
         <p class="label">Rendelés</p>
         <div class="page-hero__grid">
           <h1>Rendelés</h1>
-          <p class="lead">Ellenőrizd a&nbsp;kosarad tartalmát, add meg az elérhetőségeidet, és küldd el a&nbsp;rendelést. Online fizetés nincs: a&nbsp;részleteket a&nbsp;rendelés után egyeztetjük veled.</p>
+          <p class="lead">Ellenőrizd a&nbsp;kosarad tartalmát, add meg az elérhetőségeidet és a&nbsp;szállítási címet, és küldd el a&nbsp;rendelést. A&nbsp;csomagot a&nbsp;GLS viszi házhoz, fizetés utánvéttel.</p>
         </div>
       </div>
     </section>
@@ -95,6 +95,26 @@
               <input id="order-email" name="email" type="email" autocomplete="email" required aria-describedby="email-error">
               <span class="field-error" id="email-error" aria-live="polite"></span>
             </div>
+            <fieldset class="order-address">
+              <legend>Szállítási cím <span class="optional">(GLS házhozszállítás)</span></legend>
+              <div class="form-row form-row--zip">
+                <div class="field">
+                  <label for="order-zip">Irányítószám</label>
+                  <input id="order-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="4" required aria-describedby="zip-error">
+                  <span class="field-error" id="zip-error" aria-live="polite"></span>
+                </div>
+                <div class="field">
+                  <label for="order-city">Település</label>
+                  <input id="order-city" name="city" type="text" autocomplete="address-level2" required aria-describedby="city-error">
+                  <span class="field-error" id="city-error" aria-live="polite"></span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="order-address">Utca, házszám</label>
+                <input id="order-address" name="address" type="text" autocomplete="address-line1" required aria-describedby="address-error">
+                <span class="field-error" id="address-error" aria-live="polite"></span>
+              </div>
+            </fieldset>
             <div class="field">
               <label for="order-note">Megjegyzés <span class="optional">(nem kötelező)</span></label>
               <textarea id="order-note" name="note" rows="4"></textarea>
@@ -122,8 +142,8 @@
           <h2 id="menete-cim">Így működik</h2>
           <ol class="steps">
             <li><strong>Válaszd ki a&nbsp;fajtákat.</strong> A&nbsp;gyümölcs oldalán a&nbsp;„Kosárba” gombbal.</li>
-            <li><strong>Küldd el a&nbsp;rendelést.</strong> Itt, a&nbsp;neveddel, telefonszámoddal és e-mail-címeddel.</li>
-            <li><strong>Felvesszük veled a&nbsp;kapcsolatot,</strong> és egyeztetjük a&nbsp;részleteket. Online fizetés nincs.</li>
+            <li><strong>Küldd el a&nbsp;rendelést.</strong> Itt, az elérhetőségeiddel és a&nbsp;szállítási címmel.</li>
+            <li><strong>Felvesszük veled a&nbsp;kapcsolatot,</strong> és a&nbsp;GLS házhoz szállítja a&nbsp;csomagot. Fizetés utánvéttel, a&nbsp;futárnál.</li>
           </ol>
           <p class="muted">Csak kérdésed van? <a href="kapcsolat.html#urlap">Írj nekünk a&nbsp;Kapcsolat oldalon</a>, vagy hívj: <a href="tel:+36306275512">06&nbsp;30&nbsp;627&nbsp;5512</a>.</p>
         </aside>
@@ -134,7 +154,7 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-top">
-        <p>Gyümölcsfák a&nbsp;kertedbe.</p>
+        <p>Minden, ami egy szép kerthez kell.</p>
         <a class="btn btn--light" href="tel:+36306275512"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg> 06&nbsp;30&nbsp;627&nbsp;5512</a>
       </div>
       <div class="footer-grid">
@@ -181,7 +201,7 @@
       <div class="cart-body" data-cart-list></div>
       <div class="cart-foot" data-cart-filled hidden>
         <p class="cart-total"><span>Összesen</span> <strong data-cart-total>0 Ft</strong></p>
-        <p class="cart-note">Online fizetés nincs. A&nbsp;rendelés elküldése után felvesszük veled a&nbsp;kapcsolatot.</p>
+        <p class="cart-note">GLS házhozszállítás, fizetés utánvéttel. A&nbsp;rendelés elküldése után felvesszük veled a&nbsp;kapcsolatot.</p>
         <a class="btn btn--sun" href="rendeles.html">Tovább a rendeléshez <svg class="icon icon--arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
         <button class="btn btn--secondary" type="button" data-cart-close>Vásárlás folytatása</button>
       </div>

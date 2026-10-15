@@ -73,7 +73,7 @@ Az egész oldal ebből az egy fájlból dolgozik: Termékeink, valamint a főold
 ### 4. Kosár és rendelés
 
 - **Kosárba tétel:** minden fajtakártyán és a fajtaleírás-ablakban „Kosárba” gomb. A fejlécben a kosár gomb mutatja a darabszámot; rákattintva oldalt nyílik a kosár (mennyiség +/−, beírható 1–999, törlés, összesen).
-- **Tovább a rendeléshez** → `rendeles.html`: a tételek és mennyiségek kitöltve (itt is módosíthatók), kötelező a név, a telefonszám, az e-mail-cím és az adatkezelési hozzájárulás; a megjegyzés nem kötelező. Üres kosárral nem küldhető.
+- **Tovább a rendeléshez** → `rendeles.html`: a tételek és mennyiségek kitöltve (itt is módosíthatók), kötelező a név, a telefonszám, az e-mail-cím, a szállítási cím (irányítószám, település, utca, házszám; GLS házhozszállítás) és az adatkezelési hozzájárulás; a megjegyzés nem kötelező. Fizetés utánvéttel. Üres kosárral nem küldhető.
 - A kosár a látogató böngészőjében marad (localStorage), oldalváltáskor és újratöltéskor is megmarad. Ha a böngésző tárolója tiltott (pl. privát mód), az oldalon belül akkor is működik.
 - **Küldés:** ugyanúgy, mint a kérdező űrlapnál: a `rendeles.html` `data-endpoint` attribútumába írt űrlapkezelőre (pl. Formspree), vagy ha az üres, a látogató levelezőprogramját nyitja meg a kitöltött rendeléssel. **Rendeléshez az űrlapkezelő erősen ajánlott:** a levelezőprogramos megoldásnál nem tudjuk, hogy a látogató végül elküldte-e a levelet, és sok telefonon nincs is beállított levelezőprogram. Sikeres küldés után a kosár kiürül; hiba esetén megmarad.
 - Az űrlapkezelő a rendelést a `rendeles` mezőben kapja szövegesen (pl. `3 × Körte – Kieffer (3000 Ft/csemete) = 9000 Ft`, a végén az összesen).
