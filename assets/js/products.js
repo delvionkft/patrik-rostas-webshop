@@ -1824,8 +1824,8 @@ window.PRODUCTS = [
       },
       {
         name: 'Hanita',
-        image: null,
-        alt: '',
+        image: 'assets/img/varieties/szilva-hanita.webp',
+        alt: 'Hanita szilva az ágon',
         intro: 'A Hanita öntermékeny, jó ízű, vírusra toleráns német szilvafajta.',
         facts: [
           ['Érés', 'augusztusban, elhúzódóan'],
@@ -1869,8 +1869,8 @@ window.PRODUCTS = [
       },
       {
         name: 'Jojo',
-        image: null,
-        alt: '',
+        image: 'assets/img/varieties/szilva-jojo.webp',
+        alt: 'Jojo szilva az ágon',
         intro: 'A Jojo öntermékeny, rendszeresen termő, modern szilvafajta.',
         facts: [
           ['Érés', 'szeptemberben'],
@@ -1914,8 +1914,8 @@ window.PRODUCTS = [
       },
       {
         name: 'Mirabelle',
-        image: null,
-        alt: '',
+        image: 'assets/img/varieties/szilva-mirabelle.webp',
+        alt: 'Sárga mirabellaszilvák az ágon',
         intro: 'A Mirabelle az apró, sárga mirabellaszilvák gyűjtőneve.',
         facts: [
           ['Érés', 'általában nyár végén'],
@@ -2034,8 +2034,8 @@ window.PRODUCTS = [
       },
       {
         name: 'Stanley',
-        image: null,
-        alt: '',
+        image: 'assets/img/varieties/szilva-stanley.webp',
+        alt: 'Stanley szilva az ágon',
         intro: 'A Stanley bőtermő, öntermékeny, sokoldalúan felhasználható szilvafajta.',
         facts: [
           ['Érés', 'augusztus végén–szeptember elején'],
