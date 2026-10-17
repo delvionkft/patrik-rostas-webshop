@@ -104,9 +104,9 @@
           </ul>
         </div>
         <div class="form-card">
-          <!-- Küldés: EmailJS-en keresztül (beállítás: assets/js/main.js, EMAILJS). Ha a data-endpoint ki van töltve
+          <!-- Küldés: EmailJS-en keresztül (beállítás: assets/js/main.js, EMAILJS; a data-emailjs választja a sablont). Ha a data-endpoint ki van töltve
                (pl. Formspree), az élvez elsőbbséget; ha egyik sincs, a látogató levelezőprogramja nyílik meg (data-mailto). -->
-          <form class="form" id="contact-form" data-endpoint="" data-mailto="kerteszet1993@gmail.com" novalidate>
+          <form class="form" id="contact-form" data-emailjs="contact" data-endpoint="" data-mailto="kerteszet1993@gmail.com" novalidate>
             <div class="form-row">
               <div class="field">
                 <label for="name">Neved</label>

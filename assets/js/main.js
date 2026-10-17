@@ -184,14 +184,18 @@
      A kapcsolati és a rendelési űrlap is ezt használja.
      --------------------------------------------------------------------- */
   /* EmailJS: az űrlapok ezen keresztül küldenek e-mailt (https://www.emailjs.com).
-     Mindkét űrlap ugyanazt a sablont használja. Sablonváltozók: {{title}}, {{name}}, {{email}},
+     Űrlaponként külön sablon: az űrlap data-emailjs attribútuma választ (contact = kérdező, order = rendelés).
+     Sablonváltozók: {{title}}, {{name}}, {{email}},
      {{phone}}, {{message}}, {{time}}; rendelésnél még {{rendeles}}, {{zip}}, {{city}}, {{address}}, {{note}}.
      A nyilvános kulcs (public key) böngészőben látható, ez így rendben van; visszaélés ellen az EmailJS
      felületén állítsd be az engedélyezett domaint. Ha egy űrlapon data-endpoint is meg van adva, az élvez elsőbbséget. */
   var EMAILJS = {
     url: 'https://api.emailjs.com/api/v1.0/email/send',
     service: 'service_o4wjpwh',
-    template: 'template_lbru1pf',
+    templates: {
+      contact: 'template_lbru1pf', // Kapcsolat oldal: kérdező űrlap
+      order: 'template_vj6x0e5', // Rendelés oldal: rendelési űrlap
+    },
     publicKey: 'Q3ihGKO1QuYf_RcRi',
   };
 
@@ -256,8 +260,11 @@
         return to;
       },
       // Van-e beállított küldési mód (űrlapkezelő vagy EmailJS)? Ha nincs, marad a levelezőprogram.
+      template: function () {
+        return EMAILJS.templates[form.getAttribute('data-emailjs')] || '';
+      },
       canSend: function () {
-        return !!(this.endpoint() || (EMAILJS.service && EMAILJS.template && EMAILJS.publicKey));
+        return !!(this.endpoint() || (EMAILJS.service && this.template() && EMAILJS.publicKey));
       },
       send: function (params, busyLabel) {
         var submit = form.querySelector('[type="submit"]');
@@ -273,7 +280,7 @@
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 service_id: EMAILJS.service,
-                template_id: EMAILJS.template,
+                template_id: this.template(),
                 user_id: EMAILJS.publicKey,
                 template_params: params,
               }),
