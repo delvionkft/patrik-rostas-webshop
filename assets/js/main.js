@@ -183,6 +183,18 @@
      küldés űrlapkezelőre (data-endpoint) vagy levelezőprogrammal (data-mailto).
      A kapcsolati és a rendelési űrlap is ezt használja.
      --------------------------------------------------------------------- */
+  /* EmailJS: az űrlapok ezen keresztül küldenek e-mailt (https://www.emailjs.com).
+     Mindkét űrlap ugyanazt a sablont használja. Sablonváltozók: {{title}}, {{name}}, {{email}},
+     {{phone}}, {{message}}, {{time}}; rendelésnél még {{rendeles}}, {{zip}}, {{city}}, {{address}}, {{note}}.
+     A nyilvános kulcs (public key) böngészőben látható, ez így rendben van; visszaélés ellen az EmailJS
+     felületén állítsd be az engedélyezett domaint. Ha egy űrlapon data-endpoint is meg van adva, az élvez elsőbbséget. */
+  var EMAILJS = {
+    url: 'https://api.emailjs.com/api/v1.0/email/send',
+    service: 'service_o4wjpwh',
+    template: 'template_lbru1pf',
+    publicKey: 'Q3ihGKO1QuYf_RcRi',
+  };
+
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   var PHONE_RE = /^[+()\d\s\/-]{6,20}$/;
 
@@ -243,16 +255,30 @@
           '&body=' + encodeURIComponent(body);
         return to;
       },
-      post: function (busyLabel) {
+      // Van-e beállított küldési mód (űrlapkezelő vagy EmailJS)? Ha nincs, marad a levelezőprogram.
+      canSend: function () {
+        return !!(this.endpoint() || (EMAILJS.service && EMAILJS.template && EMAILJS.publicKey));
+      },
+      send: function (params, busyLabel) {
         var submit = form.querySelector('[type="submit"]');
         var label = submit.innerHTML;
         submit.disabled = true;
         submit.textContent = busyLabel || 'Küldés…';
-        return fetch(this.endpoint(), {
-          method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: new FormData(form),
-        })
+        params.time = new Date().toLocaleString('hu-HU');
+        var endpoint = this.endpoint();
+        var request = endpoint
+          ? fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })
+          : fetch(EMAILJS.url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                service_id: EMAILJS.service,
+                template_id: EMAILJS.template,
+                user_id: EMAILJS.publicKey,
+                template_params: params,
+              }),
+            });
+        return request
           .then(function (res) {
             if (!res.ok) throw new Error('HTTP ' + res.status);
           })
@@ -340,8 +366,8 @@
         message: form.elements.message.value.trim(),
       };
 
-      if (!f.endpoint()) {
-        // Nincs beállított űrlapkezelő: a látogató levelezőprogramját nyitjuk meg kitöltve.
+      if (!f.canSend()) {
+        // Nincs beállított küldési mód: a látogató levelezőprogramját nyitjuk meg kitöltve.
         var to = f.mailto(
           'Érdeklődés a weboldalról',
           data.message + '\n\n—\nNév: ' + data.name + '\nE-mail: ' + data.email + (data.phone ? '\nTelefon: ' + data.phone : '')
@@ -353,7 +379,13 @@
         return;
       }
 
-      f.post()
+      f.send({
+        title: 'Érdeklődés a weboldalról',
+        name: data.name,
+        email: data.email,
+        phone: data.phone || '–',
+        message: data.message,
+      })
         .then(function () {
           form.reset();
           f.setStatus('success', 'Köszönjük, megkaptuk az üzeneted! Hamarosan válaszolunk.');

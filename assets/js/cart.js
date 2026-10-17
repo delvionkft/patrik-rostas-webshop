@@ -377,13 +377,16 @@
       var summary = Cart.summary();
       form.elements.rendeles.value = summary;
 
-      if (!f.endpoint()) {
+      var body =
+        'Rendelés\n\n' + summary +
+        '\n\n—\nNév: ' + data.name + '\nTelefon: ' + data.phone + '\nE-mail: ' + data.email +
+        '\nSzállítási cím (GLS): ' + data.address + '\nFizetés: utánvéttel' +
+        (data.note ? '\nMegjegyzés: ' + data.note : '');
+
+      if (!f.canSend()) {
         var to = f.mailto(
           'Rendelés a weboldalról – ' + data.name,
-          'Rendelés\n\n' + summary +
-            '\n\n—\nNév: ' + data.name + '\nTelefon: ' + data.phone + '\nE-mail: ' + data.email +
-            '\nSzállítási cím (GLS): ' + data.address + '\nFizetés: utánvéttel' +
-            (data.note ? '\nMegjegyzés: ' + data.note : '')
+          body
         );
         f.setStatus(
           'success',
@@ -393,7 +396,21 @@
         return;
       }
 
-      f.post('Rendelés küldése…')
+      f.send(
+        {
+          title: 'Rendelés – ' + data.name,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          message: body,
+          rendeles: summary,
+          zip: form.elements.zip.value.trim(),
+          city: form.elements.city.value.trim(),
+          address: form.elements.address.value.trim(),
+          note: data.note || '–',
+        },
+        'Rendelés küldése…'
+      )
         .then(function () {
           Cart.clear();
           form.reset();

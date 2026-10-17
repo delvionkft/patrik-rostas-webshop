@@ -67,8 +67,8 @@
       <div class="container order-layout">
         <div class="form-card">
           <h2 class="visually-hidden" id="rendeles-cim">Rendelési űrlap</h2>
-          <!-- Űrlapkezelő: a data-endpoint attribútumba írd be pl. a Formspree-végpontot (rendelésnél erősen ajánlott).
-               Ha üres, a gomb a látogató levelezőprogramját nyitja meg a kitöltött rendeléssel (data-mailto címre). -->
+          <!-- Küldés: EmailJS-en keresztül (beállítás: assets/js/main.js, EMAILJS). Ha a data-endpoint ki van töltve
+               (pl. Formspree), az élvez elsőbbséget; ha egyik sincs, a látogató levelezőprogramja nyílik meg (data-mailto). -->
           <form class="form" id="order-form" data-endpoint="" data-mailto="kerteszet1993@gmail.com" novalidate>
             <fieldset class="order-items">
               <legend>Rendelt oltványok</legend>
